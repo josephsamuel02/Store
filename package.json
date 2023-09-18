@@ -1,0 +1,45 @@
+{
+  "name": "store",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "watch:tailwindcss": "tailwindcss -i src/index.css -o public/style.css --minify -w",
+    "build:tailwindcss": "tailwindcss -i  src/index.css -o public/style.css --minify",
+    "dev": "vite",
+    "start": "concurrently --kill-others \"npm run dev\"  \" npm run watch:tailwindcss\" ",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.tsx",
+    "lint-fix": "eslint src/**/*.tsx --fix"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
+    "@tippyjs/react": "^4.2.6",
+    "axios": "^1.5.0",
+    "concurrently": "^7.4.0",
+    "flag-icons": "^6.6.6",
+    "formik": "^2.2.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.2",
+    "swiper": "^8.4.4",
+    "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "@vitejs/plugin-react": "^2.1.0",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.32.0",
+    "eslint-plugin-react": "^7.32.0",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  }
+}
