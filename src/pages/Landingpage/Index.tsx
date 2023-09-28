@@ -8,7 +8,7 @@ import NewProducts from "./NewProducts";
 import Footer from "../../components/Footer";
 const Index: React.FC = () => {
   return (
-    <h1 className="text-xl">
+    <div className="w-full pt-16 md:pt-24">
       <DefaultNav />
       <Banner />
       <Categories />
@@ -16,7 +16,7 @@ const Index: React.FC = () => {
       <FlashSales />
       <NewProducts />
       <Footer />
-    </h1>
+    </div>
   );
 };
 

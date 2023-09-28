@@ -1,26 +1,66 @@
 import React from "react";
 const Categories: React.FC = () => {
   return (
-    <div className="w-full h-auto my-3 px-0 md:px-5 py-1 md:py-3 flex md:flex-row bg-purple-300">
-      <div className="mx-0 md:mx-3 w-1/5 h-40 md:h-64 p-1 rounded items-center flex flex-col bg-white">
-        <img src="/img/2.png" alt="category" className="m-auto w-full h-52 object-contain" />
-        <p className="text-sm md:text-base text-slate-8 text-center font-roboto ">Groceries</p>
+    <div className="w-full h-auto md:p-2 grid grid-cols-3 md:grid md:grid-cols-6 bg-purple-200 items-center ">
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/2.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Electronics
+        </p>
       </div>
-      <div className="mx-0 md:mx-3 w-1/5 h-40 md:h-64 p-1 rounded items-center flex flex-col bg-white">
-        <img src="/img/3.png" alt="category" className="m-auto w-full h-52 object-contain" />
-        <p className="text-sm md:text-base text-slate-8 text-center font-roboto ">Groceries</p>
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/3.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Computers & Hardware
+        </p>
       </div>
-      <div className="mx-0 md:mx-3 w-1/5 h-40 md:h-64 p-1 rounded items-center flex flex-col bg-white">
-        <img src="/img/4.png" alt="category" className="m-auto w-full h-52 object-contain" />
-        <p className="text-sm md:text-base text-slate-8 text-center font-roboto ">Groceries</p>
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/4.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Phone & tablets
+        </p>
       </div>
-      <div className="mx-0 md:mx-3 w-1/5 h-40 md:h-64 p-1 rounded items-center flex flex-col bg-white">
-        <img src="/img/5.png" alt="category" className="m-auto w-full h-52 object-contain" />
-        <p className="text-sm md:text-base text-slate-8 text-center font-roboto ">Groceries</p>
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/5.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Fashion
+        </p>
       </div>
-      <div className="mx-0 md:mx-3 w-1/5 h-40 md:h-64 p-1 rounded items-center flex flex-col bg-white">
-        <img src="/img/6.png" alt="category" className="m-auto w-full h-52 object-contain" />
-        <p className="text-sm md:text-base text-slate-8 text-center font-roboto ">Groceries</p>
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/6.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Groceries
+        </p>
+      </div>
+      <div className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded">
+        <img
+          src="/img/5.png"
+          alt="category"
+          className="mx-auto w-full md:w-48 h-24 md:h-36 object-contain "
+        />
+        <p className="text-xs py-2 md:text-base text-slate-8 text-center font-nunito font-bold ">
+          Groceries
+        </p>
       </div>
     </div>
   );

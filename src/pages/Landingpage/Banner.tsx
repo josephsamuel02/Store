@@ -6,15 +6,19 @@ import { AiOutlineShopping } from "react-icons/ai";
 import { BsPhone } from "react-icons/bs";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 import { CgGym } from "react-icons/cg";
+import ROUTES from "../../utils/Routes";
 const Banner: React.FC = () => {
   return (
-    <div className="w-full h-full py-2 flex bg-purple-300">
+    <div className="w-full h-full py-2 flex bg-purple-200">
       <div className="mx-auto w-10/12 h-10/12   flex flex-row">
         <div className="hidden lg:flex mx-auto w-1/6  pt-6 h-auto flex-col  rounded  shadow-lg bg-white ">
-          <div className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer">
+          <a
+            className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer"
+            href={`${ROUTES.CATEGORY}?category=computers`}
+          >
             <HiOutlineDesktopComputer size={24} className="mx-2 text-Storepurple" />
             <p className=" px-1 text-sm text-slate-800 font-roboto font-thin">Computers</p>
-          </div>
+          </a>
           <div className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer">
             <LuRadioReceiver size={24} className="mx-2 text-Storepurple" />
             <p className=" px-1 text-sm text-slate-800 font-roboto font-thin">Electronics</p>
