@@ -1,24 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
+import { add_cart_items } from "../../store/Cart";
+import { useDispatch } from "react-redux";
+interface AppComponent {
+  singleProduct: any;
+}
 
-const ProductCard: React.FC = () => {
+const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
+
   return (
     <div className="w-11/12 md:w-10/12 h-auto mx-auto my-4 p-4 flex flex-col bg-white rounded-sm ">
       <div className="w-full h-auto mx-auto flex flex-col md:flex-row">
-        <img src="/img/4.png  " alt="" className="m-auto w-52 h-auto object-cover" />
+        <img
+          src={singleProduct.image}
+          alt={singleProduct.name}
+          className="m-auto w-52 h-auto object-cover"
+        />
 
         <div className="w-full md:w-2/5 mx-auto h-auto flex flex-col ">
           <h2 className="text-xl md:text-2xl py-1 md:py-12 text-gray-800 font-roboto break-words">
-            Seagate BackUp Plus Slim 500GB Portable Storage Drive
+            {singleProduct.name}
           </h2>
-          <h2 className="text-4xl py-3 text-gray-800 font-dayone   break-words">₦13,900</h2>
+          <h2 className="text-4xl py-3 text-gray-800 font-dayone   break-words">
+            ₦{singleProduct.price}
+          </h2>
 
-          <p className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md">
+          <div className="w-full h-auto flex flex-row py-6 ">
+            <p className="text-base text-black font-roboto">Quantity</p>
+            <input
+              className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+              type="button"
+              value="-"
+              onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+            />
+            <p className="text-base text-black font-roboto">{quantity}</p>
+
+            <input
+              className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+              type="button"
+              value="+"
+              onClick={() => setQuantity(quantity + 1)}
+            />
+          </div>
+
+          <p
+            className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
+            onClick={() =>
+              dispatch(
+                add_cart_items({
+                  id: singleProduct.id,
+                  image: singleProduct.image,
+                  name: singleProduct.name,
+                  price: singleProduct.name,
+                  category: singleProduct.category,
+                  quantity: quantity,
+                })
+              )
+            }
+          >
             <span className="px-4">
               <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
             </span>
 
-            <span className="mx-auto">Add to cart </span>
+            <span className="mx-auto cursor-pointer">Add to cart</span>
           </p>
         </div>
       </div>
@@ -30,10 +76,10 @@ const ProductCard: React.FC = () => {
           </h3>
 
           <p className=" p-3 text-2xl text-slate-900 font-bold">ONE-STOP Electronics</p>
-          <h3 className="text-lg py-3 text-gray-800 font-bold text-center">
+          {/* <h3 className="text-lg py-3 text-gray-800 font-bold text-center">
             Seller Performance
-          </h3>
-          <ul className="w-full h-auto">
+          </h3> */}
+          {/* <ul className="w-full h-auto">
             <li className="text-md text-gray-800 px-3 py-1">
               Customer Rating: <span className="font-bold text-green-700">Excellent</span>
             </li>
@@ -44,7 +90,7 @@ const ProductCard: React.FC = () => {
             <li className="text-md text-gray-800 px-3 py-1">
               Quality Score:<span className="font-bold  text-green-700">Excellent</span>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>

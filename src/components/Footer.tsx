@@ -49,12 +49,12 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <hr />
-      <div className="mx-auto w-full md:w-4/5 md:px-12 py-4 ">
+      <div className="mx-auto w-full md:w-4/5 md:px-12 py-2 ">
         <div className="mx-14 md:mx-5 flex flex-col-reverse  md:flex-row">
           <div className="py-2">
-            <p className=" text-sm md:text-base font-nunito text-white ">
+            <p className="text-xs md:text-sm font-nunito text-white ">
               Copyright &copy; 2023 All Rights Reserved by
-              <a href="*"> One-Stop</a>.
+              <a href="*"> OneStore</a>.
             </p>
           </div>
 
