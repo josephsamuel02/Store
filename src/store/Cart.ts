@@ -14,6 +14,7 @@ const config = {
 const initialState = {
   isLoading: false,
   userId: "59u24t8",
+  total: 4325,
   Cart: [
     {
       id: "wwy5",
@@ -71,9 +72,13 @@ const CartReducer = createSlice({
   name: "CartReducer",
   initialState: initialState,
   reducers: {
-    get_all_cart_items: (state) => {},
+    get_all_cart_items: (state) => {
+      null;
+    },
     add_cart_items: (state, { payload }) => {
       state.Cart.push(payload);
+      const total = state.total;
+      state.total = total + Number(payload.price);
     },
     update_product_quantity: (state, { payload }) => {
       state.Cart[payload.index].quantity = payload.quantity;

@@ -4,30 +4,30 @@ const Categories: React.FC = () => {
   const Menu = [
     {
       name: "Computers",
-      img: "/img/2.png",
+      img: "/img/n.png",
       url: "Computers",
     },
     {
       name: "Electronics",
-      img: "/img/5.png",
+      img: "/img/i.png",
       url: "Electronics",
     },
     {
       name: "Grocery",
-      img: "/img/3.png",
+      img: "/img/j.png",
       url: "Grocery",
     },
     {
       name: "Phone & tablets",
-      img: "/img/4.png",
+      img: "/img/e.png",
       url: "Phone",
     },
     {
       name: "Accessories",
-      img: "/img/5.png",
+      img: "/img/q.jpg",
       url: "Accessories",
     },
-    { name: "Fashion", img: "/img/1.png", url: "Fashion" },
+    { name: "Fashion", img: "/img/c.png", url: "Fashion" },
   ];
 
   return (

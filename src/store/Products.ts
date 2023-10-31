@@ -13,73 +13,173 @@ const config = {
 const PlaceholderProducts = [
   {
     id: "456",
-    image: "/img/2.png",
-    name: "LCD TV",
-    price: "24577",
+    image: "/img/g.png",
+    name: "Hp 15 Intel Core I3 15.6 4GB RAM/1TB HDD Win 10 - Black",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "326139",
     category: "Computers",
   },
   {
     id: "rq45",
-    image: "/img/3.png",
-    name: "HP Papillon Laptop",
-    price: "24577",
-    category: "Grocery",
+    image: "/img/k.png",
+    name: "SHARE THIS PRODUCT Hp Laptop 15 INTEL CELERON Quad Core 8GB RAM -1TB HDD Windows 11 + USB Light For Keyboard",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "348000",
+    category: "Computers",
   },
   {
     id: "ewer",
-    image: "/img/4.png",
-    name: "iphone Earpod",
-    price: "24577",
+    image: "/img/b.png",
+    name: "Havit H633BT Wireless Headphone - Bluetooth Stereo Headset",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "16500",
     category: "Accessories",
   },
   {
     id: "55we",
-    image: "/img/5.png",
-    name: "Laptop",
-    price: "24577",
-    category: "Phone & tablets",
+    image: "/img/c.png",
+    name: "Kingskartel Kings-Kartel Stylish (Brown & Black)",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "16999",
+    category: "Fashion",
   },
   {
     id: "tqcw",
-    image: "/img/6.png",
-    name: "Laptop",
+    image: "/img/h.png",
+    name: "Bluetooth radio Clear sound",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
-    category: "Computers",
+    category: "Accessories",
   },
   {
     id: "wct",
-    image: "/img/1.png",
-    name: "Laptop",
+    image: "/img/i.png",
+    name: "LapSoft Silicone Case For IPhone top",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
     category: "Phone & tablets",
   },
   {
     id: "wtv",
-    image: "/img/2.png",
-    name: "Laptop",
+    image: "/img/milo tin 400g.jpg",
+    name: "Milo Hot Chocolate Refill",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
-    category: "Computers",
+    category: "Grocery",
   },
   {
     id: "wwy5",
     image: "/img/3.png",
-    name: "Laptop",
+    name: "Oriflame toothpaste , teeth whitener",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
-    category: "Phone & tablets",
+    category: "Grocery",
+  },
+
+  {
+    id: "wtv",
+    image: "/img/Milo refill 800G.jpg",
+    name: "Milo Sachet",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "24577",
+    category: "Grocery",
+  },
+  {
+    id: "tqcw",
+    image: "/img/h.png",
+    name: "Bluetooth radio Clear sound",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
+    price: "24577",
+    category: "Computers",
   },
   {
     id: "5653y",
     image: "/img/4.png",
-    name: "Laptop",
+    name: "Feminel Natural wash for wemen",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
-    category: "Phone & tablets",
+    category: "Grocery",
   },
+
   {
-    id: "565v3",
-    image: "/img/5.png",
-    name: "Laptop",
+    id: "5653y",
+    image: "/img/golden morn 900g.jpg",
+    name: "golden morn 900g",
+    product_details:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    key_features: [
+      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+    ],
     price: "24577",
-    category: "Computers",
+    category: "Grocery",
   },
 ];
 

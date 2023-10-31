@@ -5,6 +5,7 @@ interface AppComponent {
   Products: any[];
 }
 const FlashSales: React.FC<AppComponent> = ({ Products }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
   return (
     <div className="my-8 w-full h-auto">
       <div className="w-full h-auto p-0 flex flex-col bg-blue-600">
@@ -33,7 +34,7 @@ const FlashSales: React.FC<AppComponent> = ({ Products }) => {
                 </p>
 
                 <h2 className="font-bold text-base py-1 text-black flex flex-col md:flex-row items-center">
-                  ₦{i.price}
+                  ₦{priceFormat.format(i.price)}
                 </h2>
               </a>
             </div>

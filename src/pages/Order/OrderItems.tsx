@@ -5,6 +5,7 @@ interface AppComponent {
 }
 
 const OrderItems: React.FC<AppComponent> = ({ Order }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
   return (
     <div className="w-11/12 md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
       <h3 className="text-2xl  md:text-3xl p-4 text-black font-bold font-dayone border-b-2 border-slate-300 ">
@@ -31,7 +32,9 @@ const OrderItems: React.FC<AppComponent> = ({ Order }) => {
                       {i.name}
                     </h3>
                     <div className=" mx-auto w-2/6 h-auto flex flex-col ">
-                      <h3 className="text-xl py-2 text-black font-dayone">₦ {i.price} </h3>
+                      <h3 className="text-xl py-2 text-black font-dayone">
+                        ₦{priceFormat.format(i.price)}
+                      </h3>
 
                       <div className="w-full h-auto flex flex-row py-6 ">
                         <p className="  text-md text-black font-roboto">
@@ -87,7 +90,7 @@ const OrderItems: React.FC<AppComponent> = ({ Order }) => {
           CLOSED ORDERS
         </h3>
 
-        <>
+        {/* <>
           <div className="w-full h-auto my-2 flex flex-col bg-white   border-b-2 border-slate-300">
             <div className="w-full h-auto flex flex-row">
               <img src="/img/2.png" alt="" className="w-32 h-32  mx-auto object-contain" />
@@ -124,7 +127,7 @@ const OrderItems: React.FC<AppComponent> = ({ Order }) => {
               </div>
             </div>
           </div>
-        </>
+        </> */}
       </div>
     </div>
   );

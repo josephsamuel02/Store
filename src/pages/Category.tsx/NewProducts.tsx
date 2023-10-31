@@ -7,6 +7,7 @@ interface AppComponent {
 }
 
 const NewProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
   return (
     <div className="w-full h-full bg-white">
@@ -30,18 +31,20 @@ const NewProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
                   className="mx-auto w-full md:w-48 h-24 md:h-52 object-contain "
                 />
                 <p className=" line-clamp-1 p-1 text-xs md:text-md  text-gray-800">{i.name}</p>
-                <p className=" pb-1 text-sm font-bold  text-gray-800">₦{i.price}</p>
+                <p className=" pb-1 text-sm font-bold  text-gray-800">
+                  ₦{priceFormat.format(i.price)}
+                </p>
               </a>
               <p
                 className=" w-full mx-0.5 py-1 text-center text-sm md:text-base text-white bg-Storepurple hover:bg-purple-800 rounded"
                 onClick={() =>
                   dispatch(
                     add_cart_items({
-                      id: "3525",
-                      image: "/img/7.png",
-                      name: "Laptop",
-                      price: "24577",
-                      category: "Phone & tablets",
+                      id: i.id,
+                      image: i.image,
+                      name: i.name,
+                      price: i.price,
+                      category: i.category,
                       quantity: 1,
                     })
                   )

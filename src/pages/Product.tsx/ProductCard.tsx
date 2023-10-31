@@ -7,6 +7,7 @@ interface AppComponent {
 }
 
 const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
@@ -24,7 +25,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
             {singleProduct.name}
           </h2>
           <h2 className="text-4xl py-3 text-gray-800 font-dayone   break-words">
-            ₦{singleProduct.price}
+            ₦{priceFormat.format(singleProduct.price)}
           </h2>
 
           <div className="w-full h-auto flex flex-row py-6 ">
@@ -84,7 +85,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
               Customer Rating: <span className="font-bold text-green-700">Excellent</span>
             </li>
             <li className="text-md text-gray-800 px-3 py-1">
-              Order Fulfillment Rate:{" "}
+              Order Fulfillment Rate: 
               <span className="font-bold  text-green-700">Excellent</span>
             </li>
             <li className="text-md text-gray-800 px-3 py-1">

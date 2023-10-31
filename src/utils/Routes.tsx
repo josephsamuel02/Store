@@ -4,6 +4,7 @@ const ROUTES = {
   PRODUCT: "/product",
   CART: "/cart",
   ORDERS: "/orders",
+  CHECKOUT: "/checkout",
 
   LOGIN: "/login",
   SIGNUP: "/signup",

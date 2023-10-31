@@ -4,6 +4,7 @@ interface AppComponent {
   Products: any[];
 }
 const NewProducts: React.FC<AppComponent> = ({ Products }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
   return (
     <div className="my-8 w-full h-auto">
       <div className="w-full h-auto p-0 flex flex-col bg-red-700">
@@ -18,7 +19,6 @@ const NewProducts: React.FC<AppComponent> = ({ Products }) => {
               className="mx-0 md:mx-3 w-1/6 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"
               key={index}
             >
-              {" "}
               <a
                 className="w-full h-auto mx-auto items-center flex flex-col"
                 href={`${ROUTES.PRODUCT}?id=${i.id}`}
@@ -33,7 +33,7 @@ const NewProducts: React.FC<AppComponent> = ({ Products }) => {
                 </p>
 
                 <h2 className="font-bold text-base py-1 text-black flex flex-col md:flex-row items-center">
-                  ₦{i.price}
+                  ₦{priceFormat.format(i.price)}
                 </h2>
               </a>
             </div>

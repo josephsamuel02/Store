@@ -48,7 +48,7 @@ const Login: React.FC = () => {
             </p>
 
             <p className="mx-auto my-3 text-base text-thin text-slate-700">
-              Don't have an account?{" "}
+              Don't have an account?
               <a href={ROUTES.SIGNUP} className="mx-auto text-base  text-blue-800">
                 Sign Up
               </a>

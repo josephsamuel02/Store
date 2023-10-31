@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { remove_cart_items, update_product_quantity } from "../../store/Cart";
 const CartItems: React.FC = () => {
   const Cart = useSelector((state: any) => state.Cart.Cart);
+  const Order = useSelector((state: any) => state.Order.allOrders);
+  const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
   return (
     <div className="w-11/12 md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
@@ -21,7 +23,9 @@ const CartItems: React.FC = () => {
               <div className="w-4/6 flex my-auto flex-col md:flex-row ">
                 <h3 className="text-md  md:text-lg p-2 text-black font-roboto ">{i.name}</h3>
                 <div className="w-64 h-auto flex flex-col ">
-                  <h3 className="text-2xl py-2 text-black font-dayone">₦ {i.price} </h3>
+                  <h3 className="text-2xl py-2 text-black font-dayone">
+                    ₦{priceFormat.format(i.price)}
+                  </h3>
                   <div className="w-full h-auto flex flex-row py-6 ">
                     <input
                       className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
@@ -67,54 +71,53 @@ const CartItems: React.FC = () => {
         <h3 className="text-xl py-3 text-slate-900 font-bold">Notice</h3>
         <p className="text-md md:text-md text-slate-800 font-roboto font-thin">
           All products will be sent via a delivery agent, delivery cost will be coved by buyer.
-          delivery cost can also be negotiated between buyer and seller.
+          delivery cost can also be negotiated between buyer and delivery agent.
         </p>
       </div>
 
-      <div className="w-full h-auto my-6 flex flex-col bg-white">
-        <div className=" flex py-3 flex-row ">
-          <h3 className="text-lg text-black px-3 font-roboto font-bold ">Subtotal:</h3>
-          <h3 className="text-xl text-black font-dayone">₦ 27,999 </h3>
+      {Cart.total > 0 && (
+        <div className="w-full h-auto my-6 flex flex-col bg-white">
+          <div className=" flex py-3 flex-row ">
+            <h3 className="text-lg text-black px-3 font-roboto font-bold ">Total:</h3>
+            <h3 className="text-xl text-black font-dayone">
+              ₦{priceFormat.format(Cart.total)}
+            </h3>
+          </div>
+          <a
+            className="w-2/5 h-auto py-3 text-lg text-center text-white font-bold cursor-pointer rounded bg-Storepurple hover:bg-purple-800 "
+            href={ROUTES.CHECKOUT}
+          >
+            Checkout
+          </a>
         </div>
-        <p className="w-2/5 h-auto py-3 text-lg text-center text-white font-bold cursor-pointer rounded bg-Storepurple">
-          Checkout
-        </p>
-      </div>
+      )}
 
       <div className="w-full h-auto mt-14 border-2 border-slate-300 rounded-sm">
         <h3 className="text-xl   px-4 py-2 text-black  font-dayone  border-b-2 border-slate-300">
           Previous orders
         </h3>
 
-        <div className="mx-4 w-9/12 h-auto my-2 flex flex-col border-b-2 border-slate-300 bg-white  ">
-          <div className="w-full h-auto flex flex-row">
-            <img src="/img/2.png" alt="" className="w-20 h-20  mx-auto object-contain" />
+        {Order &&
+          Order.slice(0, 1).map((i: any, index: number) => (
+            <div
+              className="mx-4 w-9/12 h-auto my-2 flex flex-col border-b-2 border-slate-300 bg-white  "
+              key={index}
+            >
+              <div className="w-full h-auto flex flex-row">
+                <img src={i.image} alt="" className="w-20 h-20  mx-auto object-contain" />
 
-            <div className="w-4/6 flex my-auto flex-col md:flex-row ">
-              <h3 className="text-sm truncate  p-2 text-black font-roboto ">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              </h3>
-              <div className="w-64 h-auto flex flex-col ">
-                <h3 className="text-lg py-2 text-slate-800 font-dayone">₦ 27,999 </h3>
+                <div className="w-4/6 flex my-auto flex-col md:flex-row ">
+                  <h3 className="text-sm truncate  p-2 text-black font-roboto ">{i.name}</h3>
+                  <div className="w-64 h-auto flex flex-col ">
+                    <h3 className="text-lg py-2 text-slate-800 font-dayone">
+                      ₦{priceFormat.format(i.price)}
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          ))}
 
-        <div className="mx-4 w-9/12 h-auto my-2 flex flex-col border-b-2 border-slate-300 bg-white  ">
-          <div className="w-full h-auto flex flex-row">
-            <img src="/img/2.png" alt="" className="w-20 h-20  mx-auto object-contain" />
-
-            <div className="w-4/6 flex my-auto flex-col md:flex-row ">
-              <h3 className="text-sm truncate  p-2 text-black font-roboto ">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              </h3>
-              <div className="w-64 h-auto flex flex-col ">
-                <h3 className="text-lg py-2 text-slate-800 font-dayone">₦ 27,999 </h3>
-              </div>
-            </div>
-          </div>
-        </div>
         <a
           className="text-xl   px-6 md:px-12 py-2 text-Storepurple  font-roboto "
           href={ROUTES.ORDERS}
