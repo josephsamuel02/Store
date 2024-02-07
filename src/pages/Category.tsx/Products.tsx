@@ -32,7 +32,10 @@ const Products: React.FC<AppComponent> = ({ category, categoryProducts }) => {
                 />
                 <p className=" line-clamp-1 p-1 text-xs md:text-md  text-gray-800">{i.name}</p>
                 <p className=" pb-1 text-sm font-bold  text-gray-800">
-                  ₦{priceFormat.format(i.price)}
+                  ₦{priceFormat.format(i.price)}{" "}
+                  <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal  ">
+                    ₦{priceFormat.format(i.price)}
+                  </span>
                 </p>
               </a>
               <p

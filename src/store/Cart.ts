@@ -1,51 +1,52 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// require("dotenv").config();
+import jwt from "jsonwebtoken";
 import axios from "axios";
 
-const URL = "http://127.0.0.1:7000/api/kegow-middleware";
-
-const auth = "Basic a2Vnb3ctNXx0ZXN0QDEyM3w1Ig==";
+const auth = localStorage.getItem("AuthToken");
+const id: any = jwt.verify(auth, process.env.JWT_SECRET).id;
 const config = {
   headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
     Authorization: auth,
   },
 };
 
 const initialState = {
-  isLoading: false,
-  userId: "59u24t8",
-  total: 4325,
+  loading: false,
+  token: null,
+  error: null,
+  success: false,
+  userId: id,
+  total: 1,
   Cart: [
     {
-      id: "wwy5",
-      image: "/img/3.png",
-      name: "Laptop",
-      price: "24577",
-      category: "Phone & tablets",
-      quantity: 2,
-    },
-    {
-      id: "5653y",
-      image: "/img/4.png",
-      name: "Laptop",
-      price: "24577",
-      category: "Phone & tablets",
-      quantity: 4,
-    },
-    {
-      id: "565v3",
-      image: "/img/5.png",
-      name: "Laptop",
-      price: "24577",
-      category: "Computers",
-      quantity: 1,
+      id: "65c1a92bf4re52df3a0313af9",
+      name: "Head Set",
+      image: "https://placehold.co/600x400",
+      product_details:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere bibendum interdum.",
+      key_features: ["feature1"],
+      old_price: 10000,
+      price: 110000,
+
+      category: ["phone", "accesories"],
+      inStock: 2,
+
+      shopId: "65c1a742dca2e1c2b6e07cca",
+      createdAt: "2024-02-06T03:36:11.099Z",
+      updatedAt: "2024-02-06T03:36:11.099Z",
     },
   ],
 };
 
-export const getCart = createAsyncThunk("kegow/cart", async (userId) => {
+export const getCart = createAsyncThunk("shop/cart", async (userId) => {
   try {
-    const response = await axios.get(`${URL}/cart/${userId}`, config);
+    const response = await axios.post(
+      `${import.meta.env.JWT_SECRETE}/get_user_cart`,
+      { userId: userId },
+      config
+    );
     return response.data;
   } catch (error) {
     return {
@@ -55,14 +56,18 @@ export const getCart = createAsyncThunk("kegow/cart", async (userId) => {
   }
 });
 
-export const addToCart = createAsyncThunk("kegow/add_to_cart", async (data: any) => {
+export const addToCart = createAsyncThunk("shop/update_cart", async (data: any) => {
   try {
-    const response = await axios.post(`${URL}/add_to_cart`, data, config);
+    const response = await axios.post(
+      `${import.meta.env.JWT_SECRETE}/update_cart`,
+      data,
+      config
+    );
 
     return response.data;
   } catch (error) {
     return {
-      message: "unable to add to cart",
+      message: "unable to update cart",
       error: error,
     };
   }
@@ -76,32 +81,72 @@ const CartReducer = createSlice({
       null;
     },
     add_cart_items: (state, { payload }) => {
-      state.Cart.push(payload);
-      const total = state.total;
-      state.total = total + Number(payload.price);
+      const duplicate = state.Cart.filter((item) => item.id == payload.id);
+      if (!duplicate[0]) {
+        state.Cart.push(payload);
+
+        // balance the total price of the cart items
+        const total = state.total;
+        const itemPrice = Number(payload.price) * Number(payload.quantity);
+        state.total = itemPrice + total;
+      }
     },
     update_product_quantity: (state, { payload }) => {
       state.Cart[payload.index].quantity = payload.quantity;
+
+      // balance the total price of the cart items
+      const item_P: any = state.Cart[payload.index].price;
+
+      const old_item_Q = payload.prev_quantity;
+      const old_P_Q = Number(item_P) * Number(old_item_Q);
+
+      const new_item_Q = state.Cart[payload.index].quantity;
+      const new_P_Q = Number(item_P) * Number(new_item_Q);
+
+      const total = state.total - old_P_Q;
+      const newTotal = total + new_P_Q;
+      state.total = newTotal;
     },
     remove_cart_items: (state, { payload }) => {
+      // balance the total price of the cart items
+      const removedItem: Array<any> = state.Cart.filter((item) => item.id == payload);
+      const itemPrice = Number(removedItem[0].price) * Number(removedItem[0].quantity);
+      const newTotal = Number(state.total) - itemPrice;
+      state.total = newTotal;
+
+      // set new cart items
       const newState = state.Cart.filter((item) => item.id !== payload);
       state.Cart = newState;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCart.pending, (state, { payload }) => {
-      state.isLoading = true;
-      //state.Cart = [payload];
+    builder.addCase(getCart.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     });
 
     builder.addCase(getCart.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.Cart = [...payload];
+      state.loading = false;
+      state.loading = false;
+      state.success = true;
+
+      const duplicate = state.Cart.filter((item) => item.id == payload.id);
+      if (!duplicate[0]) {
+        state.Cart.push(payload);
+
+        // balance the total price of the cart items
+        const total = state.total;
+        const itemPrice = Number(payload.price) * Number(payload.quantity);
+        state.total = itemPrice + total;
+      }
     });
 
+    builder.addCase(addToCart.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
     builder.addCase(addToCart.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-
+      state.loading = false;
       state.Cart.push(payload);
     });
   },

@@ -4,15 +4,15 @@ import ROUTES from "../../utils/Routes";
 import { useSelector, useDispatch } from "react-redux";
 import { remove_cart_items, update_product_quantity } from "../../store/Cart";
 const CartItems: React.FC = () => {
-  const Cart = useSelector((state: any) => state.Cart.Cart);
+  const Cart = useSelector((state: any) => state.Cart);
   const Order = useSelector((state: any) => state.Order.allOrders);
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
   return (
     <div className="w-11/12 md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
       <h3 className="text-2xl  md:text-3xl p-4 text-black font-bold font-dayone ">Carts</h3>
-      {Cart &&
-        Cart.map((i: any, index: number) => (
+      {Cart.Cart &&
+        Cart.Cart.map((i: any, index: number) => (
           <div
             className="w-full h-auto my-2 flex flex-col bg-white rounded-md shadow-lg"
             key={i.id}
@@ -24,7 +24,7 @@ const CartItems: React.FC = () => {
                 <h3 className="text-md  md:text-lg p-2 text-black font-roboto ">{i.name}</h3>
                 <div className="w-64 h-auto flex flex-col ">
                   <h3 className="text-2xl py-2 text-black font-dayone">
-                    ₦{priceFormat.format(i.price)}
+                    ₦{priceFormat.format(i.price * i.quantity)}
                   </h3>
                   <div className="w-full h-auto flex flex-row py-6 ">
                     <input
@@ -34,7 +34,11 @@ const CartItems: React.FC = () => {
                       onClick={() =>
                         i.quantity > 1 &&
                         dispatch(
-                          update_product_quantity({ index: index, quantity: i.quantity - 1 })
+                          update_product_quantity({
+                            index: index,
+                            prev_quantity: i.quantity,
+                            quantity: i.quantity - 1,
+                          })
                         )
                       }
                     />
@@ -46,7 +50,11 @@ const CartItems: React.FC = () => {
                       value="+"
                       onClick={() =>
                         dispatch(
-                          update_product_quantity({ index: index, quantity: i.quantity + 1 })
+                          update_product_quantity({
+                            index: index,
+                            prev_quantity: i.quantity,
+                            quantity: i.quantity + 1,
+                          })
                         )
                       }
                     />
@@ -75,7 +83,7 @@ const CartItems: React.FC = () => {
         </p>
       </div>
 
-      {Cart.total > 0 && (
+      {Cart.total > 0 ? (
         <div className="w-full h-auto my-6 flex flex-col bg-white">
           <div className=" flex py-3 flex-row ">
             <h3 className="text-lg text-black px-3 font-roboto font-bold ">Total:</h3>
@@ -90,7 +98,7 @@ const CartItems: React.FC = () => {
             Checkout
           </a>
         </div>
-      )}
+      ) : null}
 
       <div className="w-full h-auto mt-14 border-2 border-slate-300 rounded-sm">
         <h3 className="text-xl   px-4 py-2 text-black  font-dayone  border-b-2 border-slate-300">

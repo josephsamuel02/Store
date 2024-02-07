@@ -36,8 +36,11 @@ const SimilarProducts: React.FC<AppComponent> = ({ categoryProducts, category })
                   className="mx-auto w-full md:w-48 h-24 md:h-52 object-contain "
                 />
                 <p className=" line-clamp-1 p-1 text-sm md:text-lg  text-gray-800">{i.name}</p>
-                <p className=" pb-1 text-base font-bold  text-gray-800">
+                <p className=" pb-1 text-base font-bold text-gray-800">
                   ₦{priceFormat.format(i.price)}
+                  <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal">
+                    ₦{priceFormat.format(i.price)}
+                  </span>
                 </p>
               </a>
               <p

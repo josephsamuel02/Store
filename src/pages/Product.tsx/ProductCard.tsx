@@ -26,6 +26,9 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
           </h2>
           <h2 className="text-4xl py-3 text-gray-800 font-dayone   break-words">
             ₦{priceFormat.format(singleProduct.price)}
+            <span className="pl-2 text-slate-600 text-xl text-decoration-line: line-through font-normal  ">
+              ₦{priceFormat.format(singleProduct.price)}
+            </span>
           </h2>
 
           <div className="w-full h-auto flex flex-row py-6 ">
@@ -54,7 +57,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
                   id: singleProduct.id,
                   image: singleProduct.image,
                   name: singleProduct.name,
-                  price: singleProduct.name,
+                  price: singleProduct.price,
                   category: singleProduct.category,
                   quantity: quantity,
                 })

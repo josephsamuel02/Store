@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
+import { registerUser } from "../../store/authSlice";
+import { persistor } from "../../store/store";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import delay from "delay";
 
 const SignUp: React.FC = () => {
+  const signUpStatus = useSelector((state: any) => state.auth.userInfo);
+  const dispatch = useDispatch<any>();
+
+  const [userInfo, setUserInfo] = useState<any>({
+    surname: "",
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  const [confirmPass, setConfirmPass] = useState<any>("");
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    if (confirmPass !== userInfo.password) {
+      toast.warn("Password is not the same value, please confirm your password.", {
+        position: "top-left",
+      });
+    } else {
+      // console.log(`${confirmPass}`, `${userInfo.password}`);
+      dispatch(registerUser(userInfo));
+    }
+
+    if (signUpStatus.status == 200) {
+      toast.success(signUpStatus.message);
+      await delay(1300);
+      window.location.assign("/login");
+    } else {
+      toast.error(signUpStatus.message);
+    }
+  };
+  const handleLogout = () => {
+    persistor.purge();
+    window.location.replace("/login");
+  };
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">
       <DefaultNav />
@@ -12,49 +56,77 @@ const SignUp: React.FC = () => {
         <div className=" mx-auto py-2 h-auto w-auto md:w-1/2">
           <form
             action=""
+            onSubmit={submit}
             className="mx-auto p-10 w-11/12 md:w-96 flex flex-col bg-white rounded-md shadow-xl "
           >
             <h2 className="mx-1 my-1 text-3xl font-bold text-slate-800">Sign Up</h2>
 
             <div className=" mx-auto h-auto w-auto flex flex-row ">
               <input
+                required
                 type="text"
                 placeholder="Surname"
                 className=" w-full my-3 mr-1 h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, surname: e.target.value }))
+                }
               />
               <input
+                required
                 type="text"
                 placeholder="Name"
                 className=" w-full my-3 ml-1 h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, name: e.target.value }))
+                }
               />
             </div>
             <input
-              type="text"
+              required
+              type="email"
               placeholder="email"
               className=" w-full my-3  h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+              onChange={(e) =>
+                setUserInfo((prev: any) => ({ ...prev, email: e.target.value }))
+              }
             />
 
             <input
+              required
               type="tel"
-              pattern="[789][0-9]{9}"
+              pattern="[0-9]{11}"
+              minLength={11}
+              maxLength={11}
               placeholder="Phone number"
               className=" w-full my-3  h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+              onChange={(e) =>
+                setUserInfo((prev: any) => ({ ...prev, phone: e.target.value }))
+              }
             />
             <input
+              required
               type="password"
+              minLength={3}
+              maxLength={21}
               placeholder="password"
               className=" w-full my-3  h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+              onChange={(e) =>
+                setUserInfo((prev: any) => ({ ...prev, password: e.target.value }))
+              }
             />
 
             <input
+              required
               type="password"
               placeholder="confirm password"
               className=" w-full my-3  h-auto py-2 px-4 text-lg  text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
+              onChange={(e) => setConfirmPass(e.target.value)}
             />
 
             <button
               type="submit"
               className="w-full mx-auto px-6 py-2 my-4 text-center text-white  text-xl font-nunito  rounded   bg-Storepurple hover:bg-purple-500 bg-gradient-to-r from-purple-500 hover:from-Storepurple transition-colors shadow-md"
+              //   onClick={() => handleLogout()}
             >
               Register
             </button>
@@ -74,6 +146,7 @@ const SignUp: React.FC = () => {
       </div>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

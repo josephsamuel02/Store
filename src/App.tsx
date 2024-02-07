@@ -11,6 +11,7 @@ import Page404 from "./pages/404_Page.tsx";
 import ForgotPassword from "./pages/Auth/ForgotPassword.tsx";
 import Orders from "./pages/Order/index.tsx";
 import Checkout from "./pages/Checkout/index.tsx";
+import Profile from "./pages/Profile/index.tsx";
 const App: React.FC = () => {
   return (
     <>
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Route path={ROUTES.ORDERS} element={<Orders />} />
         <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
 
+        <Route path={ROUTES.PROFILE} element={<Profile />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<SignUp />} />
         <Route path={ROUTES.FORGOTPASSWORD} element={<ForgotPassword />} />

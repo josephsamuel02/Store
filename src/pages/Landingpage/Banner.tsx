@@ -52,17 +52,23 @@ const Banner: React.FC = () => {
         </div>
 
         <div className=" mx-auto w-full md:w-4/5 h-full ">
-          {/* <img src="/img/banner.png" alt="" className="w-full h-full object-cover" /> */}
-          <SimpleImageSlider
-            width={896}
-            height={504}
-            images={images}
-            showBullets={true}
-            showNavs={false}
-            autoPlay={true}
-            slideDuration={3}
-            autoPlayDelay={5}
+          <img
+            src="/img/banner.png"
+            alt=""
+            className=" flex md:hidden w-full h-full object-cover"
           />
+          <div className="hidden md:flex w-auto h-auto z-0">
+            <SimpleImageSlider
+              width={896}
+              height={504}
+              images={images}
+              showBullets={true}
+              showNavs={false}
+              autoPlay={true}
+              slideDuration={3}
+              autoPlayDelay={5}
+            />
+          </div>
         </div>
       </div>
     </div>
