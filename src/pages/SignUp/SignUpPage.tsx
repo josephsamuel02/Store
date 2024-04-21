@@ -4,11 +4,12 @@ import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
 import { registerUser } from "../../store/authSlice";
-import { persistor } from "../../store/store";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 const SignUp: React.FC = () => {
   const signUpStatus = useSelector((state: any) => state.auth.userInfo);
@@ -24,30 +25,27 @@ const SignUp: React.FC = () => {
 
   const [confirmPass, setConfirmPass] = useState<any>("");
 
-  const submit = async (e) => {
+  const SignUP = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    if (confirmPass !== userInfo.password) {
+    try {
+      if (confirmPass == userInfo.password) {
+        const docRef = await addDoc(collection(db, "user"), userInfo);
+        if (!docRef) {
+          toast.error("Unable to Sign up");
+        }
+        toast.success("Signed uP successfully");
+        await delay(1300);
+        window.location.assign("/login");
+      }
       toast.warn("Password is not the same value, please confirm your password.", {
         position: "top-left",
       });
-    } else {
-      // console.log(`${confirmPass}`, `${userInfo.password}`);
-      dispatch(registerUser(userInfo));
+    } catch (error) {
+      toast.error("Error: Failed to signup");
     }
+  };
 
-    if (signUpStatus.status == 200) {
-      toast.success(signUpStatus.message);
-      await delay(1300);
-      window.location.assign("/login");
-    } else {
-      toast.error(signUpStatus.message);
-    }
-  };
-  const handleLogout = () => {
-    persistor.purge();
-    window.location.replace("/login");
-  };
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">
       <DefaultNav />
@@ -56,7 +54,7 @@ const SignUp: React.FC = () => {
         <div className=" mx-auto py-2 h-auto w-auto md:w-1/2">
           <form
             action=""
-            onSubmit={submit}
+            onSubmit={SignUP}
             className="mx-auto p-10 w-11/12 md:w-96 flex flex-col bg-white rounded-md shadow-xl "
           >
             <h2 className="mx-1 my-1 text-3xl font-bold text-slate-800">Sign Up</h2>

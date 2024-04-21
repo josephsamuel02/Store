@@ -1,14 +1,66 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// require("dotenv").config();
+
 import axios from "axios";
 
-const URL = "";
-const auth = "Basic a2Vnb3ctNXx0ZXN0QDEyM3w1Ig==";
+const auth: any = `Bearer ${localStorage.getItem("AuthToken")}`;
 const config = {
   headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
     Authorization: auth,
   },
 };
+const URL = import.meta.env.VITE_ONESTORE_API;
+
+export const getAllProducts: any = createAsyncThunk("products/get_products", async (data) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_ONESTORE_API}/get_products`,
+      data,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    return {
+      message: "unable to get data",
+      error: error,
+      status: 500,
+    };
+  }
+});
+
+export const getProductsByCategory: any = createAsyncThunk(
+  "products/get_products_by_category",
+  async (data) => {
+    try {
+      const response = await axios.post(`${URL}/get_products_by_category`, data, config);
+      return response.data;
+    } catch (error) {
+      return {
+        message: "unable to get data",
+        error: error,
+        status: 500,
+      };
+    }
+  }
+);
+
+export const getSingleProduct: any = createAsyncThunk(
+  "products/get_one_product",
+  async (data) => {
+    try {
+      const response = await axios.post(`${URL}/get_one_product`, data, config);
+      return response.data;
+      return response.data;
+    } catch (error) {
+      return {
+        status: 500,
+        message: "unable to get data",
+        error: error,
+      };
+    }
+  }
+);
 
 const PlaceholderProducts = [
   {
@@ -182,95 +234,87 @@ const PlaceholderProducts = [
     category: "Grocery",
   },
 ];
-
-const initialState = {
-  isLoading: false,
-  userId: "59u24t8",
-  singleProduct: {
-    id: "59u24t8",
-    name: "Laptop",
-    product_details:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    key_features: [
-      "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
-      "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
-    ],
-    category: "Computers",
-    image: "/img/5.png",
-    price: "24577",
-  },
-  allProducts: [...PlaceholderProducts],
-  productsByCategory: [...PlaceholderProducts],
+const singleP = {
+  id: "59u24t8",
+  name: "Laptop",
+  product_details:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  key_features: [
+    "Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+    "Lorem ipsum dolor sit amet, consectetur  sed do eiusmod tempor",
+  ],
+  category: "Computers",
+  image: "/img/5.png",
+  price: "24577",
 };
-
-export const getAllProducts = createAsyncThunk("kegow/products", async () => {
-  try {
-    const response = await axios.get(`${URL}/products`, config);
-    return response.data;
-  } catch (error) {
-    return {
-      message: "unable to get data",
-      error: error,
-    };
-  }
-});
-
-export const getProductsByCategory = createAsyncThunk("kegow/products_category", async () => {
-  try {
-    const response = await axios.get(`${URL}/products_category`, config);
-    return response.data;
-  } catch (error) {
-    return {
-      message: "unable to get data",
-      error: error,
-    };
-  }
-});
-
-export const getSingleProduct = createAsyncThunk("kegow/product", async () => {
-  try {
-    const response = await axios.get(`${URL}/product`, config);
-    return response.data;
-  } catch (error) {
-    return {
-      message: "unable to get data",
-      error: error,
-    };
-  }
-});
-
+const initialState: any = {
+  loading: false,
+  userId: "",
+  token: null,
+  error: null,
+  success: false,
+  singleProduct: {},
+  allProducts: [],
+  productsByCategory: [],
+};
 const productsReducer = createSlice({
   name: "productsReducer",
   initialState: initialState,
   reducers: {
     get_all_products: (state) => {
-      state.isLoading = true;
+      state.loading = true;
     },
     get_products_by_category: (state) => {
-      state.isLoading = true;
+      state.loading = true;
     },
 
     get_single_products: (state) => {
-      state.isLoading = true;
+      state.loading = true;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllProducts.pending, (state) => {
-      state.isLoading = true;
-      //   state.allProducts = [...payload];
+      state.loading = true;
+      state.error = null;
     });
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.allProducts = [...payload];
+      state.loading = false;
+      state.success = true;
+      state.allProducts = payload;
+    });
+
+    builder.addCase(getAllProducts.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+    builder.addCase(getProductsByCategory.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     });
     builder.addCase(getProductsByCategory.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.productsByCategory = [...payload];
+      state.loading = false;
+      state.success = true;
+      state.productsByCategory = payload;
     });
+
+    builder.addCase(getProductsByCategory.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+
+    builder.addCase(getSingleProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     builder.addCase(getSingleProduct.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.singleProduct = { ...payload };
+      state.loading = false;
+      state.singleProduct = payload;
+    });
+    builder.addCase(getSingleProduct.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
     });
   },
 });

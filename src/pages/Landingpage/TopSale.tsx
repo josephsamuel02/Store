@@ -1,7 +1,7 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
 interface AppComponent {
-  Products: any[];
+  Products: any;
 }
 const TopeSale: React.FC<AppComponent> = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
@@ -10,16 +10,16 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
       <div className="w-full h-auto p-0 flex flex-col bg-Storepurple">
         <p className=" text-4xl text-white text-center font-RubikDistressed ">Top Sales</p>
       </div>
-      <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 flex md:flex-row bg-purple-100 ">
+      <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 bg-purple-100 ">
         {Products &&
-          Products.slice(3, 9).map((i, index) => (
+          Products.map((i: any, index: number) => (
             <div
-              className="mx-0 md:mx-3 w-1/6 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"
+              className="mx-1 md:mx-auto my-6 md:my-10 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"
               key={index}
             >
               <a
                 className="w-full h-auto mx-auto items-center flex flex-col"
-                href={`${ROUTES.PRODUCT}?id=${i.id}`}
+                href={`${ROUTES.PRODUCT}/${i.id}`}
               >
                 <img
                   src={i.image}

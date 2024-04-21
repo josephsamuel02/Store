@@ -1,42 +1,65 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Footer from "../../components/Footer";
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from "react";
+ import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
-import { logIn } from "../../store/authSlice";
-import { persistor } from "../../store/store";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 const Login: React.FC = () => {
-  const signUpStatus = useSelector((state: any) => state.auth.userInfo);
-  const dispatch = useDispatch<any>();
-
   const [userInfo, setUserInfo] = useState<any>({
     email: "",
     password: "",
   });
-
-  const submit = async (e: any) => {
+  const token = localStorage.getItem("one_store_login");
+  const fetchUser = async (e: any) => {
     e.preventDefault();
 
-    dispatch(logIn(userInfo));
-    console.log(userInfo);
-    if (signUpStatus.status == 200) {
-      toast.success(signUpStatus.message);
-      await delay(1300);
-      window.location.assign("/");
-    } else {
-      toast.error(signUpStatus.message);
-      null;
+    try {
+      await getDocs(collection(db, "user")).then((querySnapshot) => {
+        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        if (!newData) {
+          toast.warn("unable to login.", {
+            position: "top-left",
+          });
+        }
+
+        var index: any;
+
+        const user = newData.map((item: any, i: any) => {
+          return item.email == userInfo.email ? (index = i) : null;
+        });
+        if (!user[index].password == userInfo.password) {
+          toast.error("incorrect login detail(s).", {
+            position: "top-left",
+          });
+        }
+
+        if (
+          newData[index].email == userInfo.email &&
+          newData[index].password == userInfo.password
+        ) {
+          localStorage.setItem("one_store_login", `${newData[index].id}`);
+          toast.success("login successful");
+          delay(1300);
+          window.location.assign("/");
+        }
+      });
+    } catch (error) {
+      toast.warning(" Unable to login, check credentials");
     }
   };
-  // const handleLogout = () => {
-  //   persistor.purge();
-  //   window.location.replace("/login");
-  // };
+
+  useEffect(() => {
+    if (token) {
+      window.location.replace("/");
+    }
+  }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">
@@ -45,7 +68,7 @@ const Login: React.FC = () => {
         <div className=" mx-auto py-2 h-auto w-auto md:w-1/2">
           <form
             action=""
-            onSubmit={submit}
+            onSubmit={fetchUser}
             className="mx-auto p-10 md:w-96  flex flex-col bg-white rounded-md items-center"
           >
             <div className=" w-full flex h-auto">

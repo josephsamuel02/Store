@@ -1,20 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultNav from "../../components/DefaultNav";
 import ProductCard from "./ProductCard";
 import ProductDetails from "./ProductDetails";
-import ProductSpecification from "./ProductSpecifications";
-import SimilarProducts from "./SimilarProducts";
 import Footer from "../../components/Footer";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { db } from "../../DB/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const Product: React.FC = () => {
-  const location = useLocation();
-  const productId = new URLSearchParams(location.search).get("id");
-  const singleProduct = useSelector((state: any) => state.Products.singleProduct);
-  const categoryProducts = useSelector((state: any) => state.Products.productsByCategory);
+  const { id }: any = useParams();
+
+  const [singleProduct, setSingleProduct] = useState<any>();
+
+  const getProductById = async () => {
+    try {
+      const Ref = await getDoc(doc(db, "products", id));
+
+      if (Ref.exists()) {
+        setSingleProduct(Ref.data());
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
+    }
+  };
+
   useEffect(() => {
-    // dispatchEvent(GetSingleProduct(productId))
+    getProductById();
   }, []);
 
   return (
@@ -22,8 +33,9 @@ const Product: React.FC = () => {
       <DefaultNav />
       <ProductCard singleProduct={singleProduct} />
       <ProductDetails singleProduct={singleProduct} />
-      <ProductSpecification singleProduct={singleProduct} />
-      <SimilarProducts categoryProducts={categoryProducts} category={singleProduct.category} />
+      {/*<ProductSpecification singleProduct={singleProduct} />
+      <SimilarProducts categoryProducts={categoryProducts} category={singleProduct} />
+      */}
       <Footer />
     </div>
   );

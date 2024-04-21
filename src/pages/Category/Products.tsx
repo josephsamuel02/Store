@@ -1,31 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import ROUTES from "../../utils/Routes";
-import { useDispatch } from "react-redux";
-import { add_cart_items } from "../../store/Cart";
+import delay from "delay";
+import { addDoc, collection } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { db } from "../../DB/firebase";
 interface AppComponent {
+  category: any | string;
   categoryProducts: any;
 }
+const Products: React.FC<AppComponent> = ({ category, categoryProducts }) => {
+  const [cartData, setCartData] = useState<any>();
+  const token = localStorage.getItem("one_store_login");
 
-const NewDeals: React.FC<AppComponent> = ({ categoryProducts }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
-  const dispatch = useDispatch();
+
+  const addToCart = async (e: any, index: number) => {
+    e.preventDefault();
+
+    try {
+      const docRef = await addDoc(collection(db, "cart"), categoryProducts[index]);
+      if (!docRef) {
+        toast.error("item was not added to your cart");
+      }
+
+      toast.success("added to your cart");
+      await delay(1300);
+      // window.location.assign("/login");
+    } catch (error) {
+      toast.error("Error: Failed to signup");
+    }
+  };
 
   return (
-    <div className="w-full h-full bg-white">
-      <div className="w-full h-auto p-0 flex flex-col bg-red-600">
-        <p className=" text-5xl text-white text-center font-RubikDistressed ">Hot New Deals</p>
-      </div>
+    <div className="w-full h-full md:p-1 bg-white">
+      <h1 className="p-4 text-xl md:text-2xl text-gray-800 font-dayone">{category}</h1>
 
-      <div className="w-full h-auto md:p-2 grid grid-cols-3 md:grid md:grid-cols-6  bg-purple-100 items-center ">
+      <div className="w-full h-auto md:p-2 grid grid-flow-row grid-cols-3 md:grid-cols-4  bg-purple-100 items-center ">
         {categoryProducts &&
-          categoryProducts.slice(2, 8).map((i: any, index: any) => (
+          categoryProducts.map((i: any, index: any) => (
             <div
               className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded"
               key={index}
             >
               <a
                 className="w-full h-auto mx-auto items-center flex flex-col"
-                href={`${ROUTES.PRODUCT}?id=${i.id}`}
+                href={`${ROUTES.PRODUCT}/${i.id}`}
               >
                 <img
                   src={i.image}
@@ -42,18 +61,9 @@ const NewDeals: React.FC<AppComponent> = ({ categoryProducts }) => {
               </a>
               <p
                 className=" w-full mx-0.5 py-1 text-center text-sm md:text-base text-white bg-Storepurple hover:bg-purple-800 rounded"
-                onClick={() =>
-                  dispatch(
-                    add_cart_items({
-                      id: i.id,
-                      image: i.image,
-                      name: i.name,
-                      price: i.price,
-                      category: i.category,
-                      quantity: 1,
-                    })
-                  )
-                }
+                onClick={(e) => {
+                  addToCart(e, index);
+                }}
               >
                 Add to cart
               </p>
@@ -64,4 +74,4 @@ const NewDeals: React.FC<AppComponent> = ({ categoryProducts }) => {
   );
 };
 
-export default NewDeals;
+export default Products;

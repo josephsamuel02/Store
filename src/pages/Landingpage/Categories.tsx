@@ -5,29 +5,29 @@ const Categories: React.FC = () => {
     {
       name: "Computers",
       img: "/img/n.png",
-      url: "Computers",
+      url: "computers",
     },
     {
       name: "Electronics",
       img: "/img/i.png",
-      url: "Electronics",
+      url: "electronics",
     },
     {
-      name: "Grocery",
+      name: "Groceries",
       img: "/img/j.png",
-      url: "Grocery",
+      url: "groceries",
     },
     {
       name: "Phone & tablets",
       img: "/img/e.png",
-      url: "Phone",
+      url: "phone",
     },
     {
       name: "Accessories",
       img: "/img/q.jpg",
-      url: "Accessories",
+      url: "accessories",
     },
-    { name: "Fashion", img: "/img/c.png", url: "Fashion" },
+    { name: "Fashion", img: "/img/c.png", url: "fashion" },
   ];
 
   return (
@@ -36,7 +36,7 @@ const Categories: React.FC = () => {
         <a
           className=" w-28 md:w-48 h-auto mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded"
           key={index}
-          href={`${ROUTES.CATEGORY}?category=${i.name}`}
+          href={`${ROUTES.CATEGORY}?category=${i.url}`}
         >
           <img
             src={i.img}

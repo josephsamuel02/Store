@@ -12,27 +12,44 @@ const Banner: React.FC = () => {
   const Menu = [
     {
       name: "Computers",
+      url: "computers",
       icon: <HiOutlineDesktopComputer size={24} className="mx-2 text-Storepurple" />,
     },
     {
       name: "Electronics",
+      url: "electronics",
       icon: <LuRadioReceiver size={24} className="mx-2 text-Storepurple" />,
     },
     {
       name: "Grocery",
+      url: "groceries",
       icon: <AiOutlineShopping size={24} className="mx-2 text-Storepurple" />,
     },
     {
       name: " Phone & tablets",
+      url: "phones",
       icon: <BsPhone size={24} className="mx-2 text-Storepurple" />,
     },
     {
       name: "Accessories",
+      url: "accessories",
       icon: <FaHeadphones size={24} className="mx-2 text-Storepurple" />,
     },
-    { name: "Fashion", icon: <LuShirt size={24} className="mx-2 text-Storepurple" /> },
-    { name: "Sport", icon: <CgGym size={24} className="mx-2 text-Storepurple" /> },
-    { name: "Food", icon: <LuApple size={24} className="mx-2 text-Storepurple" /> },
+    {
+      name: "Fashion",
+      url: "fashion",
+      icon: <LuShirt size={24} className="mx-2 text-Storepurple" />,
+    },
+    {
+      name: "Sport",
+      url: "sport",
+      icon: <CgGym size={24} className="mx-2 text-Storepurple" />,
+    },
+    {
+      name: "Food",
+      url: "food",
+      icon: <LuApple size={24} className="mx-2 text-Storepurple" />,
+    },
   ];
   const images = [{ url: "/img/banner.png" }, { url: "https://placehold.co/600x400" }];
   return (
@@ -42,7 +59,7 @@ const Banner: React.FC = () => {
           {Menu.map((i, index) => (
             <a
               className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer"
-              href={`${ROUTES.CATEGORY}?category=${i.name}`}
+              href={`${ROUTES.CATEGORY}?category=${i.url}`}
               key={index}
             >
               {i.icon}
@@ -57,7 +74,7 @@ const Banner: React.FC = () => {
             alt=""
             className=" flex md:hidden w-full h-full object-cover"
           />
-          <div className="hidden md:flex w-auto h-auto z-0">
+          <div className="hidden md:flex w-auto h-auto  ">
             <SimpleImageSlider
               width={896}
               height={504}

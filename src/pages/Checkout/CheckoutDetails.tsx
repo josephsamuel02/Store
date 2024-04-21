@@ -16,16 +16,16 @@ const CheckoutDetails: React.FC = () => {
   };
 
   // you can call this function anything
-  const onSuccess = (reference: any) => {
+  const onSuccess: any = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference);
     setShowCard(true);
   };
 
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
   };
   const initializePayment = usePaystackPayment(config);
 

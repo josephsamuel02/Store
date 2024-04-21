@@ -22,7 +22,7 @@ const OrderItems: React.FC<AppComponent> = ({ Order }) => {
             >
               <a
                 className="w-full h-auto mx-auto items-center flex flex-col"
-                href={`${ROUTES.PRODUCT}?id=${i.id}`}
+                href={`${ROUTES.PRODUCT}/${i.id}`}
               >
                 <div className="w-full h-auto flex flex-row">
                   <img src={i.image} alt="" className="w-32 h-32  mx-auto object-contain" />
