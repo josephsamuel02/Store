@@ -16,7 +16,6 @@ const Cart: React.FC = () => {
       await getDocs(collection(db, "cart")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setCart(newData);
-        console.log(newData);
       });
     } catch (error) {
       toast.warning(" Unable to login, check credentials");

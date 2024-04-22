@@ -1,13 +1,65 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import React, { useEffect, useState } from "react";
 import OrderConfirmedCard from "../../components/OrderConfirmedCard";
 import { usePaystackPayment } from "react-paystack";
+import { getDocs, collection } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
 
-const CheckoutDetails: React.FC = () => {
-  const Cart = useSelector((state: any) => state.Cart.Cart);
+import { db } from "../../DB/firebase";
+
+interface AppComponent {
+  CheckOutData: any;
+  TotalPrice: any;
+}
+const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) => {
+  const Cart = CheckOutData;
   const priceFormat = new Intl.NumberFormat("en-US");
   const [showCard, setShowCard] = useState(false);
-  const TOTAL = 300 * 100;
+  const [userInfo, setUserInfo] = useState<any>({
+    name: "",
+    password: "",
+  });
+  const TOTAL = TotalPrice * 100;
+
+  const token = localStorage.getItem("one_store_login");
+  const fetchUser = async () => {
+    try {
+      await getDocs(collection(db, "user")).then((querySnapshot) => {
+        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        if (!newData) {
+          toast.warn("unable to login.", {
+            position: "top-left",
+          });
+        }
+
+        var index: any;
+
+        const user = newData.map((item: any, i: any) => {
+          return item.id === token ? (index = item) : null;
+        });
+        setUserInfo(index);
+        console.log(index);
+
+        if (!user) {
+          toast.error("please login.", {
+            position: "top-left",
+          });
+          window.location.replace("/login");
+        }
+      });
+    } catch (error) {
+      toast.warning(" Unable to login, check credentials");
+    }
+  };
+
+  useEffect(() => {
+    if (!token) {
+      window.location.replace("/");
+    }
+    fetchUser();
+  }, []);
   const config = {
     reference: new Date().getTime().toString(),
     email: "user@example.com",
@@ -30,7 +82,7 @@ const CheckoutDetails: React.FC = () => {
   const initializePayment = usePaystackPayment(config);
 
   return (
-    <div className="mx-auto  w-full md:w-4/5 h-full bg-purple-100">
+    <div className="mx-auto  w-full md:w-4/5 h-full bg-purple-50">
       <h3 className="text-2xl  md:text-3xl p-4 text-black font-dayone ">Check Out</h3>
 
       <div className="w-full px-2 h-full flex flex-col md:flex-row">
@@ -59,7 +111,7 @@ const CheckoutDetails: React.FC = () => {
           <div className="mx-auto w-full  flex flex-row bg-white ">
             <h3 className=" mx-auto text-xl   p-4 text-black font-roboto font-bold ">Total</h3>
             <h4 className=" mx-auto text-xl   p-4 text-black font-roboto font-bold ">
-              ₦ 35,346
+              ₦ {priceFormat.format(TotalPrice)}
             </h4>
           </div>
         </div>
@@ -70,15 +122,18 @@ const CheckoutDetails: React.FC = () => {
           </h3>
           <div className="mx-3  w-full    h-auto  ">
             <p className="text-lg p-1 text-black font-roboto font-bold ">
-              Recepient: <span className="font-normal text-black">Dolapo Hassan</span>
+              Recepient:{" "}
+              <span className="font-normal text-black">
+                {userInfo.surname} {userInfo.name}
+              </span>
             </p>
-            <p className="text-lg  p-1 text-black font-roboto font-bold ">
+            {/* <p className="text-lg  p-1 text-black font-roboto font-bold ">
               Order Id: <span className="font-normal text-black">666848m848</span>
-            </p>
+            </p> */}
 
             <p className="text-lg  p-1 text-black font-roboto font-bold flex flex-row  items-center">
               Contacts numbers:
-              <span className="mx-1 font-normal text-black">08065428635</span>
+              <span className="mx-1 font-normal text-black">{userInfo.phone}</span>
             </p>
 
             <p className="text-sm p-1 text-black font-roboto  flex flex-col ">
@@ -117,16 +172,17 @@ const CheckoutDetails: React.FC = () => {
             >
               <h3 className="text-xl   p-4 text-black font-roboto font-bold ">Pay Online</h3>
             </div>
-            <div className="m-3  w-1/2 h-auto  border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded">
+            {/* <div className="m-3  w-1/2 h-auto  border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded">
               <h3 className="text-xl   p-4 text-black font-roboto font-bold ">
                 Pay On Delivery
               </h3>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
       {/* <PaystackHookExample /> */}
       <OrderConfirmedCard showCard={showCard} setShowCard={setShowCard} />
+      <ToastContainer />
     </div>
   );
 };

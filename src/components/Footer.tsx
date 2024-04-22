@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { MdWhatsapp, MdFacebook } from "react-icons/md";
 const Footer: React.FC = () => {
@@ -8,29 +9,14 @@ const Footer: React.FC = () => {
           <div className="mx-auto px-4 w-full md:w-3/5">
             <h6 className="text-lg font-nunito font-bold text-white ">About</h6>
             <p className="text-justify text-sm md:text-base font-nunito text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur.
+              At Onestore, We're dedicated to providing you with quality products and
+              exceptional service. With a wide selection of items across various categories,
+              from fashion to electronics, We're here to meet all your needs. Shop with
+              confidence at Onestore, where customer satisfaction is our top priority. Join us
+              today and discover a better way to shop online.
             </p>
           </div>
           <div className="mx-auto w-full md:w-2/5 mt-4 flex flex-row items-center">
-            <div className="w-1/2 mx-auto ">
-              <h6 className="text-lg px-4 font-roboto text-white ">Services</h6>
-              <ul className=" mx-auto px-4 text-base font-nunito text-white">
-                <li>
-                  <a href="*ry/front-end-development/">UI Design</a>
-                </li>
-
-                <li>
-                  <a href="*ry/java-programming-language/">JavaScript</a>
-                </li>
-                <li>
-                  <a href="*ry/android/">Android</a>
-                </li>
-              </ul>
-            </div>
             <div className="w-1/2 mx-auto">
               <h6 className="text-lg font-roboto text-white ">Quick Links</h6>
               <ul className="mx-auto text-base font-nunito text-white">
@@ -74,9 +60,12 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className=" mx-14 md:mx-5 py-2">
-          <p className=" text-xs md:text-sm font-nunito text-white ">
-            Developed by Drifting Technologies - mrsamd02@gmail.com
-          </p>
+          <a
+            href="https://theozonetechnology.com"
+            className=" text-xs md:text-sm font-nunito text-white underline "
+          >
+            Developed by Drifting The Ozone Technology - theozonetechnology.com
+          </a>
         </div>
       </div>
     </div>
