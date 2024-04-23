@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react"; 
+import React from "react";
 const Edit: React.FC = () => {
   // const location = useLocation();
   // const productId = new URLSearchParams(location.search).get("id");
-   // const Product = Products.filter((p: any) => p.productId === productId);
+  // const Product = Products.filter((p: any) => p.productId === productId);
 
   // const [setEditForm] = useState(false);
   // const [image, setImage] = useState<any>("");
@@ -21,6 +21,7 @@ const Edit: React.FC = () => {
   // });
   return (
     <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
+      <h3>Placeholder</h3>
       {/* <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
         {image ? (
           <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
@@ -120,10 +121,10 @@ const Edit: React.FC = () => {
                   </>
                 </div>
 
-                {/* {errors.features && touched.features ? (
+                {errors.features && touched.features ? (
                   <p className="py-0.5 text-sm text-red-600 font-roboto">{errors.features}</p>
-                ) : null} */}
-              </div>
+                ) : null}  
+              </div>  
             </div>
           </div>
           <div className="w-full mx-auto my-1 py-1 flex flex-col">
@@ -186,7 +187,7 @@ const Edit: React.FC = () => {
             </button>
           </div>
         </div>
-      </div> */}
+      </div>   */}
     </div>
   );
 };
