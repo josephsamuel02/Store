@@ -140,7 +140,7 @@ const DefaultNav: React.FC = () => {
 
       <div className="fixed top-16 left-0 right-0 w-3/6 h-auto mx-auto px-3 py-3 bg-white flex flex-col shadow-lg">
         {searchResult &&
-          searchResult.map, n: any) => {
+          searchResult.map((n: any) => {
             <a
               className="mx-2 p-2 w-auto text-md font-roboto text-black list-none border-b-2 z-20"
               href={`${ROUTES.PRODUCT}?${2}`}
