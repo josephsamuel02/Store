@@ -51,7 +51,7 @@ const Banner: React.FC = () => {
       icon: <LuApple size={24} className="mx-2 text-Storepurple" />,
     },
   ];
-  const images = [{ url: "/img/banner.png" }, { url: "https://placehold.co/600x400" }];
+  const images = [{ url: "/img/banner.png" }, { url: "/img/banner.png" }];
   return (
     <div className="w-full h-full py-2 flex bg-purple-200">
       <div className="mx-auto w-10/12 h-10/12   flex flex-row">
