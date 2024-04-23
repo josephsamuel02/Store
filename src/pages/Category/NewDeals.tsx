@@ -1,14 +1,11 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/Cart";
 interface AppComponent {
   categoryProducts: any;
 }
 
 const NewDeals: React.FC<AppComponent> = ({ categoryProducts }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
-  const dispatch = useDispatch();
 
   return (
     <div className="w-full h-full bg-white">
@@ -42,18 +39,18 @@ const NewDeals: React.FC<AppComponent> = ({ categoryProducts }) => {
               </a>
               <p
                 className=" w-full mx-0.5 py-1 text-center text-sm md:text-base text-white bg-Storepurple hover:bg-purple-800 rounded"
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      id: i.id,
-                      image: i.image,
-                      name: i.name,
-                      price: i.price,
-                      category: i.category,
-                      quantity: 1,
-                    })
-                  )
-                }
+                // onClick={() =>
+                //   dispatch(
+                //     addToCart({
+                //       id: i.id,
+                //       image: i.image,
+                //       name: i.name,
+                //       price: i.price,
+                //       category: i.category,
+                //       quantity: 1,
+                //     })
+                //   )
+                // }
               >
                 Add to cart
               </p>

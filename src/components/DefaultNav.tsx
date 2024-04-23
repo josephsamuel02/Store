@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
-import { useSelector, useDispatch } from "react-redux";
-import { getCart } from "../store/Cart";
+i;
 import { toast } from "react-toastify";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
 
-const DefaultNav = () => {
-  const dispatch = useDispatch();
+const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
   const [User, setUser] = useState();
   const [Cart, setCart] = useState([]);
@@ -24,7 +24,7 @@ const DefaultNav = () => {
           });
         }
 
-        const user = newData.map((item: any, i: any) => {
+        const user = newData.map((item: any) => {
           return item.id == token;
         });
         setUser(user);
@@ -33,7 +33,7 @@ const DefaultNav = () => {
       await getDocs(collection(db, "cart")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-        const cart = newData.map((item: any, i: any) => {
+        const cart = newData.map((item: any) => {
           return item.id == token;
         });
         setCart(cart);
@@ -42,7 +42,7 @@ const DefaultNav = () => {
       await getDocs(collection(db, "products")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-        const products = newData.map((item: any, i: any) => {
+        const products = newData.map((item: any) => {
           return item.id == token;
         });
         setProducts(products);
@@ -140,7 +140,7 @@ const DefaultNav = () => {
 
       <div className="fixed top-16 left-0 right-0 w-3/6 h-auto mx-auto px-3 py-3 bg-white flex flex-col shadow-lg">
         {searchResult &&
-          searchResult.map((i: any, n: any) => {
+          searchResult.map, n: any) => {
             <a
               className="mx-2 p-2 w-auto text-md font-roboto text-black list-none border-b-2 z-20"
               href={`${ROUTES.PRODUCT}?${2}`}

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { MdEdit } from "react-icons/md";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
+// import { MdEdit } from "react-icons/md";
 import Footer from "../../components/Footer";
 import DefaultNav from "../../components/DefaultNav";
 
 const AdminProfile: React.FC = () => {
-  const [edit, setEdit] = useState<any>(false);
+  // const [edit, setEdit] = useState<any>(false);
   return (
     <>
       <DefaultNav />
 
-      <div className="mx-auto w-full md:w-5/6 h-full mt-20 bg-white overflow-y-scroll scrollbar-hide items-center">
+      {/* <div className="mx-auto w-full md:w-5/6 h-full mt-20 bg-white overflow-y-scroll scrollbar-hide items-center">
         <div className="mx-auto w-full md:w-96 p-2 mt-16 h-full flex flex-col items-center rounded-md md:shadow-lg">
           <h3 className=" mx-auto text-3xl text-purple-800 font-dayone"> Profile</h3>
           {edit ? (
@@ -130,7 +132,7 @@ const AdminProfile: React.FC = () => {
             <MdEdit color="white" size={32} />
           </h2>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </>
   );

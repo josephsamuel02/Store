@@ -3,8 +3,7 @@ import { MdPersonOutline } from "react-icons/md";
 import ROUTES from "../../utils/Routes";
 
 const DefaultNav: React.FC = () => {
-  const [logedin, setLogedin] = useState<boolean>(true);
-  return (
+   return (
     <div className="fixed top-0 w-full h-auto px-3 md:px-5  bg-white flex flex-row items-center z-50">
       <a className="w-44 mx-2 my-2 flex items-center" href="/">
         <img src="/img/OneStore logo.svg" alt="" className="w-auto h-auto" />

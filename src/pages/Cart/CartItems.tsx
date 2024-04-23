@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -65,8 +67,8 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
   };
 
   const cartTotal = () => {
-    cartItems.map((i: any, n) => {
-      setTotalPrice((prev: any) => {
+    cartItems.map((i: any) => {
+      setTotalPrice(() => {
         return totalPrice + i.inStock * i.price;
       });
     });

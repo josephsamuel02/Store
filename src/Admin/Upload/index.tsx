@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { v4 } from "uuid";
 import { useState } from "react";
@@ -14,7 +15,7 @@ const AdminUpload: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<any>("");
   const [readyToUpload, setReadyToUpload] = useState(false);
-  const [imageFile, setImageFile] = useState<any>("");
+  const [setImageFile] = useState<any>("");
 
   const [siteInformation, setSiteInformation] = useState<any>({
     image: "",

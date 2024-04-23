@@ -1,16 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import Footer from "../../components/Footer";
 import DefaultNav from "../../components/DefaultNav";
 import { ToastContainer, toast } from "react-toastify";
-import { updateUser } from "../../store/authSlice";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Profile: React.FC = () => {
   const updatedUser = useSelector((state: any) => state.auth.userInfo);
-  const dispatch = useDispatch<any>();
   const [edit, setEdit] = useState<any>(false);
 
   useEffect(() => {});
@@ -27,7 +27,6 @@ const Profile: React.FC = () => {
 
   const submit = async (e: any) => {
     e.preventDefault();
-    dispatch(updateUser(userInfo));
 
     if (updatedUser.status == 200) {
       toast.success(updatedUser.message);

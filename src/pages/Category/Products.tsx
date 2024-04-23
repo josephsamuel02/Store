@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import ROUTES from "../../utils/Routes";
 import delay from "delay";
 import { addDoc, collection } from "firebase/firestore";
@@ -9,7 +10,6 @@ interface AppComponent {
   categoryProducts: any;
 }
 const Products: React.FC<AppComponent> = ({ category, categoryProducts }) => {
-  const [cartData, setCartData] = useState<any>();
   const token = localStorage.getItem("one_store_login");
 
   const priceFormat = new Intl.NumberFormat("en-US");

@@ -1,15 +1,12 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
-import { addToCart } from "../../store/Cart";
-import { useDispatch } from "react-redux";
-interface AppComponent {
+  interface AppComponent {
   categoryProducts: any;
   category: any;
 }
 const SimilarProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
-  const dispatch = useDispatch();
-
+ 
   return (
     <div className="mx-auto p-3 w-11/12 md:w-10/12 h-auto bg-white rounded-md">
       <div className="w-full h-auto p-0 flex flex-col bg-blue-600">

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import DefaultNav from "../../components/DefaultNav";
 import Orders from "./Orders";
 import Store from "./Store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Upload from "../Upload";
 import SideNav, { MobileNav } from "../components/SideNav";
 
@@ -10,8 +10,6 @@ const Dashboard: React.FC = () => {
   const sidebarState = useSelector((state: any) => state.app.sidebarOpen);
   const page = useSelector((state: any) => state.app.navState);
 
-
-  
   return (
     <div className="w-full h-full">
       <DefaultNav />

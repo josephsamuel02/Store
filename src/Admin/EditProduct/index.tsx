@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 
-import { useFormik, Formik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 
@@ -14,28 +16,18 @@ const Edit: React.FC = () => {
   const productId = new URLSearchParams(location.search).get("id");
   const Products = useSelector((state: any) => state.Product.Products);
   const Product = Products.filter((p: any) => p.productId === productId);
-  const priceFormat = new Intl.NumberFormat("en-US");
 
-  const [editForm, setEditForm] = useState(false);
+  const [setEditForm] = useState(false);
   const [image, setImage] = useState<any>("");
-  const siteInformation = {
-    image: "",
-    name: "",
-    productDetails: "",
-    features: ["", ""],
-    price: 24354,
-    inStock: "",
-    PayOnDelivery: false,
-  };
-  const [newValue, setNewValue] = useState({});
-  const { values, handleSubmit, handleChange, handleBlur, errors, touched } = useFormik({
+
+  const [setNewValue] = useState({});
+  const { values, handleChange, handleBlur } = useFormik({
     initialValues: Product,
     validationSchema: siteInfoSchema,
 
-    onSubmit: (values, actions) => {
+    onSubmit: () => {
       // console.log(values);
       // actions.resetForm();
-      setEditForm(false);
     },
   });
   return (
@@ -108,7 +100,6 @@ const Edit: React.FC = () => {
                           type="button"
                           onClick={() => {
                             values.features.splice(i, 1);
-                            setNewValue({ ...values });
                           }}
                           className="m-0.5 p-0.5 w-5 h-5 mr-1 text-center font-bold  rounded-full bg-gray-200 text-red-600"
                         >
@@ -132,7 +123,6 @@ const Edit: React.FC = () => {
                       type="button"
                       onClick={() => {
                         values.features.length < 5 ? values.features.push("") : null;
-                        setNewValue({ ...values });
                       }}
                       className="mx-6 p-0.5 px-2 w-14 h-8 text-center text-nunito text-sm rounded-sm bg-purple-700 text-white"
                     >

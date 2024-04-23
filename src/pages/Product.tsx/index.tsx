@@ -33,9 +33,7 @@ const Product: React.FC = () => {
       <DefaultNav />
       <ProductCard singleProduct={singleProduct} />
       <ProductDetails singleProduct={singleProduct} />
-      {/*<ProductSpecification singleProduct={singleProduct} />
-      <SimilarProducts categoryProducts={categoryProducts} category={singleProduct} />
-      */}
+
       <Footer />
     </div>
   );

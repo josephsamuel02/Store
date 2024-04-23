@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../../utils/Routes";
 
@@ -6,8 +8,8 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 
 const Store: React.FC = () => {
-  const [Product, setProducts] = useState();
-  const [stocks, setStock] = useState(1);
+  const [Product, setProducts] = useState<any>();
+  const [stocks] = useState(1);
   const priceFormat = new Intl.NumberFormat("en-US");
   const fetchProducts = async () => {
     await getDocs(collection(db, "products")).then((querySnapshot) => {
