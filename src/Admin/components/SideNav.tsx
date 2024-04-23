@@ -1,6 +1,5 @@
 import React from "react";
 import { MdInbox, MdSlideshow, MdStore, MdUpload } from "react-icons/md";
-import { useSelector } from "react-redux";
 
 interface AppState {
   page: string;
@@ -49,8 +48,6 @@ const SideNav: React.FC<AppState> = ({ page }) => {
 };
 
 const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
-  const sidebarState = useSelector((state: any) => state.app.sidebarOpen);
-
   return (
     <>
       <div

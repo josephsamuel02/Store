@@ -28,7 +28,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
   // const Order = useSelector((state: any) => state.Order.allOrders);
   const priceFormat = new Intl.NumberFormat("en-US");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [ setTPrice] = useState(0);
+  const [ setTPrice] = useState<any>(0);
   const [Order, setOrder] = useState<any>([]);
 
   const [checkout, setCheckOut] = useState(false);

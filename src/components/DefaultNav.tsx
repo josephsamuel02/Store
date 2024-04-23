@@ -9,7 +9,7 @@ import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
 
 const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-  const [setUser] = useState();
+  const [setUser] = useState<any>();
   const [Cart, setCart] = useState([]);
   const [Products, setProducts] = useState([]);
 
