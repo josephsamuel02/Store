@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useEffect, useState } from "react";
 import OrderConfirmedCard from "../../components/OrderConfirmedCard";
-import { usePaystackPayment } from "react-paystack";
 import { getDocs, collection, addDoc, doc, deleteDoc, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { db } from "../../DB/firebase";
-import delay from "delay";
-import ROUTES from "../../utils/Routes";
+
 import PayOfflineCard from "./payOfflineCard";
 
 interface AppComponent {
@@ -31,7 +30,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
   });
   const [orderItem, setOrderItem] = useState<any>();
 
-  const TOTAL = TotalPrice * 100;
+  // const TOTAL = TotalPrice * 100;
 
   const fetchUser = async () => {
     try {
@@ -45,7 +44,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
 
         var index: any;
 
-        const user = newData.map((item: any, i: any) => {
+        const user = newData.map((item: any) => {
           return item.id === token ? (index = item) : null;
         });
         setUserInfo(index);
@@ -89,6 +88,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
                 })
                 .catch((error) => {
                   toast.error("An error occurred");
+                  console.log(error);
                 });
             });
           })
@@ -121,25 +121,25 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
       orderLevel: 0,
     });
   }, []);
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: "user@example.com",
-    amount: TOTAL, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_test_a507bd6845bb5cad347a591e06e88c6fde817cc1",
-  };
+  // const config = {
+  //   reference: new Date().getTime().toString(),
+  //   email: "user@example.com",
+  //   amount: TOTAL, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+  //   publicKey: "pk_test_a507bd6845bb5cad347a591e06e88c6fde817cc1",
+  // };
 
-  const onSuccess: any = () => {
-    addToOrder("online_payment");
-    delay(1300);
-    // setShowCard(true);
-    // delay(700);
-    window.location.replace(ROUTES.ORDERS);
-  };
+  // const onSuccess: any = () => {
+  //   addToOrder("online_payment");
+  //   delay(1300);
+  //   // setShowCard(true);
+  //   // delay(700);
+  //   window.location.replace(ROUTES.ORDERS);
+  // };
 
-  const onClose: any = () => {
-    console.log("closed");
-  };
-  const initializePayment = usePaystackPayment(config);
+  // const onClose: any = () => {
+  //   console.log("closed");
+  // };
+  // const initializePayment = usePaystackPayment(config);
 
   return (
     <div className="mx-auto  w-full md:w-4/5 h-full bg-purple-50">

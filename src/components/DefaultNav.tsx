@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
-i;
 import { toast } from "react-toastify";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../DB/firebase";
@@ -10,7 +9,7 @@ import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
 
 const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-  const [User, setUser] = useState();
+  const [setUser] = useState();
   const [Cart, setCart] = useState([]);
   const [Products, setProducts] = useState([]);
 

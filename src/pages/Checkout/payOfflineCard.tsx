@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-no-target-blank */
-import React, { useState } from "react";
+import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdCall, MdWhatsapp } from "react-icons/md";
 interface appState {
   setShowCard: (value: any) => any;
 }
 const PayOfflineCard: React.FC<appState> = ({ setShowCard }) => {
-  const [placedOrder, setPlacedOrder] = useState(false);
+  // const [placedOrder, setPlacedOrder] = useState(false);
 
   return (
     <>

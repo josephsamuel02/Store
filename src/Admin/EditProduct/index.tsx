@@ -1,38 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
-
-import { useFormik } from "formik";
-import { useState } from "react";
-import { MdClose } from "react-icons/md";
-
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import ToolTip from "../components/ToolTip";
-import { siteInfoSchema } from "../components/YupSchema";
-
+import React from "react"; 
 const Edit: React.FC = () => {
-  const location = useLocation();
-  const productId = new URLSearchParams(location.search).get("id");
-  const Products = useSelector((state: any) => state.Product.Products);
-  const Product = Products.filter((p: any) => p.productId === productId);
+  // const location = useLocation();
+  // const productId = new URLSearchParams(location.search).get("id");
+   // const Product = Products.filter((p: any) => p.productId === productId);
 
-  const [setEditForm] = useState(false);
-  const [image, setImage] = useState<any>("");
+  // const [setEditForm] = useState(false);
+  // const [image, setImage] = useState<any>("");
 
-  const [setNewValue] = useState({});
-  const { values, handleChange, handleBlur } = useFormik({
-    initialValues: Product,
-    validationSchema: siteInfoSchema,
+  // const [setNewValue] = useState({});
+  // const { values, handleChange, handleBlur } = useFormik({
+  //   initialValues: Product,
+  //   validationSchema: siteInfoSchema,
 
-    onSubmit: () => {
-      // console.log(values);
-      // actions.resetForm();
-    },
-  });
+  //   onSubmit: () => {
+  //     // console.log(values);
+  //     // actions.resetForm();
+  //   },
+  // });
   return (
     <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
-      <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
+      {/* <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
         {image ? (
           <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
             <img
@@ -197,7 +186,7 @@ const Edit: React.FC = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

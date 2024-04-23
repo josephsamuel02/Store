@@ -1,6 +1,5 @@
 import React from "react";
 import { MdInbox, MdSlideshow, MdStore, MdUpload } from "react-icons/md";
-import { navState, setSidebarOpen } from "../../store/appSlice";
 import { useSelector } from "react-redux";
 
 interface AppState {
@@ -13,7 +12,7 @@ interface AppState2 {
 }
 
 const SideNav: React.FC<AppState> = ({ page }) => {
-   return (
+  return (
     <div className="hidden md:flex  w-1/5  mt-12 md:mt-36  h-auto border-r-2  ">
       <ul className="w-full mx-3 py-3  ">
         <li
@@ -52,7 +51,7 @@ const SideNav: React.FC<AppState> = ({ page }) => {
 const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
   const sidebarState = useSelector((state: any) => state.app.sidebarOpen);
 
-   return (
+  return (
     <>
       <div
         className=" fixed top-0 left-0 flex flex-col md:hidden  w-2/5 h-full mt-24 shadow  bg-white z-30"

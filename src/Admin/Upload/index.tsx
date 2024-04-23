@@ -301,7 +301,6 @@ const AdminUpload: React.FC = () => {
         showCard={showCard}
         setShowCard={setShowCard}
         Text={"Your Product was successfully uploaded"}
-        Return_URL={"upload_product"}
       />
     </div>
   );

@@ -1,12 +1,12 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
-  interface AppComponent {
+interface AppComponent {
   categoryProducts: any;
   category: any;
 }
 const SimilarProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
- 
+
   return (
     <div className="mx-auto p-3 w-11/12 md:w-10/12 h-auto bg-white rounded-md">
       <div className="w-full h-auto p-0 flex flex-col bg-blue-600">
@@ -40,18 +40,18 @@ const SimilarProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
               </a>
               <p
                 className=" w-full mx-0.5 py-1 text-center text-sm md:text-base text-white bg-Storepurple hover:bg-purple-800 rounded-sm cursor-pointer"
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      id: i.id,
-                      image: i.image,
-                      name: i.name,
-                      price: i.price,
-                      category: i.category,
-                      quantity: 1,
-                    })
-                  )
-                }
+                // onClick={() =>
+                //   dispatch(
+                //     addToCart({
+                //       id: i.id,
+                //       image: i.image,
+                //       name: i.name,
+                //       price: i.price,
+                //       category: i.category,
+                //       quantity: 1,
+                //     })
+                //   )
+                // }
               >
                 Add to cart
               </p>

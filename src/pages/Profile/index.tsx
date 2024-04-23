@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {});
 
-  const [userInfo, setUserInfo] = useState<any>({
+  const [setUserInfo] = useState<any>({
     surname: "",
     name: "",
     email: "",

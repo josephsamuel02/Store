@@ -6,10 +6,9 @@ interface appState {
   showCard: boolean;
   setShowCard: (value: any) => any;
   Text: any;
-  Return_URL: any;
 }
 
-const SuccessCard: React.FC<appState> = ({ showCard, setShowCard, Text, Return_URL }) => {
+const SuccessCard: React.FC<appState> = ({ showCard, setShowCard, Text }) => {
   return (
     <>
       {showCard && (

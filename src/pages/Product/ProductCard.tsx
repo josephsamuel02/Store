@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import delay from "delay";
 import { addDoc, collection } from "firebase/firestore";
@@ -13,12 +13,11 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
 
   const [quantity, setQuantity] = useState(1);
 
-  const addToCart = async (e: any, id) => {
+  const addToCart = async (e: any) => {
     e.preventDefault();
-    
-    try {
 
-      if(token){
+    try {
+      if (token) {
         const docRef = await addDoc(collection(db, "cart"), {
           ...singleProduct,
           inStock: quantity,
@@ -27,15 +26,13 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
         if (!docRef) {
           toast.error("item was not added to your cart");
         }
-  
+
         toast.success("added to your cart");
         await delay(1300);
         window.location.reload();
-
-      }else{
+      } else {
         toast.warn("please login to add item to your cart");
       }
-   
     } catch (error) {
       toast.error("Error: Failed to signup");
     }
