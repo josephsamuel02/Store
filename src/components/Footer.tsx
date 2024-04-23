@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
         <div className="mx-14 md:mx-5 flex flex-col-reverse  md:flex-row">
           <div className="py-2">
             <p className="text-xs md:text-sm font-nunito text-white ">
-              Copyright &copy; 2023 All Rights Reserved by
+              Copyright &copy; 2024 All Rights Reserved by
               <a href="*"> OneStore</a>.
             </p>
           </div>

@@ -14,7 +14,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
         {Products &&
           Products.map((i: any, index: number) => (
             <div
-              className="mx-1 md:mx-auto my-6 md:my-10 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"
+              className="md:w-52 mx-1 md:mx-auto my-6 md:my-10 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"
               key={index}
             >
               <a

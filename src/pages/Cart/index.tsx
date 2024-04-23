@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DefaultNav from "../../components/DefaultNav";
 import CartItems from "./CartItems";
 import Footer from "../../components/Footer";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../DB/firebase";
 
@@ -13,7 +13,10 @@ const Cart: React.FC = () => {
 
   const getCart = async () => {
     try {
-      await getDocs(collection(db, "cart")).then((querySnapshot) => {
+      const targetRef = collection(db, "cart");
+      const q = query(targetRef, where("cartId", "==", token));
+
+      await getDocs(q).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setCart(newData);
       });

@@ -1,17 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
-import { addToCart } from "../../store/Cart";
-import { useDispatch, useSelector } from "react-redux";
+import delay from "delay";
+import { addDoc, collection } from "firebase/firestore";
+import { toast, ToastContainer } from "react-toastify";
+import { db } from "../../DB/firebase";
 interface AppComponent {
   singleProduct: any;
 }
-
+const token = localStorage.getItem("one_store_login");
 const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
-  const userId: any = useSelector((state: any) => state.auth.userInfo.userId);
 
-  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
+
+  const addToCart = async (e: any, id) => {
+    e.preventDefault();
+    
+    try {
+
+      if(token){
+        const docRef = await addDoc(collection(db, "cart"), {
+          ...singleProduct,
+          inStock: quantity,
+          cartId: token,
+        });
+        if (!docRef) {
+          toast.error("item was not added to your cart");
+        }
+  
+        toast.success("added to your cart");
+        await delay(1300);
+        window.location.reload();
+
+      }else{
+        toast.warn("please login to add item to your cart");
+      }
+   
+    } catch (error) {
+      toast.error("Error: Failed to signup");
+    }
+  };
+  // useEffect(() => console.log(singleProduct), []);
 
   return (
     <div className="w-11/12 md:w-10/12 h-auto mx-auto my-4 p-4 flex flex-col bg-white rounded-sm ">
@@ -54,40 +83,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
 
             <p
               className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
-              onClick={() => {
-                dispatch(
-                  addToCart({
-                    userId: userId,
-                    products: [
-                      {
-                        productId: singleProduct.id,
-                        image: singleProduct.image,
-                        name: singleProduct.name,
-                        old_price: `${singleProduct.old_price}`,
-                        price: `${singleProduct.price}`,
-                        category: singleProduct.category,
-                        product_details: singleProduct.product_details,
-                        key_features: singleProduct.key_features,
-                        quantity: quantity,
-                        pay_on_delivery: singleProduct.pay_on_delivery,
-                      },
-                    ],
-                  })
-                );
-              }}
-
-              // onClick={() =>
-              //   dispatch(
-              //     add_cart_items({
-              //       id: singleProduct.id,
-              //       image: singleProduct.image,
-              //       name: singleProduct.name,
-              //       price: singleProduct.price,
-              //       category: singleProduct.category,
-              //       quantity: quantity,
-              //     })
-              //   )
-              // }
+              onClick={(e) => addToCart(e, singleProduct.id)}
             >
               <span className="px-4">
                 <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
@@ -101,10 +97,10 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
       <div className="w-full md:w-2/5 mx-auto md:mx-6 my-4 h-auto flex flex-col ">
         <div className="mx-auto w-full md:w-10/12 h-auto p-2 border-2 border-slate-300 rounded-md">
           <h3 className="text-xl py-3 text-slate-900 font-bold text-center border-b-2 border-slate-300">
-            SELLER INFORMATION
+            SELLER
           </h3>
 
-          <p className=" p-3 text-2xl text-slate-900 font-bold">ONE-STOP Electronics</p>
+          <p className=" p-3 text-2xl text-slate-900 font-bold">ONESTORE</p>
           {/* <h3 className="text-lg py-3 text-gray-800 font-bold text-center">
             Seller Performance
           </h3> */}
@@ -122,6 +118,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
           </ul> */}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
-import { registerUser } from "../../store/authSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
+const token = localStorage.getItem("one_store_login");
 
 const SignUp: React.FC = () => {
-  const signUpStatus = useSelector((state: any) => state.auth.userInfo);
-  const dispatch = useDispatch<any>();
-
   const [userInfo, setUserInfo] = useState<any>({
     surname: "",
     name: "",
@@ -45,6 +41,12 @@ const SignUp: React.FC = () => {
       toast.error("Error: Failed to signup");
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      window.location.replace("/login");
+    }
+  }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">

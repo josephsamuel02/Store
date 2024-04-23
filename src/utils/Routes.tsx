@@ -24,6 +24,9 @@ const ROUTES = {
   ABOUTUS: "/about",
   CONTACTUS: "/contact",
   TERMSANDCONS: "/terms_and_conditions",
+
+  WHATSAPP: "https://api.whatsapp.com/send?phone=2349073077717",
+  CALLLINE: "tel:2349073077717",
 };
 
 export default ROUTES;

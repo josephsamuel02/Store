@@ -4,26 +4,35 @@
 import React, { useEffect, useState } from "react";
 import OrderConfirmedCard from "../../components/OrderConfirmedCard";
 import { usePaystackPayment } from "react-paystack";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, addDoc, doc, deleteDoc, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-
 import { db } from "../../DB/firebase";
+import delay from "delay";
+import ROUTES from "../../utils/Routes";
+import PayOfflineCard from "./payOfflineCard";
 
 interface AppComponent {
   CheckOutData: any;
   TotalPrice: any;
 }
+
 const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) => {
   const Cart = CheckOutData;
+  const token = localStorage.getItem("one_store_login");
   const priceFormat = new Intl.NumberFormat("en-US");
   const [showCard, setShowCard] = useState(false);
+  const [showOfflinePaymentCard, setShowOfflinePaymentCard] = useState(false);
+
   const [userInfo, setUserInfo] = useState<any>({
     name: "",
-    password: "",
+    deliveryAddress: "",
+    phone: "",
+    alternativePhone: "",
   });
+  const [orderItem, setOrderItem] = useState<any>();
+
   const TOTAL = TotalPrice * 100;
 
-  const token = localStorage.getItem("one_store_login");
   const fetchUser = async () => {
     try {
       await getDocs(collection(db, "user")).then((querySnapshot) => {
@@ -40,7 +49,6 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
           return item.id === token ? (index = item) : null;
         });
         setUserInfo(index);
-        console.log(index);
 
         if (!user) {
           toast.error("please login.", {
@@ -54,11 +62,64 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
     }
   };
 
+  const addToOrder = async (paymentMedium: string) => {
+    try {
+      const docRef = await addDoc(collection(db, "order"), {
+        ...orderItem,
+        paymentMedium: paymentMedium,
+      });
+      if (!docRef) {
+        toast.error("Error");
+      } else {
+        // Specify the collection where you want to search for documents
+        const targetRef = collection(db, "cart");
+        const q = query(targetRef, where("cartId", "==", token));
+
+        // Get the documents that match the query
+        getDocs(q)
+          .then((querySnapshot) => {
+            querySnapshot.forEach((document) => {
+              // Get the reference to the document
+              const docRef = doc(db, document.ref.path);
+
+              // Delete the document
+              deleteDoc(docRef)
+                .then(() => {
+                  console.log("  successful!");
+                })
+                .catch((error) => {
+                  toast.error("An error occurred");
+                });
+            });
+          })
+          .catch((error) => {
+            console.error("Error getting documents: ", error);
+          });
+      }
+    } catch (error) {
+      toast.error("unable to order cart ");
+    }
+  };
+
   useEffect(() => {
     if (!token) {
       window.location.replace("/");
     }
+    // console.log([
+    //   {
+    //     Products: Cart,
+    //     userId: token,
+    //     totalPrice: TotalPrice,
+    //     orderLevel: 0,
+    //   },
+    // ]);
     fetchUser();
+    setOrderItem({
+      Products: Cart,
+      userId: token,
+      totalPrice: TotalPrice,
+      orderLevel: 0,
+    });
   }, []);
   const config = {
     reference: new Date().getTime().toString(),
@@ -67,17 +128,16 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
     publicKey: "pk_test_a507bd6845bb5cad347a591e06e88c6fde817cc1",
   };
 
-  // you can call this function anything
-  const onSuccess: any = (reference: any) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    // console.log(reference);
-    setShowCard(true);
+  const onSuccess: any = () => {
+    addToOrder("online_payment");
+    delay(1300);
+    // setShowCard(true);
+    // delay(700);
+    window.location.replace(ROUTES.ORDERS);
   };
 
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    // console.log("closed");
+  const onClose: any = () => {
+    console.log("closed");
   };
   const initializePayment = usePaystackPayment(config);
 
@@ -98,7 +158,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
 
                   <div className=" w-10/12  flex my-auto flex-col px-2 ">
                     <h3 className="text-sm  truncate md:text-sm p-2 text-black font-roboto ">
-                      {i.name} dU9 U u9euw 9 we 9w u 9euw -e9w ye e09yw e 0[w 9yeh 0[w 9ew 9e
+                      {i.name}
                     </h3>
 
                     <h3 className="text-sm  md:text-sm font-bold  py-2 text-slate-800 font-roboto">
@@ -122,7 +182,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
           </h3>
           <div className="mx-3  w-full    h-auto  ">
             <p className="text-lg p-1 text-black font-roboto font-bold ">
-              Recepient:{" "}
+              Recepient:
               <span className="font-normal text-black">
                 {userInfo.surname} {userInfo.name}
               </span>
@@ -141,6 +201,9 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               <textarea
                 draggable={false}
                 placeholder={"0802... "}
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, alternativePhone: e.target.value }))
+                }
                 className="  my-auto w-52 h-8 p-1  text-sm text-slate-800 font-normal focus:outline-none  resize-none no-scrollbar border-2 border-gray-300 rounded-md"
               ></textarea>
             </p>
@@ -148,40 +211,48 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               Delivery address:
               <textarea
                 draggable={false}
-                value={"2, adesanya street , obanla close ikeja "}
+                placeholder={"address... "}
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, deliveryAddress: e.target.value }))
+                }
                 className=" my-auto w-52 h-12 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
               ></textarea>
             </p>
           </div>
 
-          <div className="m-6 p-2  w-10/11    h-auto border-2 border-yellow-300 bg-yellow-50 rounded-md">
-            <h3 className="text-xl   m-2 text-black font-roboto font-bold ">Note</h3>
+          <div className="m-6 p-2 w-10/11 h-auto border-2 border-yellow-300 bg-yellow-50 rounded-md">
+            <h3 className="text-xl m-2 text-black font-roboto font-bold ">Note</h3>
             <p className="px-2 text-base font-roboto text-slate-900">
               Orders will be sent via a delivery agent, delivery cost will be coved by buyer.
               delivery cost can also be negotiated between buyer and delivery agent.
             </p>
           </div>
 
-          <div className="mx-3  w-full    h-auto  ">
-            <h3 className="text-lg   m-4 text-black font-roboto font-bold ">Payment Method</h3>
+          <div className="mx-3 w-full h-auto  ">
+            <h3 className="text-lg m-4 text-black font-roboto font-bold ">Payment Method</h3>
             <div
-              className="m-3  w-1/2 h-auto  border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded"
+              className="m-3  w-1/2 h-auto border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded"
               onClick={() => {
-                initializePayment(onSuccess, onClose);
+                // initializePayment(onSuccess, onClose);
+                toast.warning("Online payment not available at this time");
               }}
             >
-              <h3 className="text-xl   p-4 text-black font-roboto font-bold ">Pay Online</h3>
+              <h3 className="text-xl p-4 text-black font-roboto font-bold ">Pay Online</h3>
             </div>
-            {/* <div className="m-3  w-1/2 h-auto  border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded">
-              <h3 className="text-xl   p-4 text-black font-roboto font-bold ">
-                Pay On Delivery
-              </h3>
-            </div> */}
+            <div
+              onClick={() => {
+                setShowOfflinePaymentCard(true);
+                addToOrder("offline_payment");
+              }}
+              className="m-3  w-1/2 h-auto  border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded"
+            >
+              <h3 className="text-xl p-4 text-black font-roboto font-bold ">Pay Offline</h3>
+            </div>
           </div>
         </div>
       </div>
-      {/* <PaystackHookExample /> */}
       <OrderConfirmedCard showCard={showCard} setShowCard={setShowCard} />
+      {showOfflinePaymentCard && <PayOfflineCard setShowCard={setShowOfflinePaymentCard} />}
       <ToastContainer />
     </div>
   );

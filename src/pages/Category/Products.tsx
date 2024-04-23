@@ -18,14 +18,22 @@ const Products: React.FC<AppComponent> = ({ category, categoryProducts }) => {
     e.preventDefault();
 
     try {
-      const docRef = await addDoc(collection(db, "cart"), categoryProducts[index]);
-      if (!docRef) {
-        toast.error("item was not added to your cart");
-      }
+      if (token) {
+        const docRef = await addDoc(collection(db, "cart"), {
+          ...categoryProducts[index],
+          inStock: 1,
+          cartId: token,
+        });
+        if (!docRef) {
+          toast.error("item was not added to your cart");
+        }
 
-      toast.success("added to your cart");
-      await delay(1300);
-      // window.location.assign("/login");
+        toast.success("added to your cart");
+        await delay(1300);
+        window.location.reload();
+      } else {
+        toast.warn("please login to add item to your cart");
+      }
     } catch (error) {
       toast.error("Error: Failed to signup");
     }
