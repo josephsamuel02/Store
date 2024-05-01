@@ -5,7 +5,7 @@ import ROUTES from "../../utils/Routes";
 const DefaultNav: React.FC = () => {
   return (
     <div className="fixed top-0 w-full h-auto px-3 md:px-5  bg-white flex flex-row items-center z-50">
-      <a className="w-44 mx-2 my-2 flex items-center" href="/">
+      <a className="w-44 mx-2 my-2 flex items-center" href={ROUTES.ADMIN_LANDINGPAGE}>
         <img src="/img/OneStore logo.svg" alt="" className="w-auto h-auto" />
       </a>
 

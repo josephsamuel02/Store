@@ -3,14 +3,18 @@ import { MdInbox, MdSlideshow, MdStore, MdUpload } from "react-icons/md";
 
 interface AppState {
   page: string;
+  setPage: (item: any) => void;
 }
 
 interface AppState2 {
   page: string;
-  showSideNav: boolean;
+  sidebarState: any;
+  setsidebarState: (item: any) => void;
+
+  setPage: (item: any) => void;
 }
 
-const SideNav: React.FC<AppState> = ({ page }) => {
+const SideNav: React.FC<AppState> = ({ page, setPage }) => {
   return (
     <div className="hidden md:flex  w-1/5  mt-12 md:mt-36  h-auto border-r-2  ">
       <ul className="w-full mx-3 py-3  ">
@@ -19,7 +23,7 @@ const SideNav: React.FC<AppState> = ({ page }) => {
           style={{
             backgroundColor: page == "orders" ? "rgb(192 132 252 )" : "white",
           }}
-          // onClick={() => dispatch(navState("orders"))}
+          onClick={() => setPage("orders")}
         >
           <MdInbox size="32" className="text-Storepurple mx-2" /> Orders
         </li>
@@ -28,7 +32,7 @@ const SideNav: React.FC<AppState> = ({ page }) => {
           style={{
             backgroundColor: page == "store" ? "rgb(192 132 252 )" : "white",
           }}
-          // onClick={() => dispatch(navState("store"))}
+          onClick={() => setPage("store")}
         >
           <MdStore size="32" className="text-Storepurple mx-2" /> Store
         </li>
@@ -38,7 +42,7 @@ const SideNav: React.FC<AppState> = ({ page }) => {
           style={{
             backgroundColor: page == "upload" ? "rgb(192 132 252 )" : "white",
           }}
-          // onClick={() => dispatch(navState("upload"))}
+          onClick={() => setPage("upload")}
         >
           <MdUpload size="32" className="text-Storepurple mx-2" /> Upload
         </li>
@@ -47,12 +51,12 @@ const SideNav: React.FC<AppState> = ({ page }) => {
   );
 };
 
-const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
+const MobileNav: React.FC<AppState2> = ({ page, setPage, sidebarState, setsidebarState }) => {
   return (
     <>
       <div
         className=" fixed top-0 left-0 flex flex-col md:hidden  w-2/5 h-full mt-24 shadow  bg-white z-30"
-        style={{ visibility: showSideNav == true ? "visible" : "hidden" }}
+        style={{ visibility: sidebarState == true ? "visible" : "hidden" }}
       >
         <ul className="w-full px-2 py-3  h-full bg-white">
           <li
@@ -60,7 +64,7 @@ const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
             style={{
               backgroundColor: page == "orders" ? "rgb(192 132 252 )" : "white",
             }}
-            // onClick={() => dispatch(navState("orders"))}
+            onClick={() => setPage("orders")}
           >
             <MdInbox size="27" className="text-Storepurple mx-2" /> Orders
           </li>
@@ -69,7 +73,7 @@ const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
             style={{
               backgroundColor: page == "store" ? "rgb(192 132 252 )" : "white",
             }}
-            // onClick={() => dispatch(navState("store"))}
+            onClick={() => setPage("store")}
           >
             <MdStore size="27" className="text-Storepurple mx-2" /> Store
           </li>
@@ -79,7 +83,7 @@ const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
             style={{
               backgroundColor: page == "upload" ? "rgb(192 132 252 )" : "white",
             }}
-            // onClick={() => dispatch(navState("upload"))}
+            onClick={() => setPage("upload")}
           >
             <MdUpload size="32" className="text-Storepurple mx-2" /> Upload
           </li>
@@ -88,7 +92,7 @@ const MobileNav: React.FC<AppState2> = ({ page, showSideNav }) => {
 
       <div
         className=" md:hidden fixed bottom-8 left-8 flex flex-col w-16 h-16 rounded-full bg-purple-300 hover:bg-purple-400 shadow-md z-30"
-        // onClick={() => dispatch(setSidebarOpen(!sidebarState))}
+        onClick={() => setsidebarState(!sidebarState)}
       >
         <MdSlideshow size="33" className=" m-auto text-purple-900 " />
       </div>

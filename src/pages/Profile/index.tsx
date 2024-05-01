@@ -7,35 +7,60 @@ import DefaultNav from "../../components/DefaultNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { useSelector } from "react-redux";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 const Profile: React.FC = () => {
-  const updatedUser = useSelector((state: any) => state.auth.userInfo);
+  const token = localStorage.getItem("one_store_login");
+  // const Navigate = useNavigate();
   const [edit, setEdit] = useState<any>(false);
+  const [updatedUser, setUpdatedUser] = useState<any>();
 
-  useEffect(() => {});
-
-  const [setUserInfo] = useState<any>({
-    surname: "",
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    state: "",
-    lga: "",
+  const [userInfo, setUserInfo] = useState<any>({
+    ...useState,
   });
 
   const submit = async (e: any) => {
     e.preventDefault();
 
-    if (updatedUser.status == 200) {
-      toast.success(updatedUser.message);
-      await delay(1300);
-      window.location.assign("/profile");
-    } else {
-      toast.error(updatedUser.message);
-    }
+    const docRef = doc(db, "user", token);
+
+    // Data to update
+    const newData = {
+      ...userInfo,
+    };
+
+    updateDoc(docRef, newData)
+      .then(async () => {
+        toast.success("Document updated successfully!");
+        delay(2000);
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast.error("Error updating document");
+        delay(1300);
+        window.location.reload();
+      });
   };
+
+  useEffect(() => {
+    const docRef = doc(db, "user", token);
+
+    getDoc(docRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setUpdatedUser(data);
+          console.log(data);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+        Navigate("/");
+      });
+  }, []);
 
   return (
     <>
@@ -44,7 +69,7 @@ const Profile: React.FC = () => {
       <div className="mx-auto w-full md:w-5/6 h-full mt-20 bg-white overflow-y-scroll scrollbar-hide items-center">
         <div className="mx-auto w-full md:w-96 p-2 mt-16 h-full flex flex-col items-center rounded-md md:shadow-lg">
           <h3 className=" mx-auto text-3xl text-purple-800 font-dayone"> Profile</h3>
-          {edit ? (
+          {edit && (
             <form
               action=""
               onSubmit={submit}
@@ -110,7 +135,20 @@ const Profile: React.FC = () => {
                     className=" mx-auto w-full h-10 px-3 text-nunito text-lg text-slate-700 border-2 outline-none border-slate-300 rounded shadow-sm"
                   />
                 </div>
-
+                <div className="w-full mx-auto my-1 py-1 flex flex-col">
+                  <label className="text-lg text-gray-700 font-nunito">
+                    {" "}
+                    Delivery Address:
+                  </label>
+                  <input
+                    type="text"
+                    placeholder={updatedUser.address}
+                    onChange={(e) =>
+                      setUserInfo((prev: any) => ({ ...prev, address: e.target.value }))
+                    }
+                    className=" mx-auto w-full h-10 px-3 text-nunito text-lg text-slate-700 border-2 outline-none border-slate-300 rounded shadow-sm"
+                  />
+                </div>
                 <div className="w-full mx-auto my-1 py-1 flex flex-col">
                   <label className="text-lg text-gray-700 font-nunito"> LGA:</label>
                   <input
@@ -133,7 +171,8 @@ const Profile: React.FC = () => {
                 </div>
               </div>
             </form>
-          ) : (
+          )}
+          {!edit && updatedUser && (
             <div className="w-4/5 mx-auto md:px-2 md:mx-4 my-1 py-1 flex flex-col items-center ">
               <div className="w-full mx-auto my-1 py-1 flex flex-col">
                 <label className="text-lg text-gray-700 font-nunito"> User name:</label>
@@ -158,6 +197,10 @@ const Profile: React.FC = () => {
               <div className="w-full mx-auto my-1 py-1 flex flex-col">
                 <label className="text-lg text-gray-700 font-nunito"> LGA:</label>
                 <p className=" mx-0text-nunito text-lg text-gray-700">{updatedUser.lga}</p>
+              </div>
+              <div className="w-full mx-auto my-1 py-1 flex flex-col">
+                <label className="text-lg text-gray-700 font-nunito"> Delivery Address:</label>
+                <p className=" mx-0text-nunito text-lg text-gray-700">{updatedUser.address}</p>
               </div>
               {updatedUser.role == "admin" && (
                 <div className="w-full mx-auto my-1 py-1 flex flex-col">

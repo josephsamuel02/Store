@@ -40,10 +40,14 @@ const App: React.FC = () => {
         {/* ADmin */}
 
         <Route index path={ROUTES.ADMIN_LANDINGPAGE} element={<Dashboard />} />
-        <Route index path={ROUTES.ADMIN_ORDER_DETAILS} element={<AdminOrderDetails />} />
+        <Route
+          index
+          path={`${ROUTES.ADMIN_ORDER_DETAILS}/:id`}
+          element={<AdminOrderDetails />}
+        />
         <Route index path="/admin/product_details/:id" element={<AdminProductDetails />} />
         <Route index path={ROUTES.ADMIN_UPLOAD_PRODUCTS} element={<AdminUpload />} />
-        <Route path={ROUTES.ADMIN_EDIT_PRODUCT} element={<Edit />} />
+        <Route path={`${ROUTES.ADMIN_EDIT_PRODUCT}/:id`} element={<Edit />} />
         <Route path={ROUTES.ADMIN_LOGIN} element={<AdminLogin />} />
         <Route path={ROUTES.ADMIN_PROFILE} element={<AdminProfile />} />
 

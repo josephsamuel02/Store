@@ -6,7 +6,7 @@ import { BsPhone } from "react-icons/bs";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 import { CgGym } from "react-icons/cg";
 import ROUTES from "../../utils/Routes";
-import SimpleImageSlider from "react-simple-image-slider";
+import { Carousel } from "@material-tailwind/react";
 
 const Banner: React.FC = () => {
   const Menu = [
@@ -51,42 +51,28 @@ const Banner: React.FC = () => {
       icon: <LuApple size={24} className="mx-2 text-Storepurple" />,
     },
   ];
-  const images = [{ url: "/img/banner.png" }, { url: "/img/banner.png" }];
-  return (
-    <div className="w-full h-full py-2 flex bg-purple-200">
-      <div className="mx-auto w-10/12 h-10/12   flex flex-row">
-        <div className="hidden lg:flex mx-auto w-1/6  pt-6 h-auto flex-col  rounded  shadow-lg bg-white ">
-          {Menu.map((i, index) => (
-            <a
-              className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer"
-              href={`${ROUTES.CATEGORY}?category=${i.url}`}
-              key={index}
-            >
-              {i.icon}
-              <p className=" px-1 text-sm text-slate-800 font-roboto font-thin">{i.name}</p>
-            </a>
-          ))}
-        </div>
 
-        <div className=" mx-auto w-full md:w-4/5 h-full ">
-          <img
-            src="/img/banner.png"
-            alt=""
-            className=" flex md:hidden w-full h-full object-cover"
-          />
-          <div className="hidden md:flex w-auto h-auto  ">
-            <SimpleImageSlider
-              width={896}
-              height={504}
-              images={images}
-              showBullets={true}
-              showNavs={false}
-              autoPlay={true}
-              slideDuration={3}
-              autoPlayDelay={5}
-            />
-          </div>
-        </div>
+  return (
+    <div className="mx-auto w-10/12 h-10/12 flex flex-row">
+      <div className="hidden lg:flex mx-auto w-1/6  pt-6 h-auto flex-col rounded shadow-lg bg-white ">
+        {Menu.map((i, index) => (
+          <a
+            className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer"
+            href={`${ROUTES.CATEGORY}?category=${i.url}`}
+            key={index}
+          >
+            {i.icon}
+            <p className=" px-1 text-sm text-slate-800 font-roboto font-thin">{i.name}</p>
+          </a>
+        ))}
+      </div>
+
+      <div className=" mx-auto w-full md:w-4/5 h-full ">
+        <Carousel transition={{ duration: 2 }} autoplay={true} className="rounded-sm">
+          <img src="/img/banner.png" alt="image 1" className="h-full w-full object-cover" />
+          <img src="/img/banner.png" alt="image 2" className="h-full w-full object-cover" />
+          <img src="/img/banner.png" alt="image 3" className="h-full w-full object-cover" />
+        </Carousel>
       </div>
     </div>
   );

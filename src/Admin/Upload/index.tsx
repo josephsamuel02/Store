@@ -46,7 +46,6 @@ const AdminUpload: React.FC = () => {
   const handleImageSelect = async (e: any) => {
     const file = e.target.files[0];
     setImage(URL.createObjectURL(file));
-    setImageFile(e.target.files[0]);
     try {
       const imageRef = ref(storage, `/products_images/${e.target.files[0].name + v4()} `);
 
@@ -54,6 +53,8 @@ const AdminUpload: React.FC = () => {
         .then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url: any) => {
             setSiteInformation((prev: any) => ({ ...prev, image: url }));
+            toast.success("image uploaded");
+            setImageFile(e.target.files[0]);
           });
         })
         .catch((error) => {

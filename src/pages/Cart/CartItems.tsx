@@ -25,11 +25,10 @@ import ROUTES from "../../utils/Routes";
 const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
   const token = localStorage.getItem("one_store_login");
 
-  // const Order = useSelector((state: any) => state.Order.allOrders);
   const priceFormat = new Intl.NumberFormat("en-US");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [ setTPrice] = useState<any>(0);
-  const [Order, setOrder] = useState<any>([]);
+  const [setTPrice] = useState<any>(0);
+  const [Order, setOrder] = useState<any>();
 
   const [checkout, setCheckOut] = useState(false);
   const getOrders = async () => {
@@ -40,7 +39,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
 
       const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
       setOrder(newData[0]);
-      console.log(...newData);
+      // console.log(...newData);
     } catch (error) {
       console.log(" Unable to get data");
     }
@@ -76,7 +75,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
 
   const setT = () => {
     cartTotal();
-    setTPrice(totalPrice);
+    // setTPrice(totalPrice);
     setCheckOut(true);
   };
 
@@ -178,14 +177,14 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
                   </h3>
                 </div>
               )} */}
-              <a
+              <button
                 className="w-2/5 h-auto py-3 text-lg text-center text-white font-bold cursor-pointer rounded bg-Storepurple hover:bg-purple-800 "
                 onClick={() => {
                   setT();
                 }}
               >
                 Checkout
-              </a>
+              </button>
             </div>
           ) : null}
           <div className="w-11/12 md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
@@ -214,9 +213,11 @@ const CartItems: React.FC<AppComponent> = ({ cartItems }) => {
                 </a>
               </div>
             )}
-            <h3 className="text-lg p-4 text-black font-bold ">
-              Orders status: {Order.orderLevel}
-            </h3>
+            {Order ? (
+              <h3 className="text-lg p-4 text-black font-bold ">
+                Orders status: {Order.orderLevel}
+              </h3>
+            ) : null}
           </div>
         </div>
       ) : (

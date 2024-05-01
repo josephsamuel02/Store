@@ -57,7 +57,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
         }
       });
     } catch (error) {
-      toast.warning(" Unable to login, check credentials");
+      console.error(" Unable to login", error);
     }
   };
 

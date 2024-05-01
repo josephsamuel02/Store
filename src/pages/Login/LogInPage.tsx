@@ -1,17 +1,19 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
- import Footer from "../../components/Footer";
+import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+  const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>({
     email: "",
     password: "",
@@ -34,7 +36,7 @@ const Login: React.FC = () => {
         const user = newData.map((item: any, i: any) => {
           return item.email == userInfo.email ? (index = i) : null;
         });
-        if (!user[index].password == userInfo.password) {
+        if (user[index].password !== userInfo.password) {
           toast.error("incorrect login detail(s).", {
             position: "top-left",
           });
@@ -47,18 +49,32 @@ const Login: React.FC = () => {
           localStorage.setItem("one_store_login", `${newData[index].id}`);
           toast.success("login successful");
           delay(1300);
-          window.location.assign("/");
+          window.location.replace("/");
         }
       });
     } catch (error) {
-      toast.warning(" Unable to login, check credentials");
+      toast.warning("Unable to login, check credentials");
     }
   };
 
   useEffect(() => {
-    if (token) {
-      window.location.replace("/");
-    }
+    const docRef = doc(db, "user", token);
+
+    getDoc(docRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          // Document found, you can access its data
+
+          const data = docSnap.data();
+
+          Navigate("/");
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+      });
   }, []);
 
   return (

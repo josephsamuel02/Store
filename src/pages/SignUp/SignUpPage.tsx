@@ -6,8 +6,9 @@ import DefaultNav from "../../components/DefaultNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
+import { Navigate } from "react-router-dom";
 const token = localStorage.getItem("one_store_login");
 
 const SignUp: React.FC = () => {
@@ -43,9 +44,23 @@ const SignUp: React.FC = () => {
   };
 
   useEffect(() => {
-    if (token) {
-      window.location.replace("/login");
-    }
+    const docRef = doc(db, "user", token);
+
+    getDoc(docRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          // Document found, you can access its data
+
+          const data = docSnap.data();
+
+          Navigate("/");
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+      });
   }, []);
 
   return (

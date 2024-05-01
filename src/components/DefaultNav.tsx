@@ -1,53 +1,50 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
-import { toast } from "react-toastify";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, getDoc, doc } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-  const [setUser] = useState<any>();
   const [Cart, setCart] = useState([]);
+  const [User, setUser] = useState<any>(false);
+
   const [Products, setProducts] = useState([]);
+  const Navigate = useNavigate();
 
   const getUserInfo = async () => {
     try {
       await getDocs(collection(db, "user")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        if (!newData) {
-          toast.warn("unable to login.", {
-            position: "top-left",
+        if (newData.Products) {
+          const user = newData.Products.map((item: any) => {
+            return item.id == token;
           });
+          setUser(user);
+          console.log(newData);
+          console.log(user);
+        } else {
+          setCart(null);
         }
-
-        const user = newData.map((item: any) => {
-          return item.id == token;
-        });
-        setUser(user);
       });
 
       await getDocs(collection(db, "cart")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-        const cart = newData.map((item: any) => {
-          return item.id == token;
-        });
-        setCart(cart);
-      });
-
-      await getDocs(collection(db, "products")).then((querySnapshot) => {
-        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-        const products = newData.map((item: any) => {
-          return item.id == token;
-        });
-        setProducts(products);
+        if (newData.Products) {
+          const cart = newData.Products.map((item: any) => {
+            return item.cartId == token;
+          });
+          setCart(cart);
+          console.log(newData);
+          console.log(cart.Products[0]);
+        } else {
+          setCart(null);
+        }
       });
     } catch (error) {
-      toast.warning(" Unable to login, check credentials");
+      console.error(" Unable to login", error);
     }
   };
 
@@ -56,8 +53,23 @@ const DefaultNav: React.FC = () => {
   useEffect(() => {
     if (token) {
       getUserInfo();
-      // dispatch(getCart(userId));
     }
+    const docRef = doc(db, "user", token);
+    getDoc(docRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          // Document found, you can access its data
+
+          const user = docSnap.data();
+
+          setUser(true);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+      });
   }, []);
 
   const searchProduct = (word: any) => {
@@ -68,7 +80,6 @@ const DefaultNav: React.FC = () => {
       }
     });
     setSearchResult(result);
-    // console.log(result);
   };
 
   return (
@@ -95,7 +106,7 @@ const DefaultNav: React.FC = () => {
           />
         </div>
 
-        {token ? (
+        {User ? (
           <div className="w-1/6 mx-auto  md:mx-4 px-1 pt-2 flex flex-row ">
             <a className="w-auto mx-auto cursor-pointer" href={ROUTES.CART}>
               <MdOutlineLocalGroceryStore size={32} className="mx-auto text-slate-700" />
@@ -105,14 +116,14 @@ const DefaultNav: React.FC = () => {
                   style={{ top: "-70%", right: "-65%" }}
                 >
                   <p className=" text-center  text-sm font-roboto text-white ">
-                    {Cart.length}
+                    {Cart.products.length}
                   </p>
                 </div>
               )}
             </a>
             <a
               className="w-auto mx-auto flex flex-col items-center cursor-pointer"
-              href={ROUTES.PROFILE}
+              href={ROUTES.ADMIN_PROFILE}
             >
               <h1 className="w-auto mx-auto flex flex-row">
                 <MdPersonOutline size={32} className="text-slate-700" />
@@ -136,7 +147,7 @@ const DefaultNav: React.FC = () => {
           </div>
         )}
       </div>
-
+      {/* 
       <div className="fixed top-16 left-0 right-0 w-3/6 h-auto mx-auto px-3 py-3 bg-white flex flex-col shadow-lg">
         {searchResult &&
           searchResult.map((n: any) => {
@@ -148,7 +159,7 @@ const DefaultNav: React.FC = () => {
               {searchResult[0].name}
             </a>;
           })}
-      </div>
+      </div> */}
     </>
   );
 };

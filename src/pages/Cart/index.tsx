@@ -5,10 +5,11 @@ import Footer from "../../components/Footer";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../DB/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-
+  const Navigate = useNavigate();
   const [Cart, setCart] = useState([]);
 
   const getCart = async () => {
@@ -21,13 +22,13 @@ const Cart: React.FC = () => {
         setCart(newData);
       });
     } catch (error) {
-      toast.warning(" Unable to login, check credentials");
+      toast.warning(" Unable to login");
     }
   };
 
   useEffect(() => {
     if (!token) {
-      window.location.replace("/login");
+      Navigate("/login");
     }
     getCart();
   }, []);

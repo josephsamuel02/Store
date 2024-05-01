@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ROUTES from "../../utils/Routes";
-import { useSelector } from "react-redux";
 import OrdersMenu from "../components/OrdersMenu";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 const Orders: React.FC = () => {
-  const Orders = useSelector((state: any) => state.Order.Orders);
   const [orderPage, setOrderPage] = useState<any>(1);
+  const [Orders, setOrders] = useState<any>();
   const priceFormat = new Intl.NumberFormat("en-US");
+
+  const fetchOrders = async () => {
+    await getDocs(collection(db, "order")).then((querySnapshot) => {
+      const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setOrders(newData);
+    });
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   return (
     <>
       <OrdersMenu setOrderPage={setOrderPage} orderPage={orderPage} />
@@ -18,7 +31,7 @@ const Orders: React.FC = () => {
                 i.status == orderPage && (
                   <a
                     className="w-72 md:w-76 h-40 mx-auto p-1 flex flex-col items-center rounded-md shadow-md hover:shadow-lg bg-white"
-                    href={`${ROUTES.ADMIN_ORDER_DETAILS}?order_index=${index}`}
+                    href={`${ROUTES.ADMIN_ORDER_DETAILS}?/${index}`}
                     key={index}
                   >
                     <div className="my-auto w-full flex flex-row">
@@ -31,7 +44,7 @@ const Orders: React.FC = () => {
                         <p className="mx-1  py-1 truncate text-sm font-roboto font-semibold text-slate-700">
                           Customer:
                           <span className="px-1 font-roboto font-normal text-sm text-slate-800">
-                            {i.userName}
+                            {i.name}
                           </span>
                         </p>
                         <p className="mx-1  py-1 truncate text-sm font-roboto font-semibold text-slate-700">
