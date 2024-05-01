@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect } from "react";
 import { v4 } from "uuid";
 import { useState } from "react";
 import Select from "react-select";
@@ -9,8 +9,13 @@ import { toast, ToastContainer } from "react-toastify";
 import { addDoc, collection } from "firebase/firestore";
 import SuccessCard from "./successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../utils/Routes";
+import DefaultNav from "../components/DefaultNav";
 
 const AdminUpload: React.FC = () => {
+  const adminToken = localStorage.getItem("one_store_admin");
+  const Navigate = useNavigate();
   const [showCard, setShowCard] = useState(false);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<any>("");
@@ -82,8 +87,16 @@ const AdminUpload: React.FC = () => {
       toast.error("Error: Failed to upload");
     }
   };
+
+  useEffect(() => {
+    if (!adminToken) {
+      Navigate(ROUTES.ADMIN_LOGIN);
+    }
+  }, []);
+
   return (
     <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
+      <DefaultNav />
       <form className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
         {image ? (
           <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">

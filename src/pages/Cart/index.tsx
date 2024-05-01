@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 const Cart: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
   const Navigate = useNavigate();
-  const [Cart, setCart] = useState([]);
+  const [Cart, setCart] = useState<any>("");
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const getCart = async () => {
     try {
@@ -19,7 +20,17 @@ const Cart: React.FC = () => {
 
       await getDocs(q).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        setCart(newData);
+        if (newData) {
+          setCart(newData);
+          console.log(newData);
+        }
+        let t = 0;
+
+        for (let i = 0; i < newData.length; i++) {
+          const productTotal = newData[i].inStock * newData[i].price;
+          t += productTotal;
+        }
+        setTotalPrice(t);
       });
     } catch (error) {
       toast.warning(" Unable to login");
@@ -36,7 +47,7 @@ const Cart: React.FC = () => {
   return (
     <div className="w-full h-full pt-16 md:pt-20  bg-purple-100">
       <DefaultNav />
-      {token && <CartItems cartItems={Cart} />}
+      {token && <CartItems cartItems={Cart} totalPrice={totalPrice} />}
       <Footer />
     </div>
   );

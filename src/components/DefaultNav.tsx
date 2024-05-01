@@ -1,50 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
 import { getDocs, collection, getDoc, doc } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-  const [Cart, setCart] = useState([]);
-  const [User, setUser] = useState<any>(false);
+  const [Cart, setCart] = useState<any>([]);
+  const [User, setUser] = useState<any>(true);
 
   const [Products, setProducts] = useState([]);
-  const Navigate = useNavigate();
 
   const getUserInfo = async () => {
     try {
-      await getDocs(collection(db, "user")).then((querySnapshot) => {
-        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        if (newData.Products) {
-          const user = newData.Products.map((item: any) => {
-            return item.id == token;
-          });
-          setUser(user);
-          console.log(newData);
-          console.log(user);
-        } else {
-          setCart(null);
-        }
-      });
-
       await getDocs(collection(db, "cart")).then((querySnapshot) => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        if (newData.Products) {
-          const cart = newData.Products.map((item: any) => {
-            return item.cartId == token;
+        if (newData) {
+          const d: any = [];
+          newData.map((item: any) => {
+            return item.cartId == token ? d.push(item) : null;
           });
-          setCart(cart);
-          console.log(newData);
-          console.log(cart.Products[0]);
-        } else {
-          setCart(null);
+          setCart(d);
         }
       });
     } catch (error) {
-      console.error(" Unable to login", error);
+      console.error(" Unable to get cart", error);
     }
   };
 
@@ -53,23 +35,25 @@ const DefaultNav: React.FC = () => {
   useEffect(() => {
     if (token) {
       getUserInfo();
+      setUser(true);
+      const docRef = doc(db, "user", token);
+      getDoc(docRef)
+        .then((docSnap) => {
+          if (docSnap.exists()) {
+            // Document found, you can access its data
+
+            const user = docSnap.data();
+            if (!user) {
+              setUser(false);
+            }
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch((error) => {
+          console.error("Error getting document:", error);
+        });
     }
-    const docRef = doc(db, "user", token);
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          // Document found, you can access its data
-
-          const user = docSnap.data();
-
-          setUser(true);
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-      });
   }, []);
 
   const searchProduct = (word: any) => {
@@ -116,7 +100,7 @@ const DefaultNav: React.FC = () => {
                   style={{ top: "-70%", right: "-65%" }}
                 >
                   <p className=" text-center  text-sm font-roboto text-white ">
-                    {Cart.products.length}
+                    {Cart.length}
                   </p>
                 </div>
               )}

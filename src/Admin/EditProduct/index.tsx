@@ -10,6 +10,7 @@ import Select from "react-select";
 import delay from "delay";
 import SuccessCard from "../Upload/successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import DefaultNav from "../components/DefaultNav";
 const Edit: React.FC = () => {
   // const [setEditForm] = useState(false);
   // const [image, setImage] = useState<any>("");
@@ -105,7 +106,9 @@ const Edit: React.FC = () => {
 
   return (
     <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
+      <DefaultNav />
       <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
+        <h3 className="text-2xl text-gray-900 font-bold font-nunito"> Edit Product </h3>
         {newValue.image !== "" ? (
           <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
             <img

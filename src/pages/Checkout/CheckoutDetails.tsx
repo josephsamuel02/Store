@@ -27,6 +27,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
     deliveryAddress: "",
     phone: "",
     alternativePhone: "",
+    whatsappNumber: "",
   });
   const [orderItem, setOrderItem] = useState<any>();
 
@@ -65,6 +66,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
     try {
       const docRef = await addDoc(collection(db, "order"), {
         ...orderItem,
+        ...userInfo,
         paymentMedium: paymentMedium,
       });
       if (!docRef) {
@@ -104,6 +106,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
   useEffect(() => {
     if (!token) {
       window.location.replace("/");
+      console.log(TotalPrice, Cart);
     }
     // console.log([
     //   {
@@ -195,12 +198,22 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               Contacts numbers:
               <span className="mx-1 font-normal text-black">{userInfo.phone}</span>
             </p>
-
+            <p className="text-sm p-1 text-black font-roboto  flex flex-col ">
+              whatsapp number(optional):
+              <textarea
+                draggable={false}
+                placeholder={"whatsapp number "}
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, whatsappNumber: e.target.value }))
+                }
+                className="  my-auto w-52 h-8 p-1  text-sm text-slate-800 font-normal focus:outline-none  resize-none no-scrollbar border-2 border-gray-300 rounded-md"
+              ></textarea>
+            </p>
             <p className="text-sm p-1 text-black font-roboto  flex flex-col ">
               Add alternative numbers:
               <textarea
                 draggable={false}
-                placeholder={"0802... "}
+                placeholder={"  "}
                 onChange={(e) =>
                   setUserInfo((prev: any) => ({ ...prev, alternativePhone: e.target.value }))
                 }
