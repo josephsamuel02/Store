@@ -9,19 +9,19 @@ const About: React.FC = () => {
       <div className="w-full h-full mb-4 md:mb-36 py-5 md:py-20 px-0 md:px-20 lg:px-40 bg-bg1 bg-center bg-cover bg-no-repeat flex flex-col ">
         <div className="mt-20 px-6 md:px-20 pb-20 mx-auto w-11/12 md:w-full h-auto   bg-white rounded-sm md:rounded-xl shadow-lg">
           <img
-            src="/image/DM LOGO.png"
+            src="/img/DM LOGO.png"
             alt="company logo"
             className=" my-6 mx-auto w-36 h-auto"
           />
 
-          <h2 className=" text-3xl md:text-6xl py-4 md:py-5 md:pt-8   text-[#e30202] text-center ">
+          <h2 className=" text-3xl  py-4 md:py-5 md:pt-8   text-[#e30202] text-center ">
             About Us
           </h2>
 
-          <h2 className=" text-xl md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
+          <h2 className=" text-lg md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
             Welcome to One Store
           </h2>
-          <p className="text-xl text-gray-900 leading-9">
+          <p className="text-lg text-gray-900 leading-9">
             At Onestore, We're dedicated to providing you with quality products and exceptional
             service. With a wide selection of items across various categories, from fashion to
             electronics, We're here to meet all your needs. Shop with confidence at Onestore,
@@ -29,10 +29,10 @@ const About: React.FC = () => {
             better way to shop online.
           </p>
 
-          <h2 className=" text-xl md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
+          <h2 className=" text-lg md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
             OUR CORE VALUES
           </h2>
-          <p className="text-xl text-gray-900 leading-9">
+          <p className="text-lg text-gray-900 leading-9">
             Integrity: We employ the highest ethical standards, demonstrating honesty and
             fairness to all concerned.
             <br /> <br />
@@ -48,10 +48,10 @@ const About: React.FC = () => {
             dignity, equality and trust.
           </p>
 
-          <h2 className=" text-xl md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
+          <h2 className=" text-lg md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
             Teamwork
           </h2>
-          <p className="text-xl text-gray-900 leading-9">
+          <p className="text-lg text-gray-900 leading-9">
             We promote and support a diverse, yet unified team. We are committed to a teamwork
             environment where every staff is a valued member, treated with respect, encouraged
             to contribute to our growth, and recognized and rewarded for his/her efforts.
