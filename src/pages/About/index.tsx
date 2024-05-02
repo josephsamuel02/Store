@@ -9,7 +9,7 @@ const About: React.FC = () => {
       <div className="w-full h-full mb-4 md:mb-36 py-5 md:py-20 px-0 md:px-20 lg:px-40 bg-bg1 bg-center bg-cover bg-no-repeat flex flex-col ">
         <div className="mt-20 px-6 md:px-20 pb-20 mx-auto w-11/12 md:w-full h-auto   bg-white rounded-sm md:rounded-xl shadow-lg">
           <img
-            src="/img/DM LOGO.png"
+            src="/img/OneStore logo.svg"
             alt="company logo"
             className=" my-6 mx-auto w-36 h-auto"
           />
