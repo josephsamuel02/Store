@@ -108,7 +108,7 @@ const DefaultNav: React.FC = () => {
             </a>
             <a
               className="w-auto mx-auto flex flex-col items-center cursor-pointer"
-              href={ROUTES.ADMIN_PROFILE}
+              href={ROUTES.PROFILE}
             >
               <h1 className="w-auto mx-auto flex flex-row">
                 <MdPersonOutline size={32} className="text-slate-700" />

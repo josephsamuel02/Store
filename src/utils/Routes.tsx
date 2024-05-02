@@ -5,6 +5,7 @@ const ROUTES = {
   CART: "/cart",
   ORDERS: "/orders",
   CHECKOUT: "/checkout",
+  PROFILE: "/profile",
 
   ADMIN_LANDINGPAGE: "/admin",
   ADMIN_EDIT_PRODUCT: "/admin/edit_product",
@@ -14,7 +15,6 @@ const ROUTES = {
   ADMIN_LOGIN: "/admin/login",
   ADMIN_PROFILE: "/admin/profile",
 
-  PROFILE: "/profile",
   LOGIN: "/login",
   SIGNUP: "/signup",
   FORGOTPASSWORD: "/forgot-password",
