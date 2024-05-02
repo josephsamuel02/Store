@@ -49,12 +49,11 @@ const Orders: React.FC = () => {
         <div className="w-full px-3 h-auto my-6 bg-white grid gap-4 grid-col grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {Orders &&
             Orders.map((i: any, n: any) => (
-              <Card
-                className=" mx-auto mt-16 pb-6 w-auto rounded-lg"
-                key={n}
-                onClick={() => Navigate(`${ROUTES.ADMIN_ORDER_DETAILS}/${n}`)}
-              >
-                <CardHeader className="relative h-50 rounded-md">
+              <Card className=" mx-auto mt-16 pb-6 w-auto rounded-lg" key={n}>
+                <CardHeader
+                  className="relative h-50 rounded-md"
+                  onClick={() => Navigate(`${ROUTES.ADMIN_ORDER_DETAILS}/${n}`)}
+                >
                   <img
                     src={i.Products[0].image}
                     alt="card-image"
@@ -76,7 +75,10 @@ const Orders: React.FC = () => {
                   </svg>
                   ₦ {priceFormat.format(i.totalPrice)}
                 </Typography>
-                <CardBody className=" h-72 line-clamp-10 ">
+                <CardBody
+                  className=" h-72 line-clamp-10 "
+                  onClick={() => Navigate(`${ROUTES.ADMIN_ORDER_DETAILS}/${n}`)}
+                >
                   <Typography variant="h5" color="blue-gray" className="mb-2">
                     {i.surname} {i.name}
                   </Typography>
@@ -94,7 +96,7 @@ const Orders: React.FC = () => {
                   <Tooltip content="Call" className=" mx-auto flex flex-row justify-center ">
                     <Typography
                       as="a"
-                      href="#call"
+                      href={ROUTES.CALLLINE}
                       variant="lead"
                       color="green"
                       className=" mx-auto px-2 py-3 hover:bg-gray-200 flex flex-row   text-blue-600 font-lg uppercase rounded-full shadow-xl"
@@ -118,7 +120,7 @@ const Orders: React.FC = () => {
                   <Tooltip content=" whatsapp Chat">
                     <Typography
                       as="a"
-                      href="#call"
+                      href={ROUTES.WHATSAPP}
                       variant="lead"
                       color="green"
                       className=" mx-auto px-2 py-3 text-green-600 hover:bg-gray-200 flex flex-row   font-lg uppercase rounded-full shadow-xl"

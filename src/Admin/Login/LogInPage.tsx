@@ -121,14 +121,14 @@ const AdminLogin: React.FC = () => {
               Login
             </button>
 
-            <p className="mx-auto  text-base text-thin text-slate-700">
+            {/* <p className="mx-auto  text-base text-thin text-slate-700">
               <a
                 href={ROUTES.FORGOTPASSWORD}
                 className="mx-auto text-base underline text-blue-600"
               >
                 Forgot password
               </a>
-            </p>
+            </p> */}
 
             <p className="mx-auto my-3 text-base text-thin text-slate-700">
               Don't have an account?

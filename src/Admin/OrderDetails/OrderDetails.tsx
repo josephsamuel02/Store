@@ -153,7 +153,7 @@ const AdminOrderDetails: React.FC = () => {
             </div>
           )}
         </div>
-      </div>{" "}
+      </div>
       <Footer />
     </>
   );
