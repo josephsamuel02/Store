@@ -20,6 +20,7 @@ import AdminLogin from "./Admin/Login/LogInPage";
 import AdminProfile from "./Admin/Profile/index";
 import AdminUpload from "./Admin/Upload/index";
 import AdminProductDetails from "./Admin/ProductDetails/index";
+import About from "./pages/About";
 
 const App: React.FC = () => {
   return (
@@ -35,7 +36,9 @@ const App: React.FC = () => {
         <Route path={ROUTES.PROFILE} element={<Profile />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+
         <Route path={ROUTES.FORGOTPASSWORD} element={<ForgotPassword />} />
+        <Route path={ROUTES.ABOUTUS} element={<About />} />
 
         {/* ADmin */}
 

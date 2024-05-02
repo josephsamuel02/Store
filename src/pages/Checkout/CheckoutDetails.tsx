@@ -108,20 +108,16 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
       window.location.replace("/");
       console.log(TotalPrice, Cart);
     }
-    // console.log([
-    //   {
-    //     Products: Cart,
-    //     userId: token,
-    //     totalPrice: TotalPrice,
-    //     orderLevel: 0,
-    //   },
-    // ]);
+    const currDate = new Date().toLocaleDateString();
+    const currTime = new Date().toLocaleTimeString();
+    console.log(currDate, currTime);
     fetchUser();
     setOrderItem({
       Products: Cart,
       userId: token,
       totalPrice: TotalPrice,
       orderLevel: 0,
+      date: `${currTime} at ${currDate}  `,
     });
   }, []);
   // const config = {

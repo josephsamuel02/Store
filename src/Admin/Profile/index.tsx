@@ -53,7 +53,6 @@ const AdminProfile: React.FC = () => {
         if (docSnap.exists()) {
           const data = docSnap.data();
           setUpdatedUser(data);
-          console.log(data);
         } else {
           console.log("No such document!");
         }

@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import ROUTES from "../../utils/Routes";
 
-// import StoreMenu from "../components/StoreMenu";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-// import StoreMenu from "../components/StoreMenu";
 import DefaultNav from "../components/DefaultNav";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +13,6 @@ const Store: React.FC = () => {
   const Navigate = useNavigate();
 
   const [Product, setProducts] = useState<any>();
-  const [setStock, stocks] = useState<number>(1);
   const priceFormat = new Intl.NumberFormat("en-US");
   const fetchProducts = async () => {
     await getDocs(collection(db, "products")).then((querySnapshot) => {
@@ -33,7 +30,6 @@ const Store: React.FC = () => {
 
   return (
     <>
-      {/* <StoreMenu setStock={setStock} stocks={stocks} /> */}
       <DefaultNav />
       <div className="mx-auto w-full md:w-5/6 h-screen bg-white overflow-y-scroll scrollbar-hide">
         <div className="w-full mx-auto p-2 mt-28  h-full grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-3">

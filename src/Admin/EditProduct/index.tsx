@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,13 +13,10 @@ import SuccessCard from "../Upload/successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import DefaultNav from "../components/DefaultNav";
 const Edit: React.FC = () => {
-  // const [setEditForm] = useState(false);
-  // const [image, setImage] = useState<any>("");
-  const priceFormat = new Intl.NumberFormat("en-US");
   const { id } = useParams<{ id: string }>();
   const [Product, setProduct] = useState<any>([]);
-  const [image, setImage] = useState<any>("");
-  const [imageFile, setImageFile] = useState<any>("");
+  const [setImage] = useState<any>("");
+  const [setImageFile] = useState<any>("");
   const [readyToUpload, setReadyToUpload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCard, setShowCard] = useState(false);
@@ -64,14 +62,14 @@ const Edit: React.FC = () => {
   const UploadProduct = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const docRef = doc(db, "products", id);
+    const docRef = doc(db, "products", id!);
 
     // Data to update
-    const newData = {
-      ...newValue,
-    };
+    // const newData = {
+    //   ...newValue,
+    // };
 
-    updateDoc(docRef, newData)
+    updateDoc(docRef, newValue)
       .then(async () => {
         toast.success("Document updated successfully!");
         delay(2000);
@@ -79,6 +77,7 @@ const Edit: React.FC = () => {
       })
       .catch((error) => {
         toast.error("Error updating document");
+        console.log(error);
         delay(1300);
         window.location.reload();
       });

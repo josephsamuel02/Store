@@ -2,6 +2,7 @@
 import React from "react";
 import { MdWhatsapp, MdFacebook } from "react-icons/md";
 import { Typography } from "@material-tailwind/react";
+import ROUTES from "../utils/Routes";
 
 const Footer: React.FC = () => {
   return (
@@ -71,7 +72,7 @@ const Footer: React.FC = () => {
     //     </div>
     //   </div>
     // </div>
-    <footer className="w-full mt-40 bg-white p-8">
+    <footer className="w-full mt-28 bg-white p-8">
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
         <img src="/img/OneStore logo.svg" alt="logo-ct" className="mx-20 w-44 h-auto" />
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
@@ -82,17 +83,7 @@ const Footer: React.FC = () => {
               color="blue-gray"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
-              Home
-            </Typography>
-          </li>{" "}
-          <li>
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
-              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-            >
-              About Us
+              <a href={ROUTES.LANDINGPAGE}> Home</a>
             </Typography>
           </li>
           <li>
@@ -102,7 +93,27 @@ const Footer: React.FC = () => {
               color="blue-gray"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
+              <a href={ROUTES.ABOUTUS}> About Us</a>
+            </Typography>
+          </li>
+          {/* <li>
+            <Typography
+              as="a"
+              href="#"
+              color="blue-gray"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+            >
               Contact Us
+            </Typography>
+          </li> */}
+          <li>
+            <Typography
+              as="a"
+              href="#"
+              color="blue-gray"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+            >
+              <a href={ROUTES.ADMIN_LOGIN}> Admin</a>
             </Typography>
           </li>
         </ul>

@@ -4,6 +4,7 @@ import Orders from "./Orders";
 import Store from "./Store";
 import Upload from "../Upload";
 import SideNav, { MobileNav } from "../components/SideNav";
+import Footer from "../../components/Footer";
 
 const Dashboard: React.FC = () => {
   const [sidebarState, setsidebarState] = useState(false);
@@ -25,6 +26,7 @@ const Dashboard: React.FC = () => {
         {page == "store" ? <Store /> : ""}
         {page == "upload" ? <Upload /> : ""}
       </div>
+      <Footer />
     </div>
   );
 };
