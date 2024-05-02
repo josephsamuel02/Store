@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
@@ -7,7 +8,7 @@ import DefaultNav from "../components/DefaultNav";
 import Footer from "../../components/Footer";
 
 const AdminOrderDetails: React.FC = () => {
-  const { id } = useParams();
+  const { id }: any = useParams();
 
   const adminToken = localStorage.getItem("one_store_admin");
   const Navigate = useNavigate();
