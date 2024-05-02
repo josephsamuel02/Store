@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ROUTES from "../../utils/Routes";
@@ -12,7 +14,7 @@ const AdminProductDetails: React.FC = () => {
   const priceFormat = new Intl.NumberFormat("en-US");
 
   useEffect(() => {
-    const docRef = doc(db, "products", id);
+    const docRef = doc(db, "products", id!);
 
     getDoc(docRef)
       .then((docSnap) => {

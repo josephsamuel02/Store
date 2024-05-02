@@ -7,12 +7,11 @@ import DefaultNav from "../components/DefaultNav";
 import Footer from "../../components/Footer";
 
 const AdminOrderDetails: React.FC = () => {
-  const { id }: any = useParams();
+  const { id } = useParams();
 
   const adminToken = localStorage.getItem("one_store_admin");
   const Navigate = useNavigate();
   const [Orders, setOrders] = useState<any>();
-  const priceFormat = new Intl.NumberFormat("en-US");
 
   const fetchOrders = async () => {
     await getDocs(collection(db, "order")).then((querySnapshot) => {

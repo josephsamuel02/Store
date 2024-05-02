@@ -84,7 +84,7 @@ const Edit: React.FC = () => {
   };
 
   useEffect(() => {
-    const docRef = doc(db, "products", id);
+    const docRef = doc(db, "products", id!);
 
     getDoc(docRef)
       .then((docSnap) => {
