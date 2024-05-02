@@ -56,16 +56,6 @@ const About: React.FC = () => {
             environment where every staff is a valued member, treated with respect, encouraged
             to contribute to our growth, and recognized and rewarded for his/her efforts.
           </p>
-
-          <h2 className=" text-xl md:text-2xl font-bold  text-[#e30202]  pb-4 pt-10 uppercase">
-            Visit Us Today
-          </h2>
-          <p className="text-xl text-gray-900 leading-9">
-            Whether you're in the market for a new car or need service for your current
-            vehicle, we invite you to visit us at DM Auto. Experience the difference that sets
-            us apart from other dealerships and let us help you find your next vehicle. We look
-            forward to serving you!
-          </p>
         </div>
       </div>
       <Footer />
