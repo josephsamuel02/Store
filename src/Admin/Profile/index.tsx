@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ const AdminProfile: React.FC = () => {
   const submit = async (e: any) => {
     e.preventDefault();
 
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     // Data to update
     const newData = {
@@ -40,13 +41,14 @@ const AdminProfile: React.FC = () => {
       })
       .catch((error) => {
         toast.error("Error updating document");
+        console.log(error);
         delay(1300);
         window.location.reload();
       });
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     getDoc(docRef)
       .then((docSnap) => {

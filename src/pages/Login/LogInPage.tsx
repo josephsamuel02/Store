@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -58,14 +60,12 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     getDoc(docRef)
       .then((docSnap) => {
         if (docSnap.exists()) {
           // Document found, you can access its data
-
-          const data = docSnap.data();
 
           Navigate("/");
         } else {

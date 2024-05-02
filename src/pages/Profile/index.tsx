@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -9,10 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Profile: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
-  // const Navigate = useNavigate();
+  const Navigate = useNavigate();
   const [edit, setEdit] = useState<any>(false);
   const [updatedUser, setUpdatedUser] = useState<any>();
 
@@ -23,7 +25,7 @@ const Profile: React.FC = () => {
   const submit = async (e: any) => {
     e.preventDefault();
 
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     // Data to update
     const newData = {
@@ -39,12 +41,13 @@ const Profile: React.FC = () => {
       .catch((error) => {
         toast.error("Error updating document");
         delay(1300);
+        console.log(error);
         window.location.reload();
       });
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     getDoc(docRef)
       .then((docSnap) => {

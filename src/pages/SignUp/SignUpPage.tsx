@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
@@ -8,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const token = localStorage.getItem("one_store_login");
 
 const SignUp: React.FC = () => {
@@ -19,7 +21,7 @@ const SignUp: React.FC = () => {
     phone: "",
     password: "",
   });
-
+  const Navigate = useNavigate();
   const [confirmPass, setConfirmPass] = useState<any>("");
 
   const SignUP = async (e: { preventDefault: () => void }) => {
@@ -44,14 +46,12 @@ const SignUp: React.FC = () => {
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     getDoc(docRef)
       .then((docSnap) => {
         if (docSnap.exists()) {
           // Document found, you can access its data
-
-          const data = docSnap.data();
 
           Navigate("/");
         } else {

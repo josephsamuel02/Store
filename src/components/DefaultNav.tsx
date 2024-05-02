@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ const DefaultNav: React.FC = () => {
   const [Cart, setCart] = useState<any>([]);
   const [User, setUser] = useState<any>(true);
 
-  const [Products, setProducts] = useState([]);
+  const [Products] = useState([]);
 
   const getUserInfo = async () => {
     try {
@@ -30,13 +31,13 @@ const DefaultNav: React.FC = () => {
     }
   };
 
-  const [searchResult, setSearchResult] = useState<any>([{ name: "computer" }]);
+  const [setSearchResult] = useState<any>([{ name: "computer" }]);
 
   useEffect(() => {
     if (token) {
       getUserInfo();
       setUser(true);
-      const docRef = doc(db, "user", token);
+      const docRef = doc(db, "user", token!);
       getDoc(docRef)
         .then((docSnap) => {
           if (docSnap.exists()) {

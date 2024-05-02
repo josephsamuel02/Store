@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -18,7 +20,6 @@ const AdminLogin: React.FC = () => {
     email: "",
     password: "",
   });
-  const adminToken = localStorage.getItem("one_store_admin");
   const token = localStorage.getItem("one_store_login");
   const fetchUser = async (e: any) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ const AdminLogin: React.FC = () => {
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token);
+    const docRef = doc(db, "user", token!);
 
     getDoc(docRef)
       .then((docSnap) => {

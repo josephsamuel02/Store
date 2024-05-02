@@ -27,7 +27,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const token = localStorage.getItem("one_store_login");
 
   const priceFormat = new Intl.NumberFormat("en-US");
-  const [ShowPrice, setShowPrice] = useState<any>(true);
+  const [ShowPrice] = useState<any>(true);
   const [Order, setOrder] = useState<any>();
 
   const [checkout, setCheckOut] = useState(false);
