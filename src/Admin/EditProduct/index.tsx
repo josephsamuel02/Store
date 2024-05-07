@@ -14,7 +14,7 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import DefaultNav from "../components/DefaultNav";
 const Edit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [Product, setProduct] = useState<any>([]);
+  const [Product, setProduct] = useState<any>();
   const [setImage] = useState<any>("");
   const [setImageFile] = useState<any>("");
   const [readyToUpload, setReadyToUpload] = useState(false);
@@ -39,6 +39,7 @@ const Edit: React.FC = () => {
   const handleImageSelect = async (e: any) => {
     const file = e.target.files[0];
     setImage(URL.createObjectURL(file));
+
     try {
       const imageRef = ref(storage, `/products_images/${e.target.files[0].name + v4()} `);
 
@@ -92,7 +93,7 @@ const Edit: React.FC = () => {
           // Document found, you can access its data
 
           const data = docSnap.data();
-          setProduct([data]);
+          setProduct(data);
           console.log(data);
         } else {
           console.log("No such document!");
@@ -106,59 +107,61 @@ const Edit: React.FC = () => {
   return (
     <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
       <DefaultNav />
-      <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col   items-center">
-        <h3 className="text-2xl text-gray-900 font-bold font-nunito"> Edit Product </h3>
-        {newValue.image !== "" ? (
-          <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
-            <img
-              src={newValue.image}
-              alt=""
-              className="mx-auto w-48 md:w-72 h-auto object-cover rounded-sm"
-            />
-          </div>
-        ) : (
-          <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
-            <img
-              src={"/img/shopping-cart.png"}
-              alt=""
-              className="mx-auto w-60 h-48 object-cover border-2 border-slate-200 rounded"
-            />
-          </div>
-        )}
+      {Product && (
+        <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col items-center">
+          <h3 className="text-2xl text-gray-900 font-bold font-nunito"> Edit Product </h3>
+          {newValue.image && (
+            <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
+              <img
+                src={newValue.image}
+                alt=""
+                className="mx-auto w-48 md:w-72 h-auto object-cover rounded-sm"
+              />
+            </div>
+          )}
+          {!newValue.image && (
+            <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
+              <img
+                src={Product.image}
+                alt=""
+                className="mx-auto w-60 h-48 object-cover border-2 border-slate-200 rounded"
+              />
+            </div>
+          )}
 
-        <div className="w-4/5 mx-auto md:px-2 md:mx-4 my-1 py-1 flex flex-col items-center ">
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            <label className="text-lg text-gray-700 font-nunito"> Product image:</label>
-            <input
-              type="file"
-              accept="image/jpg, image/jpeg, image/png image/svg"
-              multiple={false}
-              onChange={(e) => handleImageSelect(e)}
-              className=" mx-auto w-full h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-            />
-          </div>
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            <label className="text-lg text-gray-700 font-nunito"> Product name:</label>
-            <textarea
-              draggable={false}
-              placeholder={Product.name}
-              onChange={(e: any) => setNewValue((prev: any) => ({ ...prev, name: e.value }))}
-              className=" my-auto w-full h-16 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
-            ></textarea>
-          </div>
+          <div className="w-4/5 mx-auto md:px-2 md:mx-4 my-1 py-1 flex flex-col items-center ">
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              <label className="text-lg text-gray-700 font-nunito"> Product image:</label>
+              <input
+                type="file"
+                accept="image/jpg, image/jpeg, image/png image/svg"
+                multiple={false}
+                onChange={(e) => handleImageSelect(e)}
+                className=" mx-auto w-full h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
+              />
+            </div>
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              <label className="text-lg text-gray-700 font-nunito">Product name:</label>
+              <textarea
+                draggable={false}
+                placeholder={Product.name}
+                onChange={(e: any) => setNewValue((prev: any) => ({ ...prev, name: e.value }))}
+                className=" my-auto w-full h-16 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
+              ></textarea>
+            </div>
 
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            <label className="text-lg text-gray-700 font-nunito"> Product Details:</label>
-            <textarea
-              draggable={false}
-              placeholder={Product.productDetails}
-              onChange={(e: any) =>
-                setNewValue((prev: any) => ({ ...prev, productDetails: e.value }))
-              }
-              className=" my-auto w-full h-20 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
-            ></textarea>
-          </div>
-          {/* <div className="w-full mx-auto my-3  flex flex-col">
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              <label className="text-lg text-gray-700 font-nunito"> Product Details:</label>
+              <textarea
+                draggable={false}
+                placeholder={Product.productDetails}
+                onChange={(e: any) =>
+                  setNewValue((prev: any) => ({ ...prev, productDetails: e.value }))
+                }
+                className=" my-auto w-full h-20 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
+              ></textarea>
+            </div>
+            {/* <div className="w-full mx-auto my-3  flex flex-col">
             <label className="text-lg text-gray-700 font-nunito flex flex-row items-center">
               <ToolTip tipp="what are the key attributes of the product" /> Product Features:
             </label>
@@ -209,84 +212,89 @@ const Edit: React.FC = () => {
               </div>
             </div>
           </div> */}
-          <div className="w-full mx-auto my-1 py-1 flex flex-col">
-            <label className="text-lg text-gray-700 font-nunito"> Old price ₦:</label>
+            <div className="w-full mx-auto my-1 py-1 flex flex-col">
+              <label className="text-lg text-gray-700 font-nunito"> Old price ₦:</label>
 
-            <input
-              type="tel"
-              placeholder={Product.old_price}
-              onChange={(e: any) =>
-                setNewValue((prev: any) => ({ ...prev, old_price: e.value }))
-              }
-              className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-            />
-          </div>
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            <label className="text-lg text-gray-700 font-nunito">Price ₦ :</label>
-
-            <input
-              type="tel"
-              placeholder={Product.price}
-              onChange={(e: any) => setNewValue((prev: any) => ({ ...prev, price: e.value }))}
-              className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-            />
-          </div>
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            <label className="text-lg text-gray-700 font-nunito">Available Quantity :</label>
-
-            <input
-              type="tel"
-              placeholder={Product.inStock}
-              onChange={(e: any) =>
-                setNewValue((prev: any) => ({ ...prev, inStock: e.value }))
-              }
-              className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-            />
-          </div>
-
-          <div className="w-full mx-auto my-1 py-1 flex flex-col">
-            <label className="text-lg text-gray-700 font-nunito">Allow pay on delivery</label>
-            <div className=" py-1 flex flex-row  items-center ">
-              <Select
-                options={options}
-                defaultValue={false}
-                required
+              <input
+                type="tel"
+                placeholder={Product.old_price}
                 onChange={(e: any) =>
-                  setNewValue((prev: any) => ({ ...prev, PayOnDelivery: e.value }))
+                  setNewValue((prev: any) => ({ ...prev, old_price: e.value }))
                 }
+                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
               />
             </div>
-          </div>
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              <label className="text-lg text-gray-700 font-nunito">Price ₦ :</label>
 
-          <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-            {!readyToUpload ? (
-              <button
-                type="submit"
-                onClick={() => setReadyToUpload(true)}
-                className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-400"
-              >
-                Submit
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={UploadProduct}
-                className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-700"
-              >
-                {loading ? (
-                  <ScaleLoader
-                    color={"white"}
-                    aria-label="ScaleLoader"
-                    data-testid="ScaleLoader"
-                  />
-                ) : (
-                  "Upload"
-                )}
-              </button>
-            )}
+              <input
+                type="tel"
+                placeholder={Product.price}
+                onChange={(e: any) =>
+                  setNewValue((prev: any) => ({ ...prev, price: e.value }))
+                }
+                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
+              />
+            </div>
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              <label className="text-lg text-gray-700 font-nunito">Available Quantity :</label>
+
+              <input
+                type="tel"
+                placeholder={Product.inStock}
+                onChange={(e: any) =>
+                  setNewValue((prev: any) => ({ ...prev, inStock: e.value }))
+                }
+                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
+              />
+            </div>
+
+            <div className="w-full mx-auto my-1 py-1 flex flex-col">
+              <label className="text-lg text-gray-700 font-nunito">
+                Allow pay on delivery
+              </label>
+              <div className=" py-1 flex flex-row  items-center ">
+                <Select
+                  options={options}
+                  defaultValue={false}
+                  required
+                  onChange={(e: any) =>
+                    setNewValue((prev: any) => ({ ...prev, PayOnDelivery: e.value }))
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
+              {!readyToUpload ? (
+                <button
+                  type="submit"
+                  onClick={() => setReadyToUpload(true)}
+                  className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-400"
+                >
+                  Submit
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={UploadProduct}
+                  className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-700"
+                >
+                  {loading ? (
+                    <ScaleLoader
+                      color={"white"}
+                      aria-label="ScaleLoader"
+                      data-testid="ScaleLoader"
+                    />
+                  ) : (
+                    "Upload"
+                  )}
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <ToastContainer />
       <SuccessCard
         showCard={showCard}
