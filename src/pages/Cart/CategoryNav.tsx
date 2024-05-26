@@ -1,5 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import Select from "react-select";
 
 const CategoryNav = () => {
