@@ -21,16 +21,7 @@ const Edit: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showCard, setShowCard] = useState(false);
 
-  const [newValue, setNewValue] = useState<any>({
-    image: "",
-    name: "",
-    productDetails: "",
-    features: ["", ""],
-    old_price: "",
-    price: "",
-    inStock: "",
-    PayOnDelivery: false,
-  });
+  const [newValue, setNewValue] = useState<any>();
   const options: any = [
     { value: false, label: "No" },
     { value: true, label: "Yes" },
@@ -69,6 +60,7 @@ const Edit: React.FC = () => {
     // const newData = {
     //   ...newValue,
     // };
+    console.log(newValue);
 
     updateDoc(docRef, newValue)
       .then(async () => {
@@ -94,6 +86,7 @@ const Edit: React.FC = () => {
 
           const data = docSnap.data();
           setProduct(data);
+          setNewValue(data);
           console.log(data);
         } else {
           console.log("No such document!");
@@ -130,6 +123,8 @@ const Edit: React.FC = () => {
           )}
 
           <div className="w-4/5 mx-auto md:px-2 md:mx-4 my-1 py-1 flex flex-col items-center ">
+            <h2 className="text-lg text-gray-900 font-nunito"> category:{Product.category}</h2>
+
             <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
               <label className="text-lg text-gray-700 font-nunito"> Product image:</label>
               <input
@@ -241,7 +236,7 @@ const Edit: React.FC = () => {
 
               <input
                 type="tel"
-                placeholder={Product.inStock}
+                defaultValue={Product.inStock}
                 onChange={(e: any) =>
                   setNewValue((prev: any) => ({ ...prev, inStock: e.value }))
                 }
@@ -256,11 +251,13 @@ const Edit: React.FC = () => {
               <div className=" py-1 flex flex-row  items-center ">
                 <Select
                   options={options}
-                  defaultValue={false}
+                  defaultInputValue={Product.PayOnDelivery}
+                  placeholder={Product.PayOnDelivery == false ? "No" : "Yes"}
                   required
                   onChange={(e: any) =>
                     setNewValue((prev: any) => ({ ...prev, PayOnDelivery: e.value }))
                   }
+                  className="w-32"
                 />
               </div>
             </div>

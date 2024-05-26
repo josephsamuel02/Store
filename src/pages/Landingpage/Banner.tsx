@@ -1,6 +1,7 @@
 import React from "react";
-import { FaHeadphones } from "react-icons/fa6";
-import { LuApple, LuRadioReceiver, LuShirt } from "react-icons/lu";
+import { FaHeadphones, FaWineBottle } from "react-icons/fa6";
+import { GiLipstick, GiLiquidSoap } from "react-icons/gi";
+import { LuApple, LuBaby, LuRadioReceiver, LuShirt } from "react-icons/lu";
 import { AiOutlineShopping } from "react-icons/ai";
 import { BsPhone } from "react-icons/bs";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
@@ -49,6 +50,26 @@ const Banner: React.FC = () => {
       name: "Food",
       url: "food",
       icon: <LuApple size={24} className="mx-2 text-Storepurple" />,
+    },
+    {
+      name: "Body care and hygiene",
+      icon: <GiLiquidSoap size={24} className="mx-2 text-Storepurple" />,
+      url: "body_care",
+    },
+    {
+      name: "Baby",
+      icon: <LuBaby size={24} className="mx-2 text-Storepurple" />,
+      url: "baby",
+    },
+    {
+      name: "Cosmetics",
+      icon: <GiLipstick size={24} className="mx-2 text-Storepurple" />,
+      url: "cosmetics",
+    },
+    {
+      name: "Wines and liquor",
+      icon: <FaWineBottle size={24} className="mx-2 text-Storepurple" />,
+      url: "wine",
     },
   ];
 

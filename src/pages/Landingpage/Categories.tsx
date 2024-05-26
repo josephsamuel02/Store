@@ -3,7 +3,7 @@ import ROUTES from "../../utils/Routes";
 const Categories: React.FC = () => {
   const Menu = [
     {
-      name: "Computers",
+      name: "Computing",
       img: "/img/n.png",
       url: "computers",
     },
@@ -27,7 +27,9 @@ const Categories: React.FC = () => {
       img: "/img/q.jpg",
       url: "accessories",
     },
-    { name: "Fashion", img: "/img/c.png", url: "fashion" },
+    { name: "Body care and hygiene", img: "/img/c.png", url: "baby" },
+    // { name: "Cosmetics", img: "/img/c.png", url: "cosmetics" },
+    // { name: "Wines and liquor", img: "/img/c.png", url: "wine" },
   ];
 
   return (
