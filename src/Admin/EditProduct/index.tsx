@@ -144,7 +144,7 @@ const Edit: React.FC = () => {
               <label className="text-lg text-gray-700 font-nunito">Product name:</label>
               <textarea
                 draggable={false}
-                placeholder={Product.name}
+                defaultValue={Product.name}
                 onChange={(e: any) => setNewValue((prev: any) => ({ ...prev, name: e.value }))}
                 className=" my-auto w-full h-16 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
               ></textarea>
@@ -154,7 +154,7 @@ const Edit: React.FC = () => {
               <label className="text-lg text-gray-700 font-nunito"> Product Details:</label>
               <textarea
                 draggable={false}
-                placeholder={Product.productDetails}
+                defaultValue={Product.productDetails}
                 onChange={(e: any) =>
                   setNewValue((prev: any) => ({ ...prev, productDetails: e.value }))
                 }
@@ -217,7 +217,7 @@ const Edit: React.FC = () => {
 
               <input
                 type="tel"
-                placeholder={Product.old_price}
+                defaultValue={Product.old_price}
                 onChange={(e: any) =>
                   setNewValue((prev: any) => ({ ...prev, old_price: e.value }))
                 }
@@ -229,7 +229,7 @@ const Edit: React.FC = () => {
 
               <input
                 type="tel"
-                placeholder={Product.price}
+                defaultValue={Product.price}
                 onChange={(e: any) =>
                   setNewValue((prev: any) => ({ ...prev, price: e.value }))
                 }

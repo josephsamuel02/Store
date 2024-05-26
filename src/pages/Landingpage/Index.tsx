@@ -11,7 +11,7 @@ import { db } from "../../DB/firebase";
 const Index: React.FC = () => {
   // const Products = useSelector((state: any) => state.Products.productsByCategory.data);
 
-  const [allProducts, setAllProducts] = useState();
+  const [allProducts, setAllProducts] = useState<any>("");
 
   const fetchPost = async () => {
     await getDocs(collection(db, "products")).then((querySnapshot) => {

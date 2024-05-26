@@ -6,6 +6,7 @@ import { getDocs, collection, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../DB/firebase";
 import { useNavigate } from "react-router-dom";
+import CategoryNav from "./CategoryNav";
 
 const Cart: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
@@ -45,8 +46,9 @@ const Cart: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-full pt-16 md:pt-20  bg-purple-100">
+    <div className="w-full px-3 flex flex-col items-center   h-full pt-16 md:pt-20  bg-purple-100">
       <DefaultNav />
+      <CategoryNav />
       {token && <CartItems cartItems={Cart} totalPrice={totalPrice} />}
       <Footer />
     </div>

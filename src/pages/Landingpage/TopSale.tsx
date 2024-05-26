@@ -33,7 +33,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
                 <h2 className="font-bold text-base py-1 text-black flex flex-col md:flex-row items-center">
                   ₦{priceFormat.format(i.price)}
                   <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal  ">
-                    ₦{priceFormat.format(i.price)}
+                    {i.old_price != i.old_price && `₦${priceFormat.format(i.old_price)}`}
                   </span>
                 </h2>
               </a>
