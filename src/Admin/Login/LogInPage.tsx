@@ -20,7 +20,7 @@ const AdminLogin: React.FC = () => {
     email: "",
     password: "",
   });
-  const token = localStorage.getItem("one_store_login");
+  // const token = localStorage.getItem("one_store_login");
   const fetchUser = async (e: any) => {
     e.preventDefault();
 
