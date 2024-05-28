@@ -60,7 +60,7 @@ const Edit: React.FC = () => {
     // const newData = {
     //   ...newValue,
     // };
-    console.log(newValue);
+    // console.log(newValue);
 
     updateDoc(docRef, newValue)
       .then(async () => {

@@ -56,28 +56,26 @@ const AdminLogin: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const docRef = doc(db, "user", token!);
+  // useEffect(() => {
+  //   const docRef = doc(db, "user", token!);
 
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          // Document found, you can access its data
-
-          const data = docSnap.data();
-          if (data.admin == true) {
-            localStorage.setItem("one_store_admin", `${data.id}`);
-            delay(2000);
-            Navigate("/admin");
-          }
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-      });
-  }, []);
+  //   getDoc(docRef)
+  //     .then((docSnap) => {
+  //       if (docSnap.exists()) {
+  //         const data = docSnap.data();
+  //         if (data.admin == true) {
+  //           localStorage.setItem("one_store_admin", `${data.id}`);
+  //           delay(2000);
+  //           Navigate("/admin");
+  //         }
+  //       } else {
+  //         console.log("No such document!");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting document:", error);
+  //     });
+  // }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">
