@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
@@ -10,17 +10,16 @@ import DefaultNav from "../../components/DefaultNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { getDocs, collection, doc, getDoc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-import { useNavigate } from "react-router-dom";
 
 const AdminLogin: React.FC = () => {
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>({
     email: "",
     password: "",
   });
-  const token = localStorage.getItem("one_store_login");
+  // const token = localStorage.getItem("one_store_login");
   const fetchUser = async (e: any) => {
     e.preventDefault();
 
@@ -45,7 +44,7 @@ const AdminLogin: React.FC = () => {
         }
 
         if (newData[index].admin == true) {
-          localStorage.setItem("one_store_admin", `${newData[index].id}`);
+          // localStorage.setItem("one_store_admin", `${newData[index].id}`);
           toast.success("login successful");
           delay(1300);
           window.location.replace("/admin");
@@ -56,26 +55,26 @@ const AdminLogin: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const docRef = doc(db, "user", token!);
+  // useEffect(() => {
+  //   const docRef = doc(db, "user", token);
 
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.admin == true) {
-            localStorage.setItem("one_store_admin", `${data.id}`);
-            delay(2000);
-            Navigate("/admin");
-          }
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-      });
-  }, []);
+  //   getDoc(docRef)
+  //     .then((docSnap) => {
+  //       if (docSnap.exists()) {
+  //         const data = docSnap.data();
+  //         if (data.admin == true) {
+  //           localStorage.setItem("one_store_admin", `${data.id}`);
+  //           delay(2000);
+  //           Navigate("/admin");
+  //         }
+  //       } else {
+  //         console.log("No such document!");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting document:", error);
+  //     });
+  // }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">
