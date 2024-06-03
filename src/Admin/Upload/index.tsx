@@ -43,6 +43,7 @@ const AdminUpload: React.FC = () => {
     { value: "sports", label: "sports" },
     { value: "food", label: "food" },
     { label: "Body care and hygiene", value: "baby" },
+    { label: "Baby", value: "baby" },
     { label: "Cosmetics", value: "cosmetics" },
     { label: "Wines and liquor", value: "wine" },
   ];

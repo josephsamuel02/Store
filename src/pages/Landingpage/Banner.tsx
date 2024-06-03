@@ -61,6 +61,7 @@ const Banner: React.FC = () => {
       icon: <LuBaby size={24} className="mx-2 text-Storepurple" />,
       url: "baby",
     },
+
     {
       name: "Cosmetics",
       icon: <GiLipstick size={24} className="mx-2 text-Storepurple" />,
