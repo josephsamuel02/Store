@@ -11,6 +11,9 @@ const CategoryNav = () => {
     { value: "/category?category=electronics", label: "electronics" },
     { value: "/category?category=sports", label: "sports" },
     { value: "/category?category=food", label: "food" },
+    { name: " /category?category=body_care", label: "Body Care & Hygiene" },
+    { name: "/category?category=cosmetics", label: "cosmetics" },
+    { name: "/category?category=wine", label: "Wine" },
   ];
   return (
     <div className="mx-auto py-3 w-full h-auto bg-white px-4 flex flex-row rounded">
@@ -20,7 +23,7 @@ const CategoryNav = () => {
           defaultValue="categories"
           placeholder="categories"
           onChange={(e: any) => window.location.replace(e.value)}
-          className="w-36"
+          className="w-52"
         />
       </div>
     </div>
