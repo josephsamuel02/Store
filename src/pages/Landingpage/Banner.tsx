@@ -89,11 +89,11 @@ const Banner: React.FC = () => {
         ))}
       </div>
 
-      <div className=" mx-auto w-full md:w-4/5 ">
+      <div className=" mx-auto w-full h-full md:w-4/5 ">
         <Carousel
-          className="rounded-xl"
+          className="rounded-sm"
           autoplay={true}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 2.5 }}
           loop={true}
         >
           <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover" />
