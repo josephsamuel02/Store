@@ -37,11 +37,6 @@ const Login: React.FC = () => {
         const user = newData.map((item: any, i: any) => {
           return item.email == userInfo.email ? (index = i) : null;
         });
-        if (user[index].password !== userInfo.password) {
-          toast.error("incorrect login detail(s).", {
-            position: "top-left",
-          });
-        }
 
         if (
           newData[index].email == userInfo.email &&
@@ -51,6 +46,12 @@ const Login: React.FC = () => {
           toast.success("login successful");
           delay(1300);
           window.location.replace("/");
+        }
+
+        if (user[index].password !== userInfo.password) {
+          toast.error("incorrect login detail(s).", {
+            position: "top-left",
+          });
         }
       });
     } catch (error) {

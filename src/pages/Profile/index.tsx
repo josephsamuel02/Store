@@ -47,22 +47,26 @@ const Profile: React.FC = () => {
   };
 
   useEffect(() => {
-    const docRef = doc(db, "user", token!);
+    if (!token) {
+      Navigate("/login");
+    } else {
+      const docRef = doc(db, "user", token!);
 
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setUpdatedUser(data);
-          console.log(data);
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-        Navigate("/");
-      });
+      getDoc(docRef)
+        .then((docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            setUpdatedUser(data);
+            console.log(data);
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch((error) => {
+          console.error("Error getting document:", error);
+          Navigate("/");
+        });
+    }
   }, []);
 
   return (
