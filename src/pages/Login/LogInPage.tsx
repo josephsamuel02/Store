@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../../components/DefaultNav";
@@ -12,14 +12,16 @@ import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  // const Navigate = useNavigate();
+  const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>({
     email: "",
     password: "",
   });
-  // const token = localStorage.getItem("one_store_login");
+  const OneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
+  const Now = new Date().getTime();
   const fetchUser = async (e: any) => {
     e.preventDefault();
 
@@ -30,11 +32,13 @@ const Login: React.FC = () => {
           toast.warn("unable to login.", {
             position: "top-left",
           });
+
+          console.log(newData);
         }
 
         var index: any;
 
-        const user = newData.map((item: any, i: any) => {
+        newData.map((item: any, i: any) => {
           return item.email == userInfo.email ? (index = i) : null;
         });
 
@@ -43,12 +47,16 @@ const Login: React.FC = () => {
           newData[index].password == userInfo.password
         ) {
           localStorage.setItem("one_store_login", `${newData[index].id}`);
+          localStorage.setItem("login_expiry_date", `${OneDay}`);
           toast.success("login successful");
+
           delay(1300);
+          console.log(newData[index]);
+
           window.location.replace("/");
         }
 
-        if (user[index].password !== userInfo.password) {
+        if (newData[index].password !== userInfo.password) {
           toast.error("incorrect login detail(s).", {
             position: "top-left",
           });
@@ -59,23 +67,16 @@ const Login: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const docRef = doc(db, "user", token!);
-
-  //   getDoc(docRef)
-  //     .then((docSnap) => {
-  //       if (docSnap.exists()) {
-  //         // Document found, you can access its data
-
-  //         Navigate("/");
-  //       } else {
-  //         console.log("No such document!");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting document:", error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const login_expiry_date = localStorage.getItem("login_expiry_date");
+    if (Now < Number(login_expiry_date)) {
+      Navigate("/");
+      // console.log("not expired");
+    } else if (Now >= Number(login_expiry_date)) {
+      Navigate("/login");
+      // console.log("expired");
+    }
+  }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">

@@ -68,7 +68,9 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
                 value="-"
                 onClick={() => quantity > 1 && setQuantity(quantity - 1)}
               />
-              <p className="text-base text-black font-roboto">{quantity}</p>
+              <p className="text-base text-black font-roboto">
+                {singleProduct.inStock >= 1 ? quantity : 0}
+              </p>
 
               <input
                 className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
@@ -78,16 +80,27 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
               />
             </div>
 
-            <p
-              className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
-              onClick={(e) => addToCart(e)}
-            >
-              <span className="px-4">
-                <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
-              </span>
+            {singleProduct.inStock >= 1 && (
+              <p
+                className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
+                onClick={(e) => addToCart(e)}
+              >
+                <span className="px-4">
+                  <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
+                </span>
 
-              <span className="mx-auto cursor-pointer">Add to cart</span>
-            </p>
+                <span className="mx-auto cursor-pointer">Add to cart</span>
+              </p>
+            )}
+            {singleProduct.inStock < 1 && (
+              <p className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-gray-500  rounded-md cursor-pointer">
+                <span className="px-4">
+                  <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
+                </span>
+
+                <span className="mx-auto cursor-pointer">Add to cart</span>
+              </p>
+            )}
           </div>
         </div>
       )}

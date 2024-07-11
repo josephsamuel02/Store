@@ -18,6 +18,7 @@ const Product: React.FC = () => {
 
       if (Ref.exists()) {
         setSingleProduct(Ref.data());
+        console.log(Ref.data());
       }
     } catch (error) {
       console.error("Error getting document:", error);

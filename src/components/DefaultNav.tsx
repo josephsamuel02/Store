@@ -3,15 +3,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
-import { getDocs, collection, getDoc, doc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
 
 const DefaultNav: React.FC = () => {
+  const Now = new Date().getTime();
   const token = localStorage.getItem("one_store_login");
   const [Cart, setCart] = useState<any>([]);
-  const [User, setUser] = useState<any>(true);
-
+  const [exprLogin, setExpireLogin] = useState(true);
   const [Products] = useState([]);
 
   const getUserInfo = async () => {
@@ -34,26 +34,12 @@ const DefaultNav: React.FC = () => {
   const [setSearchResult] = useState<any>([{ name: "computer" }]);
 
   useEffect(() => {
-    if (token) {
+    const login_expiry_date = localStorage.getItem("login_expiry_date");
+    if (Now < Number(login_expiry_date)) {
       getUserInfo();
-      setUser(true);
-      const docRef = doc(db, "user", token!);
-      getDoc(docRef)
-        .then((docSnap) => {
-          if (docSnap.exists()) {
-            // Document found, you can access its data
-
-            const user = docSnap.data();
-            if (!user) {
-              setUser(false);
-            }
-          } else {
-            console.log("No such document!");
-          }
-        })
-        .catch((error) => {
-          console.error("Error getting document:", error);
-        });
+      setExpireLogin(false);
+    } else if (Now >= Number(login_expiry_date)) {
+      setExpireLogin(true);
     }
   }, []);
 
@@ -91,7 +77,7 @@ const DefaultNav: React.FC = () => {
           />
         </div>
 
-        {User ? (
+        {!exprLogin ? (
           <div className="w-1/6 mx-auto  md:mx-4 px-1 pt-2 flex flex-row ">
             <a className="w-auto mx-auto cursor-pointer" href={ROUTES.CART}>
               <MdOutlineLocalGroceryStore size={32} className="mx-auto text-slate-700" />

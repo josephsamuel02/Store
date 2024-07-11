@@ -25,7 +25,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full pt-16 md:pt-20">
+    <div className="w-full pt-16 md:pt-20 ">
       <DefaultNav />
       <Banner />
       <Categories />
