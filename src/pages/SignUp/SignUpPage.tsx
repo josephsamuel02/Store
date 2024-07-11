@@ -8,11 +8,12 @@ import DefaultNav from "../../components/DefaultNav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import delay from "delay";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-// const token = localStorage.getItem("one_store_login");
+import { useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = () => {
+  const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>({
     surname: "",
     name: "",
@@ -20,47 +21,39 @@ const SignUp: React.FC = () => {
     phone: "",
     password: "",
   });
-  // const Navigate = useNavigate();
   const [confirmPass, setConfirmPass] = useState<any>("");
 
-  const SignUP = async (e: { preventDefault: () => void }) => {
+  const SignUP = async (e: any) => {
     e.preventDefault();
 
     try {
+      const q = query(collection(db, "user"), where("email", "==", userInfo.email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        return toast.warning("user wth this email already exist, please login");
+      }
+
+      if (confirmPass !== userInfo.password) {
+        return toast.warn("Password is not the same value, please confirm your password.", {
+          position: "top-left",
+        });
+      }
+
       if (confirmPass == userInfo.password) {
         const docRef = await addDoc(collection(db, "user"), userInfo);
         if (!docRef) {
-          toast.error("Unable to Sign up");
+          return toast.error("Unable to Sign up");
         }
+
         toast.success("Signed uP successfully");
         await delay(1300);
-        window.location.assign("/login");
+        Navigate("/login");
       }
-      toast.warn("Password is not the same value, please confirm your password.", {
-        position: "top-left",
-      });
     } catch (error) {
       toast.error("Error: Failed to signup");
     }
   };
-
-  // useEffect(() => {
-  //   const docRef = doc(db, "user", token!);
-
-  //   getDoc(docRef)
-  //     .then((docSnap) => {
-  //       if (docSnap.exists()) {
-  //         // Document found, you can access its data
-
-  //         Navigate("/");
-  //       } else {
-  //         console.log("No such document!");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting document:", error);
-  //     });
-  // }, []);
 
   return (
     <div className="w-full h-full pt-16 md:pt-24 bg-purple-100">

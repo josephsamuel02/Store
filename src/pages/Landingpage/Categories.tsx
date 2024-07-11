@@ -33,7 +33,7 @@ const Categories: React.FC = () => {
   ];
 
   return (
-    <div className="w-full h-auto md:p-2 grid grid-cols-3 md:grid md:grid-cols-6 bg-purple-800 items-center ">
+    <div className="w-full h-auto md:p-2 grid grid-cols-3 md:grid md:grid-cols-6  bg-[#4303a8] items-center ">
       {Menu.map((i, index) => (
         <a
           className=" w-28 h-auto md:w-44 md:h-44  mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded"

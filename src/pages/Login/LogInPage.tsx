@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
@@ -71,10 +72,8 @@ const Login: React.FC = () => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
       Navigate("/");
-      // console.log("not expired");
     } else if (Now >= Number(login_expiry_date)) {
       Navigate("/login");
-      // console.log("expired");
     }
   }, []);
 

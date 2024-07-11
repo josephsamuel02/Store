@@ -7,7 +7,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   return (
     <div className="my-8 w-full h-auto">
-      <div className="w-full h-auto p-0 flex flex-col  bg-purple-800">
+      <div className="w-full h-auto p-0 flex flex-col   bg-[#4303a8]">
         <p className=" text-3xl md:text-6xl py-4 text-white text-center font-RubikDistressed ">
           Top Sales
         </p>
