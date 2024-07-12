@@ -104,7 +104,7 @@ const DefaultNav: React.FC = () => {
               )}
             </a>
             <a
-              className="w-auto mx-auto flex flex-col items-center cursor-pointer"
+              className="w-auto mx-auto ml-2 flex flex-col items-center cursor-pointer"
               href={ROUTES.PROFILE}
             >
               <h1 className="w-auto mx-auto flex flex-row">
@@ -115,13 +115,13 @@ const DefaultNav: React.FC = () => {
         ) : (
           <div className="w-2/6 md:1/5 mx-0 md:mx-4 flex flex-row items-center">
             <a
-              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple hover:bg-purple-900 rounded-full "
+              className=" md:h-34 mr-1 md:mx-5 px-5 md:px-7 py-1.5 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple hover:bg-purple-900 rounded-full "
               href={ROUTES.LOGIN}
             >
               Login
             </a>
             <a
-              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple  hover:bg-purple-900  rounded-full "
+              className=" md:h-34 mr-1 md:mx-5 px-4 md:px-7 py-1.5 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple  hover:bg-purple-900  rounded-full "
               href={ROUTES.SIGNUP}
             >
               Signup

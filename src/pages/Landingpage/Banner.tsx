@@ -76,7 +76,7 @@ const Banner: React.FC = () => {
 
   return (
     <div className="mx-auto w-10/12 h-10/12 flex flex-row">
-      <div className="hidden lg:flex mx-auto w-1/6  pt-6 h-auto flex-col rounded shadow-lg bg-white ">
+      <div className="hidden  lg:flex mx-auto w-1/6  pt-6 h-auto flex-col rounded shadow-lg bg-white ">
         {Menu.map((i, index) => (
           <a
             className="w-full h-auto px-2 py-2 flex flex-row items-center cursor-pointer"
@@ -89,14 +89,14 @@ const Banner: React.FC = () => {
         ))}
       </div>
 
-      <div className=" mx-auto w-full h-full md:w-4/5 ">
+      <div className="  mx-auto w-full h-full md:w-4/5 ">
         <Carousel
-          className="rounded-sm"
+          className="rounded-sm  "
           autoplay={true}
           transition={{ duration: 2.5 }}
           loop={true}
         >
-          <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover" />
+          <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover " />
           <img src="/img/banner2.png" alt="image 2" className="h-full w-full object-cover" />
           <img src="/img/banner3.png" alt="image 3" className="h-full w-full object-cover" />
         </Carousel>
