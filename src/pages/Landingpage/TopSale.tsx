@@ -16,7 +16,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
         {Products &&
           Products.map((i: any, index: number) => (
             <div
-              className="w-32 md:w-[180px] h-[230px] md:h-[270px]  mx-1 md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl"
+              className="w-32 md:w-[180px] h-[230px] md:h-[240px]  mx-1 md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl"
               key={index}
             >
               <a
@@ -28,7 +28,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
                   alt="category"
                   className="m-auto w-full h-44 object-contain"
                 />
-                <p className="w-full px-2 text-xs md:text-sm truncate  text-slate-8 text-center font-bold font-nunito ">
+                <p className="w-full px-2 text-xs md:text-base truncate  text-slate-8 text-center font-bold  ">
                   {i.name}
                 </p>
 
