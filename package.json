@@ -19,6 +19,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tippyjs/react": "^4.2.6",
     "@types/jwt-decode": "^3.1.0",
+    "algoliasearch": "^4.24.0",
     "axios": "^1.5.0",
     "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001541",

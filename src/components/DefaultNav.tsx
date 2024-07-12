@@ -12,7 +12,6 @@ const DefaultNav: React.FC = () => {
   const token = localStorage.getItem("one_store_login");
   const [Cart, setCart] = useState<any>([]);
   const [exprLogin, setExpireLogin] = useState(true);
-  const [Products] = useState([]);
 
   const getUserInfo = async () => {
     try {
@@ -31,7 +30,7 @@ const DefaultNav: React.FC = () => {
     }
   };
 
-  const [searchResult, setSearchResult] = useState<any>([{ name: "computer" }]);
+  const [_, setSearchResult] = useState<any>([{ name: "computer" }]);
 
   useEffect(() => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
