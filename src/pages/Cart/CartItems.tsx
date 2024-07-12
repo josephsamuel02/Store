@@ -77,7 +77,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   return (
     <>
       {!checkout ? (
-        <div className="w-11/12 md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
+        <div className="w-full md:w-10/12 md:p-6 h-auto mx-auto my-4 p-4 flex flex-col bg-white ">
           <h3 className="text-2xl  md:text-3xl p-4 text-black font-bold font-dayone ">Cart</h3>
           {cartItems[0] &&
             cartItems.map((i: any) => (
