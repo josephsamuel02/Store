@@ -11,6 +11,7 @@ import delay from "delay";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 
 const SignUp: React.FC = () => {
   const Navigate = useNavigate();
@@ -22,6 +23,7 @@ const SignUp: React.FC = () => {
     password: "",
   });
   const [confirmPass, setConfirmPass] = useState<any>("");
+  const [loading, setLoading] = useState(false);
 
   const SignUP = async (e: any) => {
     e.preventDefault();
@@ -41,13 +43,14 @@ const SignUp: React.FC = () => {
       }
 
       if (confirmPass == userInfo.password) {
+        setLoading(true);
         const docRef = await addDoc(collection(db, "user"), userInfo);
         if (!docRef) {
           return toast.error("Unable to Sign up");
         }
-
-        toast.success("Signed uP successfully");
-        await delay(1300);
+        setLoading(false);
+        toast.success("Signed up successfully");
+        await delay(1200);
         Navigate("/login");
       }
     } catch (error) {
@@ -132,7 +135,7 @@ const SignUp: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full mx-auto px-6 py-2 my-4 text-center text-white  text-xl font-nunito  rounded   bg-Storepurple hover:bg-purple-500 bg-gradient-to-r from-purple-500 hover:from-Storepurple transition-colors shadow-md"
+              className="w-full mx-auto px-6 py-2 my-4 text-center text-white  text-xl font-nunito  rounded-full   bg-Storepurple hover:bg-purple-500 bg-gradient-to-r from-purple-500 hover:from-Storepurple transition-colors shadow-md"
               //   onClick={() => handleLogout()}
             >
               Register
@@ -153,7 +156,9 @@ const SignUp: React.FC = () => {
       </div>
 
       <Footer />
-      <ToastContainer />
+
+      {loading && <Loading />}
+      <ToastContainer theme="light" />
     </div>
   );
 };

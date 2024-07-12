@@ -114,19 +114,19 @@ const Login: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full mx-auto px-6 py-2 my-4 text-center text-white  text-xl font-nunito  rounded bg-Storepurple hover:bg-purple-500 bg-gradient-to-r from-purple-500 hover:from-Storepurple transition-colors shadow-md"
+              className="w-full mx-auto px-6 py-2 my-4 text-center text-white  text-xl font-nunito  rounded-full bg-Storepurple hover:bg-purple-500 bg-gradient-to-r from-purple-500 hover:from-Storepurple transition-colors shadow-md"
             >
               Login
             </button>
 
-            <p className="mx-auto  text-base text-thin text-slate-700">
+            {/* <p className="mx-auto  text-base text-thin text-slate-700">
               <a
                 href={ROUTES.FORGOTPASSWORD}
                 className="mx-auto text-base underline text-blue-600"
               >
                 Forgot password
               </a>
-            </p>
+            </p> */}
 
             <p className="mx-auto my-3 text-base text-thin text-slate-700">
               Don't have an account?

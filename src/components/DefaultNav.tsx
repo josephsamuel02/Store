@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
 
@@ -31,7 +31,7 @@ const DefaultNav: React.FC = () => {
     }
   };
 
-  const [setSearchResult] = useState<any>([{ name: "computer" }]);
+  const [searchResult, setSearchResult] = useState<any>([{ name: "computer" }]);
 
   useEffect(() => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
@@ -42,20 +42,32 @@ const DefaultNav: React.FC = () => {
       setExpireLogin(true);
     }
   }, []);
+  const searchProduct = async (word: string) => {
+    if (typeof word !== "string") {
+      throw new Error(
+        "searchProduct: Invalid input type. Expected a string for email search."
+      );
+    }
 
-  const searchProduct = (word: any) => {
-    const result = Products.filter((item: any) => {
-      const lower = item.name.toLowerCase();
-      if (lower.includes(word)) {
-        return item;
-      }
-    });
-    setSearchResult(result);
+    try {
+      const q = query(collection(db, "products"), where("name", "==", word));
+      const querySnapshot = await getDocs(q);
+
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log(data);
+      setSearchResult(data);
+    } catch (error) {
+      console.error("searchProduct error:", error);
+    }
   };
+
+  useEffect(() => {
+    searchProduct("milo");
+  }, []);
 
   return (
     <>
-      <div className="fixed top-0 w-full h-auto px-3 md:px-5 py-2 md:py-3 bg-white flex flex-row items-center shadow-lg">
+      <div className="fixed top-0 w-full h-auto px-3 md:px-5 py-4 md:py-4 bg-white flex flex-row items-center shadow-lg">
         <a className="w-20 md:w-1/5 md:mx-2 md:px-4 flex items-center" href="/">
           <img
             src="/img/OneStore logo.svg"
@@ -66,14 +78,14 @@ const DefaultNav: React.FC = () => {
         <div className="w-2/3 md:w-2/3 mx-0 md:mx-auto px-auto flex flex-row items-center">
           <input
             type="text"
-            className="w-3/5 md:w-96 h-8 md:h-12 mx-4 mr-0 py-0 px-3 text-lg font-roboto outline-none rounded text-black border-2 border-gray-300 "
+            className="w-3/5 md:w-96 h-8 md:h-10 mx-4 mr-0 py-0 px-3 text-md text-gray-800 font-roboto outline-none rounded-l-full   border-2 border-gray-100 "
             placeholder="search"
             onChange={(e) => searchProduct(e.target.value)}
           />
           <input
             type="button"
             value="Search"
-            className="  h-8 md:h-12 mx-0 px-2 md:px-7 text-xs md:text-lg font-roboto text-white bg-Storepurple rounded-sm "
+            className="  h-8 md:h-10 mx-0 px-2 md:px-7   font-thin text-xs md:text-lg font-roboto text-white bg-Storepurple  hover:bg-purple-900  rounded-r-full "
           />
         </div>
 
@@ -104,13 +116,13 @@ const DefaultNav: React.FC = () => {
         ) : (
           <div className="w-2/6 md:1/5 mx-0 md:mx-4 flex flex-row items-center">
             <a
-              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple rounded "
+              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple hover:bg-purple-900 rounded-full "
               href={ROUTES.LOGIN}
             >
               Login
             </a>
             <a
-              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple rounded "
+              className=" md:h-34 mr-1 md:mx-5 px-3 md:px-7 py-1 md:py-2 text-sm md:text-lg font-roboto text-white bg-Storepurple  hover:bg-purple-900  rounded-full "
               href={ROUTES.SIGNUP}
             >
               Signup
