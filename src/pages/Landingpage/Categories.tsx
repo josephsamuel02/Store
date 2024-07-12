@@ -36,7 +36,7 @@ const Categories: React.FC = () => {
     <div className="w-full h-auto md:p-2 grid grid-cols-3 md:grid md:grid-cols-6  bg-[#4303a8] items-center ">
       {Menu.map((i, index) => (
         <a
-          className=" w-auto h-auto md:w-auto md:h-auto p-1 mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded"
+          className=" w-[130px] h-auto md:w-[190px] md:h-auto p-1 mx-auto  my-4 items-center flex flex-col bg-white cursor-pointer rounded"
           key={index}
           href={`${ROUTES.CATEGORY}?category=${i.url}`}
         >
