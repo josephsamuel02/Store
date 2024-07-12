@@ -74,7 +74,7 @@ const DefaultNav: React.FC = () => {
             className="w-auto h-auto mx-1 md:mx-2 object-cover"
           />
         </a>
-        <div className="w-2/3 md:w-2/3 mx-0 md:mx-auto px-auto flex flex-row items-center">
+        {/* <div className="w-2/3 md:w-2/3 mx-0 md:mx-auto px-auto flex flex-row items-center">
           <input
             type="text"
             className="w-3/5 md:w-96 h-8 md:h-10 mx-4 mr-0 py-0 px-3 text-md text-gray-800 font-roboto outline-none rounded-l-full   border-2 border-gray-100 "
@@ -86,8 +86,8 @@ const DefaultNav: React.FC = () => {
             value="Search"
             className="  h-8 md:h-10 mx-0 px-2 md:px-7   font-thin text-xs md:text-lg font-roboto text-white bg-Storepurple  hover:bg-purple-900  rounded-r-full "
           />
-        </div>
-
+        </div> */}
+        <div className="w-2/4 md:w-2/3 mx-0 md:mx-auto px-auto flex flex-row items-center"></div>
         {!exprLogin ? (
           <div className="w-1/6 mx-auto  md:mx-4 px-1 pt-2 flex flex-row ">
             <a className="w-auto mx-auto cursor-pointer" href={ROUTES.CART}>
