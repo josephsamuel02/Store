@@ -110,14 +110,14 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
     }
     const currDate = new Date().toLocaleDateString();
     const currTime = new Date().toLocaleTimeString();
-    console.log(currDate, currTime);
+    // console.log(currDate, currTime);
     fetchUser();
     setOrderItem({
       Products: Cart,
       userId: token,
       totalPrice: TotalPrice,
       orderLevel: 0,
-      date: `${currTime} at ${currDate}  `,
+      date: `${currTime} at ${currDate}`,
     });
   }, []);
   // const config = {
@@ -209,7 +209,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               Add alternative numbers:
               <textarea
                 draggable={false}
-                placeholder={"  "}
+                placeholder={""}
                 onChange={(e) =>
                   setUserInfo((prev: any) => ({ ...prev, alternativePhone: e.target.value }))
                 }
@@ -261,7 +261,13 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
         </div>
       </div>
       <OrderConfirmedCard showCard={showCard} setShowCard={setShowCard} />
-      {showOfflinePaymentCard && <PayOfflineCard setShowCard={setShowOfflinePaymentCard} />}
+      {showOfflinePaymentCard && (
+        <PayOfflineCard
+          setShowCard={setShowOfflinePaymentCard}
+          TotalPrice={TotalPrice}
+          userId={token}
+        />
+      )}
       <ToastContainer />
     </div>
   );

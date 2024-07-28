@@ -23,7 +23,6 @@ const Cart: React.FC = () => {
         const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         if (newData) {
           setCart(newData);
-          console.log(newData);
         }
         let t = 0;
 

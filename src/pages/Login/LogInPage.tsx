@@ -14,6 +14,8 @@ import delay from "delay";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 import { useNavigate } from "react-router-dom";
+import { GoEyeClosed } from "react-icons/go";
+import { GoEye } from "react-icons/go";
 
 const Login: React.FC = () => {
   const Navigate = useNavigate();
@@ -21,6 +23,9 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const OneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
   const Now = new Date().getTime();
   const fetchUser = async (e: any) => {
@@ -99,16 +104,32 @@ const Login: React.FC = () => {
                 setUserInfo((prev: any) => ({ ...prev, email: e.target.value }))
               }
             />
-            <input
-              required
-              type="password"
-              placeholder="password"
-              className="w-full my-3 h-auto py-2 px-4 text-lg text-slate-800 rounded-md outline-none border-2 border-blue-600 focus:border-purple-700"
-              onChange={(e) =>
-                setUserInfo((prev: any) => ({ ...prev, password: e.target.value }))
-              }
-            />
-            <div className=" mx-3 w-auto h-auto flex flex-row items-center">
+            <div className="w-full my-3 h-auto py-2  text-lg text-slate-800 flex flex-row items-center rounded-md outline-none border-2 border-blue-600 focus:border-purple-700">
+              <input
+                required
+                type={showPassword ? "password" : "text"}
+                placeholder="password"
+                className="w-full h-auto  px-4 text-lg text-slate-800  outline-none   "
+                onChange={(e) =>
+                  setUserInfo((prev: any) => ({ ...prev, password: e.target.value }))
+                }
+              />{" "}
+              {!showPassword ? (
+                <GoEyeClosed
+                  size={20}
+                  className="text-[#2319ac] mx-3"
+                  onClick={() => setShowPassword(true)}
+                />
+              ) : (
+                <GoEye
+                  size={20}
+                  className="text-[#2319ac] mx-3"
+                  onClick={() => setShowPassword(false)}
+                />
+              )}
+            </div>
+
+            <div className=" mr-auto w-auto h-auto flex flex-row items-center">
               <input type="checkbox" name="remember me" id="" className="my-3 h-auto" />
               <p className="px-1 text-base text-slate-900">Remember me</p>
             </div>
@@ -130,7 +151,7 @@ const Login: React.FC = () => {
 
             <p className="mx-auto my-3 text-base text-thin text-slate-700">
               Don't have an account?
-              <a href={ROUTES.SIGNUP} className="mx-auto text-base  text-blue-800">
+              <a href={ROUTES.SIGNUP} className="mx-1 text-base  text-blue-800">
                 Sign Up
               </a>
             </p>

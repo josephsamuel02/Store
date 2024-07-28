@@ -55,9 +55,14 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
             </h2>
             <h2 className="text-4xl py-3 text-gray-800 font-dayone   break-words">
               ₦{priceFormat.format(singleProduct.price)}
-              <span className="pl-2 text-slate-600 text-xl text-decoration-line: line-through font-normal  ">
-                ₦{priceFormat.format(singleProduct.price)}
-              </span>
+              {singleProduct.old_price != 0 && (
+                <span className="pl-2 text-slate-600 text-xl text-decoration-line: line-through font-normal  ">
+                  ₦
+                  {priceFormat.format(
+                    singleProduct.old_price != singleProduct.price && singleProduct.old_price
+                  )}
+                </span>
+              )}
             </h2>
 
             <div className="w-full h-auto flex flex-row py-6 ">

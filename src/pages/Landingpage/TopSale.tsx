@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ROUTES from "../../utils/Routes";
 interface AppComponent {
@@ -34,9 +35,11 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
 
                 <h2 className=" text-base py-1 text-black flex flex-col md:flex-row items-center">
                   ₦{priceFormat.format(i.price)}
-                  <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal  ">
-                    {i.old_price != i.old_price && `₦${priceFormat.format(i.old_price)}`}
-                  </span>
+                  {i.old_price != 0 && (
+                    <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal  ">
+                      {i.old_price != i.price && `₦${priceFormat.format(i.old_price)}`}
+                    </span>
+                  )}
                 </h2>
               </a>
             </div>

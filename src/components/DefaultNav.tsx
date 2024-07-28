@@ -53,7 +53,6 @@ const DefaultNav: React.FC = () => {
       const querySnapshot = await getDocs(q);
 
       const data = querySnapshot.docs.map((doc) => doc.data());
-      console.log(data);
       setSearchResult(data);
     } catch (error) {
       console.error("searchProduct error:", error);
