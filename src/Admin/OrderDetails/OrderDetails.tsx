@@ -1,24 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 import ROUTES from "../../utils/Routes";
 import DefaultNav from "../components/DefaultNav";
 import Footer from "../../components/Footer";
+import delay from "delay";
+import { toast } from "react-toastify";
 
 const AdminOrderDetails: React.FC = () => {
   const { id }: any = useParams();
+  const priceFormat = new Intl.NumberFormat("en-US");
 
   const adminToken = localStorage.getItem("one_store_admin");
   const Navigate = useNavigate();
   const [Orders, setOrders] = useState<any>();
+  const [newValue, setNewValue] = useState<any>();
 
   const fetchOrders = async () => {
     await getDocs(collection(db, "order")).then((querySnapshot) => {
       const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setOrders(newData[id]);
+      setNewValue(newData[id]);
     });
+  };
+
+  const UploadProduct = async (e: any) => {
+    e.preventDefault();
+
+    const docRef = doc(db, "order", Orders.id);
+    updateDoc(docRef, { ...Orders, orderLevel: Orders.orderLevel + 1 })
+      .then(async () => {
+        toast.success("Document updated successfully!");
+        delay(2000);
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast.error("Error updating document");
+        console.log(error);
+        delay(1300);
+        window.location.reload();
+      });
   };
   useEffect(() => {
     if (!adminToken) {
@@ -26,6 +49,7 @@ const AdminOrderDetails: React.FC = () => {
     }
     fetchOrders();
   }, []);
+
   return (
     <>
       <div className="w-full h-screen bg-white overflow-y-scroll scrollbar-hide">
@@ -70,7 +94,9 @@ const AdminOrderDetails: React.FC = () => {
               </h3>
               <h3 className="mx-6 py-2 text-base   text-slate-800 font-roboto font-bold">
                 Total price:
-                <span className="px-2 font-normal"> ₦{Orders.totalPrice}</span>
+                <span className="px-2 font-normal">
+                  ₦{priceFormat.format(Orders.totalPrice)}
+                </span>
               </h3>
               <h3 className="mx-6 py-2 text-base   text-slate-800 font-roboto font-bold items-center flex flex-row flex-wrap">
                 Status:
@@ -92,6 +118,23 @@ const AdminOrderDetails: React.FC = () => {
                 {Orders.orderLevel == 3 && (
                   <span className=" mx-2 my-1 px-4 py-1 text-sm md:text-base  text-white font-normal bg-green-500 hover:bg-green-700 shadow-md rounded cursor-pointer">
                     Complete
+                  </span>
+                )}
+                {Orders.orderLevel < 3 && "Next ->>"}
+                {Orders.orderLevel < 3 && (
+                  <span
+                    className=" mx-2 my-1 px-4 py-1 text-sm md:text-base  text-black font-normal bg-white hover:bg-[#d8d6d6ad] shadow-md rounded cursor-pointer"
+                    onClick={(e) => {
+                      UploadProduct(e);
+                    }}
+                  >
+                    {Orders.orderLevel == 0
+                      ? "Confirmed"
+                      : Orders.orderLevel == 1
+                      ? "Shipped"
+                      : Orders.orderLevel == 2
+                      ? "Complete"
+                      : null}
                   </span>
                 )}
               </h3>

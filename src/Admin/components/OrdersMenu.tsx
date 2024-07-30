@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 interface appState {
   setOrderPage: (value: any) => any;
@@ -10,8 +11,8 @@ const OrdersMenu: React.FC<appState> = ({ setOrderPage, orderPage }) => {
         <div className="w-full h-auto md:px-1 flex flex-row items-center">
           <div
             className="w-1/4   mx-0.5 h-full  border-b-4 border-slate-600 rounded-sm hover:bg-slate-200 cursor-default"
-            style={{ backgroundColor: orderPage == 1 ? "rgb(233 213 255)" : "" }}
-            onClick={() => setOrderPage(1)}
+            style={{ backgroundColor: orderPage == 0 ? "rgb(233 203 255)" : "" }}
+            onClick={() => setOrderPage(0)}
           >
             <p className=" py-2 text-sm md:text-base text-center text-slate-800 font-dayone">
               Pending
@@ -20,8 +21,8 @@ const OrdersMenu: React.FC<appState> = ({ setOrderPage, orderPage }) => {
 
           <div
             className="w-1/4  mx-0.5 h-full  border-b-4 border-purple-700 rounded-sm hover:bg-slate-200 cursor-default"
-            style={{ backgroundColor: orderPage == 2 ? "rgb(233 213 255)" : "" }}
-            onClick={() => setOrderPage(2)}
+            style={{ backgroundColor: orderPage == 1 ? "rgb(233 213 255)" : "" }}
+            onClick={() => setOrderPage(1)}
           >
             <p className=" py-2 text-sm md:text-base text-center text-slate-800 font-dayone">
               Confirmed
@@ -29,8 +30,8 @@ const OrdersMenu: React.FC<appState> = ({ setOrderPage, orderPage }) => {
           </div>
           <div
             className="w-1/4  mx-0.5 h-full  border-b-4 border-blue-600 rounded-sm hover:bg-slate-200 cursor-default"
-            style={{ backgroundColor: orderPage == 3 ? "rgb(233 213 255)" : "" }}
-            onClick={() => setOrderPage(3)}
+            style={{ backgroundColor: orderPage == 2 ? "rgb(233 213 255)" : "" }}
+            onClick={() => setOrderPage(2)}
           >
             <p className=" py-2 text-sm md:text-base text-center text-slate-800 font-dayone">
               Shipped
@@ -38,8 +39,8 @@ const OrdersMenu: React.FC<appState> = ({ setOrderPage, orderPage }) => {
           </div>
           <div
             className="w-1/4  mx-0.5 h-full  border-b-4 border-green-600 rounded-sm  hover:bg-slate-200 cursor-default"
-            style={{ backgroundColor: orderPage == 4 ? "rgb(233 213 255)" : "" }}
-            onClick={() => setOrderPage(4)}
+            style={{ backgroundColor: orderPage == 3 ? "rgb(233 213 255)" : "" }}
+            onClick={() => setOrderPage(3)}
           >
             <p className=" py-2 text-sm md:text-base text-center text-slate-800 font-dayone">
               Completed

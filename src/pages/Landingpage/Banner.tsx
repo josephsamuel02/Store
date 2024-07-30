@@ -93,7 +93,7 @@ const Banner: React.FC = () => {
         <Carousel
           className="rounded-sm  "
           autoplay={true}
-          transition={{ duration: 2.5 }}
+          transition={{ duration: 3.5 }}
           loop={true}
         >
           <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover " />

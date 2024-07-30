@@ -118,6 +118,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
       totalPrice: TotalPrice,
       orderLevel: 0,
       date: `${currTime} at ${currDate}`,
+      OrderId: Math.floor(Math.random() * 1000000000),
     });
   }, []);
   // const config = {
@@ -243,7 +244,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               className="m-3  w-1/2 h-auto border-2 border-purple-400 bg-purple-100 hover:bg-purple-200 cursor-pointer  rounded"
               onClick={() => {
                 // initializePayment(onSuccess, onClose);
-                toast.warning("Online payment not available at this time");
+                toast("Online payment not available at the moment");
               }}
             >
               <h3 className="text-xl p-4 text-black font-roboto font-bold ">Pay Online</h3>
@@ -265,7 +266,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
         <PayOfflineCard
           setShowCard={setShowOfflinePaymentCard}
           TotalPrice={TotalPrice}
-          userId={token}
+          OrderId={orderItem.OrderId}
         />
       )}
       <ToastContainer />

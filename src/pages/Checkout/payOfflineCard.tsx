@@ -7,17 +7,18 @@ import { sendSMS } from "../../utils/SMSGate";
 interface appState {
   setShowCard: (value: any) => any;
   TotalPrice: any;
-  userId: any;
+  OrderId: any;
 }
 
-const PayOfflineCard: React.FC<appState> = ({ setShowCard, TotalPrice, userId }) => {
+const PayOfflineCard: React.FC<appState> = ({ setShowCard, TotalPrice, OrderId }) => {
   // const [placedOrder, setPlacedOrder] = useState(false);
-  useEffect(() => {
-    sendSMS({
-      recipients: "09159958433",
-      message: `Dear customer. Your order has been placed and our agent will contact you regarding your payment and delivery. Order Id: ${userId}, Total price:₦${TotalPrice.TotalPrice}`,
-    });
-  }, []);
+  // useEffect(() => {
+  //   sendSMS({
+  //     recipients: `09073077717`,
+  //     message: `Dear customer, Order Id: 133748, Total price:₦${TotalPrice.TotalPrice}`,
+  //     // message: `Dear customer. Your order has been placed and our agent will contact you regarding your payment and delivery. Order Id: ${OrderId}, Total price:₦${TotalPrice.TotalPrice}`,
+  //   });
+  // }, []);
   return (
     <>
       <div className="fixed left-0 right-0 top-0 bottom-0 bg-transparent backdrop-blur-sm  rounded-md z-40 items-center  ">
