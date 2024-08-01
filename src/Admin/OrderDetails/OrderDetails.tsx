@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getDocs, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 import ROUTES from "../../utils/Routes";
-import DefaultNav from "../components/DefaultNav";
+import DefaultNav from "../components/AdminNav";
 import Footer from "../../components/Footer";
 import delay from "delay";
 import { toast } from "react-toastify";

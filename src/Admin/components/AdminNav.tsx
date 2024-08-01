@@ -7,8 +7,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 import { useNavigate } from "react-router-dom";
 
-const DefaultNav: React.FC = () => {
-  const token = localStorage.getItem("one_store_login");
+const AdminNav: React.FC = () => {
+  const token = localStorage.getItem("one_store_admin");
   const Navigate = useNavigate();
   const [updatedUser, setUpdatedUser] = useState<any>();
 
@@ -31,12 +31,12 @@ const DefaultNav: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 w-full h-auto px-3 py-2 md:px-5  bg-white flex flex-row items-center z-40">
+    <div className="fixed top-0 left-0 right-0 w-full h-auto px-3 py-4 md:px-5  bg-white flex flex-row items-center z-40">
       <a className="w-44 mx-2 my-2 flex items-center" href={ROUTES.ADMIN_LANDINGPAGE}>
         <img src="/img/OneStore logo.svg" alt="" className="w-auto h-auto" />
       </a>
       {updatedUser && (
-        <div className=" w-4/5 mx-auto md:mx-4 px-1 flex flex-row ">
+        <div className=" w-4/5 mx-auto md:mx-4 md:ml-auto px-1 flex flex-row bg-white ">
           <span className="w-auto mx-auto cursor-pointer"></span>
           <div className="w-auto mx-4 flex flex-col items-center cursor-pointer">
             <a
@@ -44,7 +44,7 @@ const DefaultNav: React.FC = () => {
               href={ROUTES.ADMIN_PROFILE}
             >
               <MdPersonOutline size={32} className=" text-slate-700" />
-              <span className="text-xs md:text-sm text-black font-roboto font-thin">
+              <span className="text-lg md:text-sm text-black font-roboto font-thin">
                 {`${updatedUser.surname} ${updatedUser.name}`}
               </span>
             </a>
@@ -55,4 +55,4 @@ const DefaultNav: React.FC = () => {
   );
 };
 
-export default DefaultNav;
+export default AdminNav;

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import ROUTES from "../../utils/Routes";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-import DefaultNav from "../components/DefaultNav";
+import DefaultNav from "../components/AdminNav";
 
 const AdminProductDetails: React.FC = () => {
   // const productId = new URLSearchParams(location.search).get("product_id");

@@ -33,18 +33,21 @@ const AdminLogin: React.FC = () => {
         }
 
         var index: any;
-
         const user = newData.map((item: any, i: any) => {
-          return item.admin == true ? (index = i) : null;
+          return item.email == userInfo.email ? (index = i) : null;
         });
-        if (user[index].password !== userInfo.password) {
-          toast.error("incorrect login detail(s).", {
+
+        if (user[index].password != userInfo.password) {
+          toast.error("incorrect login details", {
             position: "top-left",
           });
         }
+        if (newData[index].admin !== true) {
+          toast.error("You are not authorized");
+        }
 
         if (newData[index].admin == true) {
-          // localStorage.setItem("one_store_admin", `${newData[index].id}`);
+          localStorage.setItem("one_store_admin", `${newData[index].id}`);
           toast.success("login successful");
           delay(1300);
           window.location.replace("/admin");
@@ -128,7 +131,7 @@ const AdminLogin: React.FC = () => {
             </p> */}
 
             <p className="mx-auto my-3 text-base text-thin text-slate-700">
-              Don't have an account?
+              Don`t have an account?
               <a href={ROUTES.SIGNUP} className="mx-auto text-base  text-blue-800">
                 Sign Up
               </a>

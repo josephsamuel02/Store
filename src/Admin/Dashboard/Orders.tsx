@@ -4,7 +4,7 @@ import ROUTES from "../../utils/Routes";
 import OrdersMenu from "../components/OrdersMenu";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
-import DefaultNav from "../components/DefaultNav";
+import DefaultNav from "../components/AdminNav";
 import { useNavigate } from "react-router-dom";
 import {
   Card,

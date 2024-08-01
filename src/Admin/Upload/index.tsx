@@ -11,7 +11,7 @@ import SuccessCard from "./successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../utils/Routes";
-import DefaultNav from "../components/DefaultNav";
+import DefaultNav from "../components/AdminNav";
 
 const AdminUpload: React.FC = () => {
   const adminToken = localStorage.getItem("one_store_admin");

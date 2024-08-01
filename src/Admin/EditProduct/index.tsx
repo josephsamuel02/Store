@@ -11,7 +11,7 @@ import Select from "react-select";
 import delay from "delay";
 import SuccessCard from "../Upload/successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import DefaultNav from "../components/DefaultNav";
+import DefaultNav from "../components/AdminNav";
 const Edit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [Product, setProduct] = useState<any>();
