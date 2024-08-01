@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-no-target-blank */
-import React, { useEffect } from "react";
+import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdCall, MdWhatsapp } from "react-icons/md";
-import { sendSMS } from "../../utils/SMSGate";
 interface appState {
   setShowCard: (value: any) => any;
   TotalPrice: any;
   OrderId: any;
 }
 
-const PayOfflineCard: React.FC<appState> = ({ setShowCard, TotalPrice, OrderId }) => {
+const PayOfflineCard: React.FC<appState> = ({ setShowCard }) => {
   // const [placedOrder, setPlacedOrder] = useState(false);
   // useEffect(() => {
   //   sendSMS({

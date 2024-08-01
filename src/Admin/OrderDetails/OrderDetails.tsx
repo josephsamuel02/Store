@@ -16,13 +16,13 @@ const AdminOrderDetails: React.FC = () => {
   const adminToken = localStorage.getItem("one_store_admin");
   const Navigate = useNavigate();
   const [Orders, setOrders] = useState<any>();
-  const [newValue, setNewValue] = useState<any>();
+  // const [newValue, setNewValue] = useState<any>();
 
   const fetchOrders = async () => {
     await getDocs(collection(db, "order")).then((querySnapshot) => {
       const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setOrders(newData[id]);
-      setNewValue(newData[id]);
+      // setNewValue(newData[id]);
     });
   };
 
