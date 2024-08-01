@@ -24,17 +24,16 @@ const AdminLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      await getDocs(collection(db, "user")).then(async (querySnapshot) => {
-        const newData: any = await querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
+      await getDocs(collection(db, "user")).then((querySnapshot) => {
+        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+        delay(1000);
+
         if (!newData) {
           toast.warn("unable to login.", {
             position: "top-left",
           });
         }
-
         var index: any;
         const user = newData.map((item: any, i: any) => {
           return item.email == userInfo.email ? (index = i) : null;
