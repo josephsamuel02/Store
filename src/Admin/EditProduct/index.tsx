@@ -1,303 +1,242 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db, storage } from "../../DB/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import Select from "react-select";
-import delay from "delay";
-import SuccessCard from "../Upload/successCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import DefaultNav from "../components/AdminNav";
+import delay from "delay";
+
 const Edit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [Product, setProduct] = useState<any>();
-  const [setImage] = useState<any>("");
-  const [setImageFile] = useState<any>("");
-  const [readyToUpload, setReadyToUpload] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showCard, setShowCard] = useState(false);
+  const Navigate = useNavigate();
 
-  const [newValue, setNewValue] = useState<any>();
-  const options: any = [
+  const [product, setProduct] = useState<any>({});
+  const [newValue, setNewValue] = useState<any>({});
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const [prepareData, setPrepareData] = useState(false);
+
+  const options = [
     { value: false, label: "No" },
     { value: true, label: "Yes" },
   ];
 
-  const handleImageSelect = async (e: any) => {
-    const file = e.target.files[0];
-    setImage(URL.createObjectURL(file));
+  // Fetch product data
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const docRef = doc(db, "products", id!);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setProduct(data);
+        setNewValue(data); // Initialize newValue with fetched data
+      } else {
+        console.log("No such document!");
+      }
+    };
 
-    try {
-      const imageRef = ref(storage, `/products_images/${e.target.files[0].name + v4()} `);
+    fetchProduct().catch((error) => {
+      console.error("Error fetching document:", error);
+    });
+  }, [id]);
 
-      await uploadBytes(imageRef, e.target.files[0])
-        .then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url: any) => {
-            setNewValue((prev: any) => ({ ...prev, image: url }));
-            toast.success("image uploaded");
-            setImageFile(e.target.files[0]);
-          });
-        })
-        .catch((error) => {
-          toast.error("unable to upload images");
-          console.log(error);
-        });
-    } catch (error) {
-      toast.error("Unable to upload image to server");
+  // Handle image selection
+  const handleImageSelect = (e: any) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImagePreview(URL.createObjectURL(file)); // Preview image
+      setImageFile(e.target.files[0]); // Store file for upload later
     }
   };
 
-  const UploadProduct = async (e: any) => {
-    e.preventDefault();
-    setLoading(true);
-    const docRef = doc(db, "products", id!);
-
-    // Data to update
-    // const newData = {
-    //   ...newValue,
-    // };
-    // console.log(newValue);
-
-    updateDoc(docRef, newValue)
-      .then(async () => {
-        toast.success("Document updated successfully!");
-        delay(2000);
-        window.location.reload();
-      })
-      .catch((error) => {
-        toast.error("Error updating document");
-        console.log(error);
-        delay(1300);
-        window.location.reload();
-      });
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewValue((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    const docRef = doc(db, "products", id!);
+  // const readyTosend = () => {
+  //   console.log(imageFile);
+  //   // console.log(imagePreview);
+  // };
+  // Handle dropdown selection changes
+  const handleSelectChange = (option: any) => {
+    setNewValue((prev: any) => ({ ...prev, PayOnDelivery: option.value }));
+  };
 
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          // Document found, you can access its data
+  // Handle form submission and product update
+  const uploadProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-          const data = docSnap.data();
-          setProduct(data);
-          setNewValue(data);
-          console.log(data);
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-      });
-  }, []);
+    if (imageFile) {
+      // Upload image if selected
+      const imageRef = ref(storage, `products_images/${imageFile.name + v4()}`);
+      try {
+        const snapshot = await uploadBytes(imageRef, imageFile);
+        const imageUrl = await getDownloadURL(snapshot.ref);
+        setNewValue((prev: any) => ({ ...prev, image: imageUrl }));
+        prepareData && toast.success("Image uploaded successfully");
+      } catch (error) {
+        toast.error("Failed to upload image");
+        setLoading(false);
+        return;
+      }
+    }
+    delay(1000);
+
+    try {
+      const docRef = doc(db, "products", id!);
+      await updateDoc(docRef, newValue);
+
+      prepareData && toast.success("Product updated successfully!");
+      delay(1000);
+      prepareData && Navigate(`/admin/product_details/${id}`);
+
+      setPrepareData(true);
+    } catch (error) {
+      toast.error("Error updating product");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="mx-auto w-full md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
+    <div className="mx-auto w-full mt-10 md:w-5/6 h-full bg-white overflow-y-scroll scrollbar-hide items-center">
       <DefaultNav />
-      {Product && (
-        <div className="mx-auto w-full md:w-96 p-2 mt-16  h-full flex flex-col items-center">
-          <h3 className="text-2xl text-gray-900 font-bold font-nunito"> Edit Product </h3>
-          {newValue.image && (
-            <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
-              <img
-                src={newValue.image}
-                alt=""
-                className="mx-auto w-48 md:w-72 h-auto object-cover rounded-sm"
-              />
-            </div>
+      <div className="mx-auto w-full md:w-96 p-2 mt-16 h-full flex flex-col items-center">
+        <h3 className="text-2xl text-gray-900 font-bold">Edit Product</h3>
+
+        {/* Image preview */}
+        <div className="w-auto mx-auto my-3 py-1 flex flex-col items-center">
+          {imagePreview ? (
+            <img
+              src={imagePreview}
+              alt="Selected"
+              className="w-60 h-auto object-cover rounded-sm"
+            />
+          ) : (
+            <img
+              src={product.image}
+              alt="Product"
+              className="w-60 h-48 object-cover rounded-sm"
+            />
           )}
-          {!newValue.image && (
-            <div className="w-auto mx-auto md:mx-4 my-3 py-1 flex flex-col items-center">
-              <img
-                src={Product.image}
-                alt=""
-                className="mx-auto w-60 h-48 object-cover border-2 border-slate-200 rounded"
-              />
-            </div>
-          )}
-
-          <div className="w-4/5 mx-auto md:px-2 md:mx-4 my-1 py-1 flex flex-col items-center ">
-            <h2 className="text-lg text-gray-900 font-nunito"> category:{Product.category}</h2>
-
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              <label className="text-lg text-gray-700 font-nunito"> Product image:</label>
-              <input
-                type="file"
-                accept="image/jpg, image/jpeg, image/png image/svg"
-                multiple={false}
-                onChange={(e) => handleImageSelect(e)}
-                className=" mx-auto w-full h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-              />
-            </div>
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              <label className="text-lg text-gray-700 font-nunito">Product name:</label>
-              <textarea
-                draggable={false}
-                defaultValue={Product.name}
-                onChange={(e: any) => setNewValue((prev: any) => ({ ...prev, name: e.value }))}
-                className=" my-auto w-full h-16 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
-              ></textarea>
-            </div>
-
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              <label className="text-lg text-gray-700 font-nunito"> Product Details:</label>
-              <textarea
-                draggable={false}
-                defaultValue={Product.productDetails}
-                onChange={(e: any) =>
-                  setNewValue((prev: any) => ({ ...prev, productDetails: e.value }))
-                }
-                className=" my-auto w-full h-20 p-1  text-sm text-slate-800 font-normal focus:outline-none resize-none no-scrollbar border-2 border-gray-300 rounded-md"
-              ></textarea>
-            </div>
-            {/* <div className="w-full mx-auto my-3  flex flex-col">
-            <label className="text-lg text-gray-700 font-nunito flex flex-row items-center">
-              <ToolTip tipp="what are the key attributes of the product" /> Product Features:
-            </label>
-            <div className="w-auto mx-auto md:mx-4 my-3  flex flex-col ">
-              <div className="w-full h-auto flex flex-col">
-                <div>
-                  {values &&
-                    values.keyFeatures.map((features: any, i: number) => (
-                      <div className=" flex flex-row items-center" key={i}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            values.features.splice(i, 1);
-                          }}
-                          className="m-0.5 p-0.5 w-5 h-5 mr-1 text-center font-bold  rounded-full bg-gray-200 text-red-600"
-                        >
-                          <MdClose size={15} />
-                        </button>
-                        <input
-                          type="text"
-                          name={`features[${i}]`}
-                          defaultValue={features}
-                          id={`features[${i}]`}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          // disabled={!editForm}
-                          placeholder="Services offered"
-                          className="w-64 h-auto p-1 my-1 text-nunito bg-white border-2 outline-none border-gray-300 rounded "
-                        />
-                      </div>
-                    ))}
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        values.features.length < 5 ? values.features.push("") : null;
-                      }}
-                      className="mx-6 p-0.5 px-2 w-14 h-8 text-center text-nunito text-sm rounded-sm bg-purple-700 text-white"
-                    >
-                      Add
-                    </button>
-                  </>
-                </div>
-
-                {errors.features && touched.features ? (
-                  <p className="py-0.5 text-sm text-red-600 font-roboto">{errors.features}</p>
-                ) : null}
-              </div>
-            </div>
-          </div> */}
-            <div className="w-full mx-auto my-1 py-1 flex flex-col">
-              <label className="text-lg text-gray-700 font-nunito"> Old price ₦:</label>
-
-              <input
-                type="tel"
-                defaultValue={Product.old_price}
-                onChange={(e: any) =>
-                  setNewValue((prev: any) => ({ ...prev, old_price: e.value }))
-                }
-                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-              />
-            </div>
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              <label className="text-lg text-gray-700 font-nunito">Price ₦ :</label>
-
-              <input
-                type="tel"
-                defaultValue={Product.price}
-                onChange={(e: any) =>
-                  setNewValue((prev: any) => ({ ...prev, price: e.value }))
-                }
-                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-              />
-            </div>
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              <label className="text-lg text-gray-700 font-nunito">Available Quantity :</label>
-
-              <input
-                type="tel"
-                defaultValue={Product.inStock}
-                onChange={(e: any) =>
-                  setNewValue((prev: any) => ({ ...prev, inStock: e.value }))
-                }
-                className=" px-2 mx-1 w-44 h-auto text-nunito bg-white border-2 outline-none border-slate-300 rounded shadow-sm"
-              />
-            </div>
-
-            <div className="w-full mx-auto my-1 py-1 flex flex-col">
-              <label className="text-lg text-gray-700 font-nunito">
-                Allow pay on delivery
-              </label>
-              <div className=" py-1 flex flex-row  items-center ">
-                <Select
-                  options={options}
-                  defaultInputValue={Product.PayOnDelivery}
-                  placeholder={Product.PayOnDelivery == false ? "No" : "Yes"}
-                  required
-                  onChange={(e: any) =>
-                    setNewValue((prev: any) => ({ ...prev, PayOnDelivery: e.value }))
-                  }
-                  className="w-32"
-                />
-              </div>
-            </div>
-
-            <div className="w-full mx-auto my-1 py-1 flex flex-col   ">
-              {!readyToUpload ? (
-                <button
-                  type="submit"
-                  onClick={() => setReadyToUpload(true)}
-                  className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-400"
-                >
-                  Submit
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={UploadProduct}
-                  className="mx-auto py-2 px-2 w-full font-bold text-white text-center text-nunito text-lg rounded-sm bg-purple-700"
-                >
-                  {loading ? (
-                    <ScaleLoader
-                      color={"white"}
-                      aria-label="ScaleLoader"
-                      data-testid="ScaleLoader"
-                    />
-                  ) : (
-                    "Upload"
-                  )}
-                </button>
-              )}
-            </div>
-          </div>
         </div>
-      )}
+
+        {/* File input for image */}
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Product Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageSelect}
+            className="w-full text-sm border rounded"
+          />
+        </div>
+
+        {/* Product name input */}
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Product Name:</label>
+          <textarea
+            name="name"
+            defaultValue={product.name}
+            onChange={handleInputChange}
+            className="w-full h-16 p-1 border rounded"
+          />
+        </div>
+
+        {/* Product details input */}
+        <div className="w-full flex flex-col">
+          <label className="text-lg">Product Details:</label>
+          <textarea
+            name="productDetails"
+            defaultValue={product.productDetails}
+            onChange={handleInputChange}
+            className="w-full h-20 p-1 border rounded"
+          />
+        </div>
+
+        {/* Price and old price input */}
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Old Price ₦:</label>
+          <input
+            type="tel"
+            name="old_price"
+            defaultValue={product.old_price}
+            onChange={handleInputChange}
+            className="w-44 px-2 border rounded"
+          />
+        </div>
+
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Price ₦:</label>
+          <input
+            type="tel"
+            name="price"
+            defaultValue={product.price}
+            onChange={handleInputChange}
+            className="w-44 px-2 border rounded"
+          />
+        </div>
+
+        {/* Available quantity */}
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Available Quantity:</label>
+          <input
+            type="tel"
+            name="inStock"
+            defaultValue={product.inStock}
+            onChange={handleInputChange}
+            className="w-44 px-2 border rounded"
+          />
+        </div>
+
+        {/* Pay on delivery */}
+        <div className="w-full flex flex-col mt-6">
+          <label className="text-lg">Allow Pay on Delivery:</label>
+          <Select
+            options={options}
+            defaultValue={options.find((option) => option.value === product.PayOnDelivery)}
+            onChange={handleSelectChange}
+            className="w-32"
+          />
+        </div>
+
+        {/* Submit button */}
+        <div className="w-full flex flex-col mt-6">
+          {!prepareData && (
+            <button
+              type="submit"
+              onClick={(e) => {
+                uploadProduct(e);
+              }}
+              className="w-full py-2 text-lg font-bold bg-[#ef8300] text-white rounded-md"
+            >
+              {loading ? <ScaleLoader color="white" /> : "Ready"}
+            </button>
+          )}
+          {prepareData && (
+            <button
+              type="submit"
+              onClick={uploadProduct}
+              className="w-full py-2 text-lg font-bold bg-purple-700 text-white rounded-md"
+            >
+              {loading ? <ScaleLoader color="white" /> : "Update Product"}
+            </button>
+          )}
+        </div>
+      </div>
       <ToastContainer />
-      <SuccessCard
-        showCard={showCard}
-        setShowCard={setShowCard}
-        Text={"Your Product was successfully uploaded"}
-      />
     </div>
   );
 };
