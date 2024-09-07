@@ -21,7 +21,6 @@ const Edit: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-
   const [prepareData, setPrepareData] = useState(false);
 
   const options = [
