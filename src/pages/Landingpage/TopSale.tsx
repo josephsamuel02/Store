@@ -8,14 +8,14 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   return (
     <div className="my-8 w-full h-auto">
-      <div className="w-full h-auto p-0 flex flex-col   bg-[#4303a8]">
+      <div className="w-full h-auto p-0 flex flex-col bg-[#4303a8]">
         <p className=" text-3xl md:text-6xl py-4 text-white text-center font-RubikDistressed ">
           Top Sales
         </p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 bg-[#f0eaf52a] ">
         {Products &&
-          Products.map((i: any, index: number) => (
+          Products.splice(0, 15).map((i: any, index: number) => (
             <div
               className="w-[110px] md:w-[180px] h-[197px] md:h-[240px]  mx-1 md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl"
               key={index}
