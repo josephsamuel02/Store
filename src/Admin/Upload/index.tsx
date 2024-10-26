@@ -46,6 +46,7 @@ const AdminUpload: React.FC = () => {
     { label: "Baby", value: "baby" },
     { label: "Cosmetics", value: "cosmetics" },
     { label: "Wines and liquor", value: "wine" },
+    { label: "household", value: "household" },
   ];
   const options: any = [
     { value: false, label: "No" },

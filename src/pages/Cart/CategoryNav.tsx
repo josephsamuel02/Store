@@ -14,6 +14,7 @@ const CategoryNav = () => {
     { name: " /category?category=body_care", label: "Body Care & Hygiene" },
     { name: "/category?category=cosmetics", label: "cosmetics" },
     { name: "/category?category=wine", label: "Wine" },
+    { name: "/category?category=household", label: "household" },
   ];
   return (
     <div className="mx-auto py-3 w-full h-auto bg-white px-4 flex flex-row rounded">
