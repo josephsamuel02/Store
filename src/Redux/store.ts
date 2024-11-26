@@ -23,14 +23,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
-  devTools: import.meta.env.DEV,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
-        ignoredPaths: ["_persist"], // Ignore paths that redux-persist adds
-      },
-    }),
+  devTools: import.meta.env.DEV, // Retain dev tools
 });
 
 export const persistor = persistStore(store);
