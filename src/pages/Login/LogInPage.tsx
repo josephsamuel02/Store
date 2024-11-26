@@ -38,8 +38,6 @@ const Login: React.FC = () => {
           toast.warn("unable to login.", {
             position: "top-left",
           });
-
-          console.log(newData);
         }
 
         var index: any;
@@ -113,7 +111,7 @@ const Login: React.FC = () => {
                 onChange={(e) =>
                   setUserInfo((prev: any) => ({ ...prev, password: e.target.value }))
                 }
-              />{" "}
+              />
               {!showPassword ? (
                 <GoEyeClosed
                   size={20}

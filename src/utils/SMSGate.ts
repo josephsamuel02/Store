@@ -1,10 +1,11 @@
 import axios from "axios";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const sendSMS = async (data: any) => {
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: ` https://my.kudisms.net/api/sms?token=${
+    url: `https://my.kudisms.net/api/sms?token=${
       import.meta.env.VITE_KUDI_SMS_API_KEY
     }&senderID=onestore.ng&recipients=${data.recipients},&message=${data.message}&gateway=2`,
   };

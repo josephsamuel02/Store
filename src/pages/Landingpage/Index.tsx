@@ -5,16 +5,17 @@ import Banner from "./Banner";
 import Categories from "./Categories";
 import TopeSale from "./TopSale";
 import Footer from "../../components/Footer";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "../../DB/firebase";
 import Electronics from "./Electronics";
 import Accessories from "./Accessories";
 import Baby from "./Baby";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 const Index: React.FC = () => {
-  // const Products = useSelector((state: any) => state.Products.productsByCategory.data);
+  // const ProductsData = useSelector((state: any) => state.Products.products);
+  // const dispatch = useDispatch<AppDispatch>();
 
-  const [allProducts, setAllProducts] = useState<any>("");
+  const [allProducts, setAllProducts] = useState<any>([]);
 
   const fetchPost = async () => {
     await getDocs(collection(db, "products")).then((querySnapshot) => {
@@ -22,10 +23,16 @@ const Index: React.FC = () => {
       setAllProducts(newData);
     });
   };
-
   useEffect(() => {
+    // dispatch(GetProducts());
     fetchPost();
+    // setAllProducts(Products);
+    // console.log(ProductsData);
   }, []);
+
+  // useEffect(() => {
+  //   setAllProducts(ProductsData);
+  // }, [ProductsData]);
 
   return (
     <div className="w-full pt-24 md:pt-24 ">

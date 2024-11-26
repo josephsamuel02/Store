@@ -1,40 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
-import delay from "delay";
-import { addDoc, collection } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
-import { db } from "../../DB/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, getCart } from "../../Redux/Cart";
+import { AppDispatch } from "../../Redux/store";
 interface AppComponent {
   singleProduct: any;
 }
-const token = localStorage.getItem("one_store_login");
 const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+  const dispatch = useDispatch<AppDispatch>();
+  const User = useSelector((state: any) => state.Auth.auth.data.user_id);
 
   const [quantity, setQuantity] = useState(1);
+  const [showBTN, setShowBTN] = useState(true);
 
-  const addToCart = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      if (token) {
-        const docRef = await addDoc(collection(db, "cart"), {
-          ...singleProduct,
-          inStock: quantity,
-          cartId: token,
-        });
-        if (!docRef) {
-          toast.error("item was not added to your cart");
-        }
-
-        toast.success("added to your cart");
-        await delay(1300);
-        window.location.reload();
-      } else {
-        toast.warn("please login to add item to your cart");
-      }
-    } catch (error) {
-      toast.error("Error: Failed to signup");
+  const addProduct = async () => {
+    {
+      const cartItem = { ...singleProduct, inStock: quantity };
+      dispatch(addToCart(cartItem));
+      dispatch(getCart());
+      toast.success("Added to cart");
+      setShowBTN(false);
+      console.log(cartItem);
     }
   };
   // useEffect(() => console.log(singleProduct), []);
@@ -85,10 +74,10 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
               />
             </div>
 
-            {singleProduct.inStock >= 1 && (
+            {User && singleProduct.inStock >= 1 && showBTN && (
               <p
                 className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
-                onClick={(e) => addToCart(e)}
+                onClick={() => addProduct()}
               >
                 <span className="px-4">
                   <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
@@ -103,7 +92,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
                   <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
                 </span>
 
-                <span className="mx-auto cursor-pointer">Add to cart</span>
+                <span className="mx-auto cursor-pointer">Out of stock</span>
               </p>
             )}
           </div>

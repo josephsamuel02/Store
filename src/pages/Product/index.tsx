@@ -8,6 +8,7 @@ import { db } from "../../DB/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const Product: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { id }: any = useParams();
 
   const [singleProduct, setSingleProduct] = useState<any>();

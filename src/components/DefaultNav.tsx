@@ -6,36 +6,26 @@ import ROUTES from "../utils/Routes";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
+import { AppDispatch } from "../Redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../Redux/Cart";
 
 const DefaultNav: React.FC = () => {
-  const Now = new Date().getTime();
-  const token = localStorage.getItem("one_store_login");
-  const [Cart, setCart] = useState<any>([]);
-  const [exprLogin, setExpireLogin] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const CartState = useSelector((state: any) => state.Cart.cart);
 
-  const getUserInfo = async () => {
-    try {
-      await getDocs(collection(db, "cart")).then((querySnapshot) => {
-        const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        if (newData) {
-          const d: any = [];
-          newData.map((item: any) => {
-            return item.cartId == token ? d.push(item) : null;
-          });
-          setCart(d);
-        }
-      });
-    } catch (error) {
-      console.error(" Unable to get cart", error);
-    }
-  };
+  const Now = new Date().getTime();
+
+  const [Cart, setCart] = useState<any>(CartState);
+  const [exprLogin, setExpireLogin] = useState(true);
 
   const [_, setSearchResult] = useState<any>([{ name: "computer" }]);
 
   useEffect(() => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
-      getUserInfo();
+      // getUserInfo();
+      dispatch(getCart());
       setExpireLogin(false);
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);
@@ -60,12 +50,16 @@ const DefaultNav: React.FC = () => {
   };
 
   useEffect(() => {
+    setCart(CartState);
+  }, [CartState]);
+
+  useEffect(() => {
     searchProduct("milo");
   }, []);
 
   return (
     <>
-      <div className="fixed top-0 w-full h-auto px-3 md:px-5 py-4 md:py-4 bg-white flex flex-row items-center shadow-lg">
+      <div className="fixed top-0 w-full h-auto px-3 md:px-5 py-4 md:py-4 bg-white flex flex-row items-center shadow-lg z-20">
         <a className="w-20 md:w-1/5 md:mx-2 md:px-4 flex items-center" href="/">
           <img
             src="/img/OneStore logo.svg"
