@@ -2,21 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-interface AppComponent {
-  cartItems: any;
-  totalPrice: any;
-}
-
 import CheckoutDetails from "../Checkout/CheckoutDetails";
-import { db } from "../../DB/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
 import { ToastContainer } from "react-toastify";
 import ROUTES from "../../utils/Routes";
 import { AppDispatch } from "../../Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteCartItem, getCart, getMyOrders, UpdateCartQuantity } from "../../Redux/Cart";
 
+interface AppComponent {
+  cartItems: any;
+  totalPrice: any;
+}
 const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const dispatch = useDispatch<AppDispatch>();
   const myOrders = useSelector((state: any) => state.Cart.orders);
