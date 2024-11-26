@@ -41,21 +41,19 @@ export const LoginUser = createAsyncThunk(
     }
   }
 );
-// Initial state
+
 const initialState = {
-  user: {}, // To store the logged-in user
-  token: null, // Optional: Token if needed globally
-  status: "idle", // idle | loading | succeeded | failed
-  error: null, // Error message for failed states
+  user: {},
+  token: null,
+  status: "idle",
+  error: null,
 };
 
-// Create Slice
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logout(state: any) {
-      // Clear local storage and reset state on logout
       localStorage.removeItem("ASY_A_Token");
       state.user = null;
       state.token = null;
@@ -68,7 +66,7 @@ const authSlice = createSlice({
         state.status = "loading";
         state.error = null;
       })
-      .addCase(LoginUser.fulfilled, (state: any, action: any) => {
+      .addCase(LoginUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload.user;
         state.token = action.payload.access_token;
@@ -81,8 +79,6 @@ const authSlice = createSlice({
   },
 });
 
-// Export actions
 export const { logout } = authSlice.actions;
 
-// Export reducer
 export default authSlice.reducer;

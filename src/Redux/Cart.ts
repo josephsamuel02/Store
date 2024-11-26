@@ -94,7 +94,7 @@ const initialState = {
   orders: [],
   data: {},
   status: "idle",
-  error: null,
+  error: "",
 };
 
 export const Cart: any = createSlice({
@@ -111,7 +111,7 @@ export const Cart: any = createSlice({
         state.status = "succeeded";
         state.cart = action.payload;
       })
-      .addCase(getCart.rejected, (state, action: any) => {
+      .addCase(getCart.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -123,7 +123,7 @@ export const Cart: any = createSlice({
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(addToCart.rejected, (state, action: any) => {
+      .addCase(addToCart.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -135,7 +135,7 @@ export const Cart: any = createSlice({
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(UpdateCartQuantity.rejected, (state, action: any) => {
+      .addCase(UpdateCartQuantity.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -147,7 +147,7 @@ export const Cart: any = createSlice({
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(DeleteCartItem.rejected, (state, action: any) => {
+      .addCase(DeleteCartItem.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -159,7 +159,7 @@ export const Cart: any = createSlice({
         state.status = "succeeded";
         state.orders = action.payload;
       })
-      .addCase(getMyOrders.rejected, (state, action: any) => {
+      .addCase(getMyOrders.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

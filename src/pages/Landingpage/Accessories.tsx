@@ -3,9 +3,8 @@ import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdShoppingCart } from "react-icons/md";
 import { addToCart, getCart } from "../../Redux/Cart";
-
-import { AppDispatch } from "../../Redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../Redux/store";
 
 interface AppComponent {
   Products: any;

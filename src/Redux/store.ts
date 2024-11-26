@@ -24,7 +24,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
   reducer: persistedReducer,
   devTools: import.meta.env.DEV,
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: unknown | any | object | string | boolean) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
@@ -34,7 +34,8 @@ const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-// Infer the `RootState` and `AppDispatch` types from the store its_elf
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
