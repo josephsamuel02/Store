@@ -9,8 +9,8 @@ import FetchProducts from "./FetchProducts";
 
 const reducers = combineReducers({
   Auth: authSlice,
-  User: User,
-  Cart: Cart,
+  User,
+  Cart,
   Products: FetchProducts,
 });
 
@@ -27,7 +27,7 @@ const store = configureStore({
   devTools: import.meta.env.DEV, // Retain dev tools
 });
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store as any);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
