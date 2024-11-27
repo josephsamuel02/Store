@@ -83,7 +83,7 @@ export const DeleteCartItem = createAsyncThunk(
 
 export const getMyOrders = createAsyncThunk(
   "get_my_orders",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue }: any) => {
     try {
       const token = localStorage.getItem("one_store_login");
 

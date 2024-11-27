@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
 import { getDocs, collection, query, where } from "firebase/firestore";
@@ -25,7 +25,7 @@ const DefaultNav: React.FC = () => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
       // getUserInfo();
-      dispatch(getCart());
+      dispatch(getCart() as any);
       setExpireLogin(false);
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);
