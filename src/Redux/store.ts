@@ -24,6 +24,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
+
   devTools: import.meta.env.DEV, // Retain dev tools
 });
 

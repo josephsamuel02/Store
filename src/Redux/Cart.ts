@@ -16,23 +16,26 @@ import delay from "delay";
 
 axios.defaults.timeout = 140000;
 
-export const addToCart = createAsyncThunk("addToCart", async (data: object) => {
-  try {
-    const token = localStorage.getItem("one_store_login");
-    if (!token) {
-      throw new Error("User not logged in.");
+export const addToCart = createAsyncThunk(
+  "cart/addToCart",
+  async (data: object, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("one_store_login");
+      if (!token) {
+        throw new Error("User not logged in.");
+      }
+      const response = await addDoc(collection(db, "cart"), {
+        ...data,
+        cartId: token, // Link item to the user's session
+      });
+      return { id: response.id, ...data }; // Return the new document ID and data
+    } catch (error: any) {
+      return rejectWithValue(error.message); // Reject with meaningful error message
     }
-    const response = await addDoc(collection(db, "cart"), {
-      ...data,
-      cartId: token,
-    });
-    return response.id; // Return cart document ID or necessary data
-  } catch (error: any) {
-    return error.message;
   }
-});
+);
 
-export const getCart = createAsyncThunk("get-cart", async () => {
+export const getCart = createAsyncThunk("get-cart", async (_, { rejectWithValue }) => {
   try {
     const token = localStorage.getItem("one_store_login");
 
@@ -49,45 +52,53 @@ export const getCart = createAsyncThunk("get-cart", async () => {
       }));
     return d;
   } catch (error: any) {
-    console.log(error);
+    return rejectWithValue(error.message);
   }
 });
 
 export const UpdateCartQuantity = createAsyncThunk(
   "update_cart_quantity",
-  async (data: any) => {
+  async (data: any, { rejectWithValue }) => {
     try {
       await updateDoc(doc(db, "cart", data.id), { inStock: data.q });
       await delay(900);
     } catch (error: any) {
       console.log(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const DeleteCartItem = createAsyncThunk("delete_cart_item", async (data: any) => {
-  try {
-    await deleteDoc(doc(db, "cart", data.id));
-    await delay(900);
-  } catch (error) {
-    return error;
+export const DeleteCartItem = createAsyncThunk(
+  "delete_cart_item",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      await deleteDoc(doc(db, "cart", data.id));
+      await delay(900);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const getMyOrders = createAsyncThunk("get_my_orders", async () => {
-  try {
-    const token = localStorage.getItem("one_store_login");
+export const getMyOrders = createAsyncThunk(
+  "get_my_orders",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("one_store_login");
 
-    const targetRef = collection(db, "order");
-    const q = query(targetRef, where("userId", "==", token));
-    const querySnapshot = await getDocs(q);
+      const targetRef = collection(db, "order");
+      const q = query(targetRef, where("userId", "==", token));
+      const querySnapshot = await getDocs(q);
 
-    const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
-    return newData[0];
-  } catch (error) {
-    console.log(" Unable to get data");
+      const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
+      return newData[0];
+    } catch (error: any) {
+      console.log(" Unable to get data");
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const initialState = {
   cart: [],
