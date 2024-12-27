@@ -94,6 +94,9 @@ const Banner = () => {
           autoplay={true}
           transition={{ duration: 3.5 }}
           loop={true}
+          prevArrow={() => ""}
+          nextArrow={() => ""}
+          // navigation={() => ""}
         >
           <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover " />
           <img src="/img/banner2.png" alt="image 2" className="h-full w-full object-cover" />
