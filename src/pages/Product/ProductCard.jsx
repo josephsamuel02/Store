@@ -8,7 +8,8 @@ import { addToCart, getCart } from "../../Redux/Cart";
 const ProductCard = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.Auth.auth.data.user_id);
+  const User = useSelector((state) => state.Auth.auth.data?.user_id);
+
   const exp = localStorage.getItem("login_expiry_date");
 
   const [quantity, setQuantity] = useState(1);

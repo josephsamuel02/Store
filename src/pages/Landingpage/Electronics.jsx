@@ -6,7 +6,8 @@ import { addToCart, getCart } from "../../Redux/Cart";
 const Electronics = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.Auth.auth.data.user_id);
+  const User = useSelector((state) => state.Auth.auth.data?.user_id);
+
   const exp = localStorage.getItem("login_expiry_date");
   return (
     <div className="my-8 w-full h-auto">

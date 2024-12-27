@@ -19,16 +19,16 @@ const Index = () => {
 
   const [allProducts, setAllProducts] = useState([]);
 
-  // const fetchPost = async () => {
-  //   await getDocs(collection(db, "products")).then((querySnapshot) => {
-  //     const newData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  //     setAllProducts(newData);
-  //     console.log(newData);
-  //   });
-  // };
+  const fetchPost = async () => {
+    await getDocs(collection(db, "products")).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setAllProducts(newData);
+      console.log(newData);
+    });
+  };
   useEffect(() => {
-    dispatch(GetProducts());
-    // fetchPost();
+    // dispatch(GetProducts());
+    fetchPost();
     setAllProducts(ProductsData);
   }, []);
 
