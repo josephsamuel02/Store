@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import DefaultNav from "../../components/DefaultNav";
 import Banner from "./Banner";
@@ -8,14 +7,14 @@ import Footer from "../../components/Footer";
 import Electronics from "./Electronics";
 import Accessories from "./Accessories";
 import Baby from "./Baby";
-import { useSelector, useDispatch } from "react-redux";
-import { GetProducts } from "../../Redux/FetchProducts";
+import { useSelector } from "react-redux";
+// import { GetProducts } from "../../Redux/FetchProducts";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 
 const Index = () => {
   const ProductsData = useSelector((state) => state.Products.products);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [allProducts, setAllProducts] = useState([]);
 

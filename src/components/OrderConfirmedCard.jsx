@@ -1,5 +1,4 @@
 import ROUTES from "../utils/Routes";
-
 const OrderConfirmedCard = (showCard, setShowCard) => {
   return (
     <>
@@ -28,9 +27,5 @@ const OrderConfirmedCard = (showCard, setShowCard) => {
     </>
   );
 };
-// OrderConfirmedCard.propTypes = {
-//   showCard: PropTypes.bool.isRequired,
-//   setShowCard: PropTypes.func.isRequired,
-// };
 
 export default OrderConfirmedCard;

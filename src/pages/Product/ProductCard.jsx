@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart, getCart } from "../../Redux/Cart";
 
 const ProductCard = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.Auth.auth.data?.user_id);
+  // const User = useSelector((state) => state.Auth.auth.data?.user_id);
 
   const exp = localStorage.getItem("login_expiry_date");
 

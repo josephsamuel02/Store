@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-no-target-blank */
 import { useEffect, useState } from "react";
 import ROUTES from "../../utils/Routes";
 import { MdCall, MdWhatsapp } from "react-icons/md";
