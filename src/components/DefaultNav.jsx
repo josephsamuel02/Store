@@ -28,7 +28,6 @@ const DefaultNav = () => {
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const searchProduct = async (word) => {
     if (typeof word !== "string") {
