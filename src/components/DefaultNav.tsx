@@ -24,7 +24,7 @@ const DefaultNav: React.FC = () => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
       // getUserInfo();
-      dispatch(getCart() as any);
+      dispatch<any>(getCart() as any);
       setExpireLogin(false);
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);

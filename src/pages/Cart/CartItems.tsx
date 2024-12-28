@@ -5,9 +5,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import CheckoutDetails from "../Checkout/CheckoutDetails";
 import { ToastContainer } from "react-toastify";
 import ROUTES from "../../utils/Routes";
-import { AppDispatch } from "../../Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteCartItem, getCart, getMyOrders, UpdateCartQuantity } from "../../Redux/Cart";
+import { AppDispatch } from "../../Redux/store";
 
 interface AppComponent {
   cartItems: any;
@@ -27,7 +27,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   };
 
   useEffect(() => {
-    !myOrders && dispatch(getMyOrders());
+    !myOrders && dispatch<any>(getMyOrders());
     setOrder(myOrders);
   }, [myOrders]);
 
@@ -67,8 +67,8 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
                             // Number(i.inStock) > 1 && UpdateCartQuantity(i.id, q);
 
                             Number(i.inStock) > 1 &&
-                              dispatch(UpdateCartQuantity({ id: i.id, q: q }));
-                            dispatch(getCart());
+                              dispatch<any>(UpdateCartQuantity({ id: i.id, q: q }));
+                            dispatch<any>(getCart());
                           }}
                         />
                         <p className="text-base text-black font-roboto">{Number(i.inStock)}</p>
@@ -80,8 +80,8 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
                           onClick={async () => {
                             const q = Number(i.inStock) + 1;
 
-                            dispatch(UpdateCartQuantity({ id: i.id, q: q }));
-                            dispatch(getCart());
+                            dispatch<any>(UpdateCartQuantity({ id: i.id, q: q }));
+                            dispatch<any>(getCart());
                           }}
                         />
                       </div>
@@ -92,8 +92,8 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
                 <div
                   className="w-36 m-2 h-auto px-4 py-2 flex flex-row cursor-pointer items-center rounded-md hover:bg-slate-200 "
                   onClick={() => {
-                    dispatch(DeleteCartItem({ id: i.id }));
-                    dispatch(getCart());
+                    dispatch<any>(DeleteCartItem({ id: i.id }));
+                    dispatch<any>(getCart());
                   }}
                 >
                   <span>

@@ -58,8 +58,8 @@ const Baby: React.FC<AppComponent> = ({ Products }) => {
                         e.preventDefault();
                         e.stopPropagation();
                         const cartItem = { ...i, inStock: 1 };
-                        dispatch(addToCart(cartItem));
-                        dispatch(getCart());
+                        dispatch<any>(addToCart(cartItem));
+                        dispatch<any>(getCart());
                         console.log({ ...i, inStock: 1 });
                       }}
                     >

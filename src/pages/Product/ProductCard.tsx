@@ -19,8 +19,8 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
   const addProduct = async () => {
     {
       const cartItem = { ...singleProduct, inStock: quantity };
-      dispatch(addToCart(cartItem));
-      dispatch(getCart());
+      dispatch<any>(addToCart(cartItem));
+      dispatch<any>(getCart());
       toast.success("Added to cart");
       setShowBTN(false);
       console.log(cartItem);

@@ -24,7 +24,7 @@ const Index: React.FC = () => {
     });
   };
   useEffect(() => {
-    // dispatch(GetProducts());
+    //  dispatch<any>(GetProducts());
     fetchPost();
     // setAllProducts(Products);
     // console.log(ProductsData);

@@ -56,8 +56,8 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
                       e.preventDefault();
                       e.stopPropagation();
                       const cartItem = { ...i, inStock: 1 };
-                      dispatch(addToCart(cartItem));
-                      dispatch(getCart());
+                      dispatch<any>(addToCart(cartItem));
+                      dispatch<any>(getCart());
                     }}
                   >
                     <MdShoppingCart className="text-md text-white ml-auto" />

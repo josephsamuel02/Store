@@ -18,7 +18,7 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const CartState = useSelector((state: any) => state.Cart.cart);
   const get = () => {
-    dispatch(getCart());
+    dispatch<any>(getCart());
 
     setCart(CartState);
 
