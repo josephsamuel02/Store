@@ -17,7 +17,7 @@ const TopeSale = ({ Products }) => {
         </p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-[#f0eaf52a] ">
-        {Products &&
+        {Products.length !== 0 &&
           Products.slice(0, 15).map((i, index) => (
             <div
               className="w-[125px] md:w-[180px] h-[223px] md:h-[270px] mx-auto md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-110"

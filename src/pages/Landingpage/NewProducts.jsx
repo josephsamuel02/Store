@@ -11,7 +11,7 @@ const NewProducts = (Products) => {
         </p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 flex md:flex-row bg-purple-100 ">
-        {Products &&
+        {Products.length !== 0 &&
           Products.slice(10, 5).map((i, index) => (
             <div
               className="mx-0 md:mx-3 w-1/6 h-auto md:h-64 p-1 rounded items-center flex flex-col bg-white cursor-pointer"

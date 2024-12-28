@@ -1,4 +1,3 @@
-import React from "react";
 import ROUTES from "../../utils/Routes";
 import { useDispatch } from "react-redux";
 import { MdShoppingCart } from "react-icons/md";
@@ -17,7 +16,7 @@ const Baby = ({ Products }) => {
         <p className=" text-4xl text-[#4303a8] text-center font-RubikDistressed ">Baby</p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-[#f0eaf52a] ">
-        {Products &&
+        {Products.length !== 0 &&
           Products.filter((i) => i.category === "baby")
             .splice(0, 10)
             .map((i, index) => (

@@ -17,7 +17,7 @@ const Electronics = ({ Products }) => {
         </p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-[#f0eaf52a] ">
-        {Products &&
+        {Products.length !== 0 &&
           Products.filter((i) => i.category === "electronics")
             .splice(0, 10)
             .map((i, index) => (
