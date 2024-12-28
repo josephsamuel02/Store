@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-no-target-blank */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ROUTES from "../../utils/Routes";
 import { MdCall, MdWhatsapp } from "react-icons/md";
-import { sendSMS } from "../../utils/SMSGate";
+// import { sendSMS } from "../../utils/SMSGate";
 interface appState {
   setShowCard: (value: any) => any;
   TotalPrice: any;
@@ -11,7 +11,7 @@ interface appState {
 }
 
 const PayOfflineCard: React.FC<appState> = ({ setShowCard, TotalPrice, OrderId }) => {
-  const [placedOrder, setPlacedOrder] = useState(false);
+  // const [placedOrder, setPlacedOrder] = useState(false);
   useEffect(() => {
     console.log(
       `Dear customer. Your order has been placed and our agent will contact you regarding your payment and delivery. Order number: ${OrderId}, Total price:₦${TotalPrice.TotalPrice}`
