@@ -13,7 +13,7 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 
 const Index = () => {
-  const ProductsData = useSelector((state) => state.Products.products);
+  // const ProductsData = useSelector((state) => state.Products.products);
   // const dispatch = useDispatch();
 
   const [allProducts, setAllProducts] = useState([]);
@@ -27,12 +27,12 @@ const Index = () => {
   useEffect(() => {
     // dispatch(GetProducts());
     fetchPost();
-    setAllProducts(ProductsData);
+    // setAllProducts(ProductsData);
   }, []);
 
-  useEffect(() => {
-    setAllProducts(ProductsData);
-  }, [ProductsData]);
+  // useEffect(() => {
+  //   setAllProducts(ProductsData);
+  // }, [ProductsData]);
 
   return (
     <div className="w-full pt-24 md:pt-24 ">
