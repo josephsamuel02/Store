@@ -11,7 +11,7 @@ interface AppComponent {
 const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.auth.data.user_id);
+  const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
 
   const [quantity, setQuantity] = useState(1);
   const [showBTN, setShowBTN] = useState(true);

@@ -11,7 +11,7 @@ interface AppComponent {
 const TopeSale: React.FC<AppComponent> = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.auth.data.user_id);
+  const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
 
   return (
     <div className="my-8 w-full h-auto">
