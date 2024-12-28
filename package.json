@@ -9,7 +9,7 @@
     "build:tailwindcss": "tailwindcss -i  src/index.css -o public/style.css --minify",
     "start": "concurrently --kill-others \"npm run dev\"  \" npm run watch:tailwindcss\" ",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .js,.jsx",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
     "postcss": "^8.4.49",
