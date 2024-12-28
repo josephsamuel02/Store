@@ -6,9 +6,9 @@ import ROUTES from "../utils/Routes";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
-import { AppDispatch } from "../Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../Redux/Cart";
+import { AppDispatch } from "../Redux/store";
 
 const DefaultNav: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

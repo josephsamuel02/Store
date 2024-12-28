@@ -38,7 +38,7 @@ const store = configureStore({
   devTools: import.meta.env.DEV, // Retain dev tools
 });
 
-export const persistor = persistStore(store as any);
+export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
