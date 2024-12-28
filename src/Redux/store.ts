@@ -27,12 +27,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware: any) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ["persist/PERSIST"],
-        // Ignore these field paths in all actions
-        ignoredActionPaths: ["meta.arg", "payload.timestamp"],
-        // Ignore these paths in the state
-        ignoredPaths: ["items.dates"],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredPaths: ["_persist"],
       },
     }),
   devTools: import.meta.env.DEV, // Retain dev tools
