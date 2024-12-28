@@ -24,7 +24,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: any) =>
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these action types
@@ -34,7 +34,7 @@ const store = configureStore({
         // Ignore these paths in the state
         ignoredPaths: ["items.dates"],
       },
-    }) as any,
+    }),
   devTools: import.meta.env.DEV, // Retain dev tools
 });
 
