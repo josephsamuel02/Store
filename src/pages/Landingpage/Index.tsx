@@ -36,7 +36,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="w-full pt-24 md:pt-24 ">
-      <DefaultNav />
+      {/* <DefaultNav /> */}
       <Banner />
       <Categories />
       <TopeSale Products={allProducts} />
