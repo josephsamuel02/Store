@@ -46,6 +46,7 @@ const AdminUpload: React.FC = () => {
     { label: "Baby", value: "baby" },
     { label: "Cosmetics", value: "cosmetics" },
     { label: "Wines and liquor", value: "wine" },
+    { label: "household", value: "household" },
   ];
   const options: any = [
     { value: false, label: "No" },
@@ -70,7 +71,7 @@ const AdminUpload: React.FC = () => {
           toast.error("unable to upload images");
           console.log(error);
         });
-    } catch (error) {
+    } catch {
       toast.error("Unable to upload image to server");
     }
   };
@@ -87,7 +88,7 @@ const AdminUpload: React.FC = () => {
         setLoading(false);
         setShowCard(true);
       }
-    } catch (error) {
+    } catch {
       toast.error("Error: Failed to upload");
     }
   };
@@ -96,6 +97,7 @@ const AdminUpload: React.FC = () => {
     if (!adminToken) {
       Navigate(ROUTES.ADMIN_LOGIN);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,40 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
-import delay from "delay";
-import { addDoc, collection } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../DB/firebase";
 interface AppComponent {
   singleProduct: any;
+  getCartInfo: () => void;
 }
-const token = localStorage.getItem("one_store_login");
-const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
+const ProductCard: React.FC<AppComponent> = ({ singleProduct, getCartInfo }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+  const User = localStorage.getItem("one_store_login");
 
   const [quantity, setQuantity] = useState(1);
+  const [showBTN, setShowBTN] = useState(true);
 
-  const addToCart = async (e: any) => {
-    e.preventDefault();
-
+  const addToCart = async (data: object) => {
     try {
-      if (token) {
-        const docRef = await addDoc(collection(db, "cart"), {
-          ...singleProduct,
-          inStock: quantity,
-          cartId: token,
-        });
-        if (!docRef) {
-          toast.error("item was not added to your cart");
-        }
-
-        toast.success("added to your cart");
-        await delay(1300);
-        window.location.reload();
-      } else {
-        toast.warn("please login to add item to your cart");
+      const token = localStorage.getItem("one_store_login");
+      if (!token) {
+        throw new Error("User not logged in.");
       }
-    } catch (error) {
-      toast.error("Error: Failed to signup");
+      const response = await addDoc(collection(db, "cart"), {
+        ...data,
+        cartId: token, // Link item to the user's session
+      });
+      return { id: response.id, ...data }; // Return the new document ID and data
+    } catch (error: any) {
+      return error.message; // Reject with meaningful error message
+    }
+  };
+
+  const addProduct = async () => {
+    {
+      const cartItem = { ...singleProduct, inStock: quantity };
+      addToCart(cartItem);
+      getCartInfo();
+      toast.success("Added to cart");
+      setShowBTN(false);
     }
   };
   // useEffect(() => console.log(singleProduct), []);
@@ -65,30 +68,32 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
               )}
             </h2>
 
-            <div className="w-full h-auto flex flex-row py-6 ">
-              <p className="text-base text-black font-roboto">Quantity</p>
-              <input
-                className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
-                type="button"
-                value="-"
-                onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-              />
-              <p className="text-base text-black font-roboto">
-                {singleProduct.inStock >= 1 ? quantity : 0}
-              </p>
+            {User && showBTN && (
+              <div className="w-full h-auto flex flex-row py-6 ">
+                <p className="text-base text-black font-roboto">Quantity</p>
+                <input
+                  className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+                  type="button"
+                  value="-"
+                  onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                />
+                <p className="text-base text-black font-roboto">
+                  {singleProduct.inStock >= 1 ? quantity : 0}
+                </p>
 
-              <input
-                className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
-                type="button"
-                value="+"
-                onClick={() => setQuantity(quantity + 1)}
-              />
-            </div>
+                <input
+                  className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+                  type="button"
+                  value="+"
+                  onClick={() => setQuantity(quantity + 1)}
+                />
+              </div>
+            )}
 
-            {singleProduct.inStock >= 1 && (
+            {User && singleProduct.inStock >= 1 && showBTN && (
               <p
                 className="mx-auto my-6 px-4 w-full h-auto py-4 text-xl  text-white font-roboto flex flex-row items-center bg-Storepurple hover:bg-purple-700 rounded-md cursor-pointer"
-                onClick={(e) => addToCart(e)}
+                onClick={() => addProduct()}
               >
                 <span className="px-4">
                   <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
@@ -103,7 +108,7 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
                   <MdAddShoppingCart size={32} className="mx-auto  text-slate-50" />
                 </span>
 
-                <span className="mx-auto cursor-pointer">Add to cart</span>
+                <span className="mx-auto cursor-pointer">Out of stock</span>
               </p>
             )}
           </div>

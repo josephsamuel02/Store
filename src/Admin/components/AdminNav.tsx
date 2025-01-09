@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState } from "react";
 import { MdPersonOutline } from "react-icons/md";
 import ROUTES from "../../utils/Routes";
@@ -28,6 +27,7 @@ const AdminNav: React.FC = () => {
         console.error("Error getting document:", error);
         Navigate("/admin");
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

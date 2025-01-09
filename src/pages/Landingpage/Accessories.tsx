@@ -1,25 +1,57 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ROUTES from "../../utils/Routes";
+import { MdShoppingCart } from "react-icons/md";
 
 interface AppComponent {
   Products: any;
+  addToCart: (data: object) => Promise<{ id: string; [key: string]: any } | string>;
 }
 
-const Accessories: React.FC<AppComponent> = ({ Products }) => {
+const Accessories: React.FC<AppComponent> = ({ Products, addToCart }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+  const User = localStorage.getItem("one_store_login");
+
+  // const getCart = async () => {
+  //   try {
+  //     const token = localStorage.getItem("one_store_login");
+
+  //     const targetRef = collection(db, "cart");
+  //     const q = query(targetRef, where("cartId", "==", token));
+  //     const d: any = [];
+
+  //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  //     token &&
+  //       (await getDocs(q).then((querySnapshot) => {
+  //         const response: any = querySnapshot.docs.map((doc) => ({
+  //           ...doc.data(),
+  //           id: doc.id,
+  //         }));
+
+  //         if (response) {
+  //           response.map((item: any) => (item.cartId == token ? d.push(item) : null));
+  //         }
+  //       }));
+  //     return d;
+  //   } catch (error: any) {
+  //     return error.message;
+  //   }
+  // };
+
   return (
     <div className="my-8 w-full h-auto">
-      <div className="w-full h-auto p-0 flex flex-col bg-[#4303a8]">
-        <p className=" text-4xl text-white text-center font-RubikDistressed ">Accessories</p>
+      <div className="w-full h-auto py-5 flex flex-col border-y border-[#d7bfff] bg-white">
+        <p className=" text-4xl text-[#4303a8] text-center font-RubikDistressed ">
+          Accessories
+        </p>
       </div>
-      <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 bg-[#f0eaf52a] ">
+      <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-[#f0eaf52a] ">
         {Products &&
           Products.filter((i: any) => i.category === "accessories")
             .splice(0, 10)
             .map((i: any, index: number) => (
               <div
-                className="w-[110px] md:w-[180px] h-[197px] md:h-[240px] mx-1 md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl"
+                className="w-[125px] md:w-[180px] h-[223px] md:h-[270px]  mx-auto md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-110"
                 key={index}
               >
                 <a
@@ -31,18 +63,37 @@ const Accessories: React.FC<AppComponent> = ({ Products }) => {
                     alt="category"
                     className="m-auto w-full h-36 md:h-44 object-contain"
                   />
-                  <p className="w-full px-2 text-xs md:text-base truncate text-slate-8 text-center font-bold">
+                  <p className="w-full px-2 text-[10px] md:text-sm truncate  text-slate-8 text-center font-bold  ">
                     {i.name}
                   </p>
 
-                  <h2 className="text-base py-1 text-black flex flex-col md:flex-row items-center">
+                  <h2 className=" text-[10px] md:text-sm py-1 text-black flex flex-col md:flex-row items-center">
                     ₦{priceFormat.format(i.price)}
                     {i.old_price != 0 && (
-                      <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal">
+                      <span className="pl-2 text-slate-600 text-sm text-decoration-line: line-through font-normal  ">
                         {i.old_price != i.price && `₦${priceFormat.format(i.old_price)}`}
                       </span>
                     )}
                   </h2>
+
+                  {User && (
+                    <h2
+                      className=" w-full py-2  bg-[#4303a8] hover:bg-[#6d35c7] flex flex-row  items-center rounded cursor-pointer"
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const cartItem = { ...i, inStock: 1 };
+                        addToCart(cartItem);
+                        // console.log({ ...i, inStock: 1 });
+                      }}
+                    >
+                      <MdShoppingCart className="text-md text-white ml-auto" />
+
+                      <span className="mr-auto  pl-2 text-white text-[11px] md:text-sm   font-normal  ">
+                        Add to cart
+                      </span>
+                    </h2>
+                  )}
                 </a>
               </div>
             ))}

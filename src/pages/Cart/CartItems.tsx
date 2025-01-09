@@ -1,29 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import CheckoutDetails from "../Checkout/CheckoutDetails";
+import { toast, ToastContainer } from "react-toastify";
+import ROUTES from "../../utils/Routes";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../DB/firebase";
 
 interface AppComponent {
   cartItems: any;
   totalPrice: any;
+  getCart: any;
 }
-
-import CheckoutDetails from "../Checkout/CheckoutDetails";
-import { db } from "../../DB/firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
-import { toast, ToastContainer } from "react-toastify";
-import delay from "delay";
-import ROUTES from "../../utils/Routes";
-
-const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
+const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) => {
   const token = localStorage.getItem("one_store_login");
 
   const priceFormat = new Intl.NumberFormat("en-US");
@@ -31,6 +31,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const [Order, setOrder] = useState<any>();
 
   const [checkout, setCheckOut] = useState(false);
+
   const getOrders = async () => {
     try {
       const targetRef = collection(db, "order");
@@ -47,8 +48,8 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const UpdateCartQuantity = async (id: string, q: number) => {
     try {
       await updateDoc(doc(db, "cart", id), { inStock: q });
-      await delay(900);
-      window.location.replace("/cart");
+      // await delay(900);
+      // window.location.replace("/cart");
     } catch (error) {
       toast.error("unable increase product quantity quantity");
     }
@@ -57,8 +58,11 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const deleteCartItem = async (id: any) => {
     try {
       await deleteDoc(doc(db, "cart", id));
+      getCart();
       toast.success("Item removed");
-      await delay(900);
+
+      // await delay(900);
+
       // window.location.reload();
     } catch (e) {
       toast.error("Error deleting document: ");
@@ -66,7 +70,6 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   };
 
   const setT = () => {
-    // setTPrice(totalPrice);
     setCheckOut(true);
   };
 
@@ -105,9 +108,11 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
                           className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
                           type="button"
                           value="-"
-                          onClick={() => {
+                          onClick={async () => {
                             const q = Number(i.inStock) - 1;
-                            Number(i.inStock) > 1 && UpdateCartQuantity(i.id, q);
+                            if (Number(i.inStock) > 1) {
+                              await UpdateCartQuantity(i.id, q);
+                            }
                           }}
                         />
                         <p className="text-base text-black font-roboto">{Number(i.inStock)}</p>

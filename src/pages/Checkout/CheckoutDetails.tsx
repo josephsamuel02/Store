@@ -20,6 +20,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
   const token = localStorage.getItem("one_store_login");
   const priceFormat = new Intl.NumberFormat("en-US");
   const [showCard, setShowCard] = useState(false);
+  const [TPrice, seTPrice] = useState(TotalPrice);
   const [showOfflinePaymentCard, setShowOfflinePaymentCard] = useState(false);
 
   const [userInfo, setUserInfo] = useState<any>({
@@ -86,7 +87,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
               // Delete the document
               deleteDoc(docRef)
                 .then(() => {
-                  console.log("  successful!");
+                  console.log(" successful!");
                 })
                 .catch((error) => {
                   toast.error("An error occurred");
@@ -121,6 +122,9 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
       OrderId: Math.floor(Math.random() * 1000000000),
     });
   }, []);
+
+  useEffect(() => seTPrice(TotalPrice), [TotalPrice]);
+
   // const config = {
   //   reference: new Date().getTime().toString(),
   //   email: "user@example.com",
@@ -265,7 +269,7 @@ const CheckoutDetails: React.FC<AppComponent> = ({ CheckOutData, TotalPrice }) =
       {showOfflinePaymentCard && (
         <PayOfflineCard
           setShowCard={setShowOfflinePaymentCard}
-          TotalPrice={TotalPrice}
+          TotalPrice={TPrice}
           OrderId={orderItem.OrderId}
         />
       )}

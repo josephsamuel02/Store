@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ROUTES from "../../utils/Routes";
 interface AppComponent {
@@ -41,7 +42,7 @@ const SimilarProducts: React.FC<AppComponent> = ({ categoryProducts }) => {
               <p
                 className=" w-full mx-0.5 py-1 text-center text-sm md:text-base text-white bg-Storepurple hover:bg-purple-800 rounded-sm cursor-pointer"
                 // onClick={() =>
-                //   dispatch(
+                //    dispatch<any>(
                 //     addToCart({
                 //       id: i.id,
                 //       image: i.image,
