@@ -2,16 +2,42 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdShoppingCart } from "react-icons/md";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store";
 import { addToCart, getCart } from "../../Redux/Cart";
+=======
+
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 interface AppComponent {
   Products: any;
+  addToCart: (data: object) => Promise<{ id: string; [key: string]: any } | string>;
 }
-const TopeSale: React.FC<AppComponent> = ({ Products }) => {
+const TopeSale: React.FC<AppComponent> = ({ Products, addToCart }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+<<<<<<< HEAD
   const dispatch = useDispatch<AppDispatch>();
   const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
+=======
+  // const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
+  const User = localStorage.getItem("one_store_login");
+
+  // const addToCart = async (data: object) => {
+  //   try {
+  //     const token = localStorage.getItem("one_store_login");
+  //     if (!token) {
+  //       throw new Error("User not logged in.");
+  //     }
+  //     const response = await addDoc(collection(db, "cart"), {
+  //       ...data,
+  //       cartId: token, // Link item to the user's session
+  //     });
+  //     return { id: response.id, ...data }; // Return the new document ID and data
+  //   } catch (error: any) {
+  //     return error.message; // Reject with meaningful error message
+  //   }
+  // };
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   return (
     <div className="my-8 w-full h-auto">
@@ -22,7 +48,7 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-[#f0eaf52a] ">
         {Products &&
-          Products.splice(0, 15).map((i: any, index: number) => (
+          Products.slice(0, 15).map((i: any, index: number) => (
             <div
               className="w-[125px] md:w-[180px] h-[223px] md:h-[270px] mx-auto md:mx-auto my-6 md:my-10 p-1 rounded-lg items-center flex flex-col bg-white cursor-pointer shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-110"
               key={index}
@@ -56,8 +82,12 @@ const TopeSale: React.FC<AppComponent> = ({ Products }) => {
                       e.preventDefault();
                       e.stopPropagation();
                       const cartItem = { ...i, inStock: 1 };
+<<<<<<< HEAD
                       dispatch<any>(addToCart(cartItem));
                       dispatch<any>(getCart());
+=======
+                      addToCart(cartItem);
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
                     }}
                   >
                     <MdShoppingCart className="text-md text-white ml-auto" />

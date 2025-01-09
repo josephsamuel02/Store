@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -83,8 +82,10 @@ const Edit: React.FC = () => {
         const snapshot = await uploadBytes(imageRef, imageFile);
         const imageUrl = await getDownloadURL(snapshot.ref);
         setNewValue((prev: any) => ({ ...prev, image: imageUrl }));
-        prepareData && toast.success("Image uploaded successfully");
-      } catch (error) {
+        if (prepareData) {
+          toast.success("Image uploaded successfully");
+        }
+      } catch {
         toast.error("Failed to upload image");
         setLoading(false);
         return;
@@ -96,9 +97,13 @@ const Edit: React.FC = () => {
       const docRef = doc(db, "products", id!);
       await updateDoc(docRef, newValue);
 
-      prepareData && toast.success("Product updated successfully!");
+      if (prepareData) {
+        toast.success("Product updated successfully!");
+      }
       delay(1000);
-      prepareData && Navigate(`/admin/product_details/${id}`);
+      if (prepareData) {
+        Navigate(`/admin/product_details/${id}`);
+      }
 
       setPrepareData(true);
     } catch (error) {

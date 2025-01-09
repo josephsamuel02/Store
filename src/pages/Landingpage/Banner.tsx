@@ -7,7 +7,8 @@ import { BsPhone } from "react-icons/bs";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
 import { CgGym } from "react-icons/cg";
 import ROUTES from "../../utils/Routes";
-import { Carousel } from "@material-tailwind/react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Banner: React.FC = () => {
   const Menu = [
@@ -90,15 +91,16 @@ const Banner: React.FC = () => {
       </div>
 
       <div className="  mx-auto w-full h-full md:w-4/5 ">
-        <Carousel
-          className="rounded-sm  "
-          autoplay={true}
-          transition={{ duration: 3.5 }}
-          loop={true}
-        >
-          <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover " />
-          <img src="/img/banner2.png" alt="image 2" className="h-full w-full object-cover" />
-          <img src="/img/banner3.png" alt="image 3" className="h-full w-full object-cover" />
+        <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false} interval={2000}>
+          <div>
+            <img src="/img/banner1.png" alt="image 1" className="h-full w-full object-cover" />
+          </div>
+          <div>
+            <img src="/img/banner2.png" alt="image 2" className="h-full w-full object-cover" />
+          </div>
+          <div>
+            <img src="/img/banner3.png" alt="image 3" className="h-full w-full object-cover" />
+          </div>
         </Carousel>
       </div>
     </div>

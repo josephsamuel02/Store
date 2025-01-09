@@ -42,6 +42,11 @@ export const getCart = createAsyncThunk("get-cart", async (_, { rejectWithValue 
     const targetRef = collection(db, "cart");
     const q = query(targetRef, where("cartId", "==", token));
     const d: any = [];
+<<<<<<< HEAD
+=======
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
     token &&
       (await getDocs(q).then((querySnapshot) => {
         const response: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));

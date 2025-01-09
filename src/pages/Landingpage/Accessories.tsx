@@ -2,18 +2,52 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdShoppingCart } from "react-icons/md";
+<<<<<<< HEAD
 import { addToCart, getCart } from "../../Redux/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store";
+=======
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
 interface AppComponent {
   Products: any;
+  addToCart: (data: object) => Promise<{ id: string; [key: string]: any } | string>;
 }
 
-const Accessories: React.FC<AppComponent> = ({ Products }) => {
+const Accessories: React.FC<AppComponent> = ({ Products, addToCart }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+<<<<<<< HEAD
   const dispatch = useDispatch<AppDispatch>();
   const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
+=======
+  const User = localStorage.getItem("one_store_login");
+
+  // const getCart = async () => {
+  //   try {
+  //     const token = localStorage.getItem("one_store_login");
+
+  //     const targetRef = collection(db, "cart");
+  //     const q = query(targetRef, where("cartId", "==", token));
+  //     const d: any = [];
+
+  //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  //     token &&
+  //       (await getDocs(q).then((querySnapshot) => {
+  //         const response: any = querySnapshot.docs.map((doc) => ({
+  //           ...doc.data(),
+  //           id: doc.id,
+  //         }));
+
+  //         if (response) {
+  //           response.map((item: any) => (item.cartId == token ? d.push(item) : null));
+  //         }
+  //       }));
+  //     return d;
+  //   } catch (error: any) {
+  //     return error.message;
+  //   }
+  // };
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   return (
     <div className="my-8 w-full h-auto">
@@ -56,6 +90,7 @@ const Accessories: React.FC<AppComponent> = ({ Products }) => {
                   {User && (
                     <h2
                       className=" w-full py-2  bg-[#4303a8] hover:bg-[#6d35c7] flex flex-row  items-center rounded cursor-pointer"
+<<<<<<< HEAD
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -63,6 +98,14 @@ const Accessories: React.FC<AppComponent> = ({ Products }) => {
                         dispatch<any>(addToCart(cartItem));
                         dispatch<any>(getCart());
                         console.log({ ...i, inStock: 1 });
+=======
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const cartItem = { ...i, inStock: 1 };
+                        addToCart(cartItem);
+                        // console.log({ ...i, inStock: 1 });
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
                       }}
                     >
                       <MdShoppingCart className="text-md text-white ml-auto" />

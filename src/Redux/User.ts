@@ -73,7 +73,16 @@ const initialState = {
 export const User: any = createSlice({
   name: "artwork",
   initialState: initialState,
+<<<<<<< HEAD
   reducers: {},
+=======
+
+  reducers: {
+    clearUserData: (state) => {
+      state.my_profile = {};
+    },
+  },
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
   extraReducers: (builder) => {
     builder
 
@@ -102,5 +111,9 @@ export const User: any = createSlice({
       });
   },
 });
+<<<<<<< HEAD
+=======
+export const { clearUserData } = User.actions;
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
 export default User.reducer;

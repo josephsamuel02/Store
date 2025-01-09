@@ -2,20 +2,33 @@
 import React, { useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCart } from "../../Redux/Cart";
 import { AppDispatch } from "../../Redux/store";
+=======
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../DB/firebase";
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 interface AppComponent {
   singleProduct: any;
+  getCartInfo: () => void;
 }
+<<<<<<< HEAD
 const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
   const dispatch = useDispatch<AppDispatch>();
   const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
+=======
+const ProductCard: React.FC<AppComponent> = ({ singleProduct, getCartInfo }) => {
+  const priceFormat = new Intl.NumberFormat("en-US");
+  const User = localStorage.getItem("one_store_login");
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   const [quantity, setQuantity] = useState(1);
   const [showBTN, setShowBTN] = useState(true);
 
+<<<<<<< HEAD
   const addProduct = async () => {
     {
       const cartItem = { ...singleProduct, inStock: quantity };
@@ -24,6 +37,31 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
       toast.success("Added to cart");
       setShowBTN(false);
       console.log(cartItem);
+=======
+  const addToCart = async (data: object) => {
+    try {
+      const token = localStorage.getItem("one_store_login");
+      if (!token) {
+        throw new Error("User not logged in.");
+      }
+      const response = await addDoc(collection(db, "cart"), {
+        ...data,
+        cartId: token, // Link item to the user's session
+      });
+      return { id: response.id, ...data }; // Return the new document ID and data
+    } catch (error: any) {
+      return error.message; // Reject with meaningful error message
+    }
+  };
+
+  const addProduct = async () => {
+    {
+      const cartItem = { ...singleProduct, inStock: quantity };
+      addToCart(cartItem);
+      getCartInfo();
+      toast.success("Added to cart");
+      setShowBTN(false);
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
     }
   };
   // useEffect(() => console.log(singleProduct), []);
@@ -54,25 +92,27 @@ const ProductCard: React.FC<AppComponent> = ({ singleProduct }) => {
               )}
             </h2>
 
-            <div className="w-full h-auto flex flex-row py-6 ">
-              <p className="text-base text-black font-roboto">Quantity</p>
-              <input
-                className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
-                type="button"
-                value="-"
-                onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-              />
-              <p className="text-base text-black font-roboto">
-                {singleProduct.inStock >= 1 ? quantity : 0}
-              </p>
+            {User && showBTN && (
+              <div className="w-full h-auto flex flex-row py-6 ">
+                <p className="text-base text-black font-roboto">Quantity</p>
+                <input
+                  className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+                  type="button"
+                  value="-"
+                  onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                />
+                <p className="text-base text-black font-roboto">
+                  {singleProduct.inStock >= 1 ? quantity : 0}
+                </p>
 
-              <input
-                className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
-                type="button"
-                value="+"
-                onClick={() => setQuantity(quantity + 1)}
-              />
-            </div>
+                <input
+                  className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
+                  type="button"
+                  value="+"
+                  onClick={() => setQuantity(quantity + 1)}
+                />
+              </div>
+            )}
 
             {User && singleProduct.inStock >= 1 && showBTN && (
               <p

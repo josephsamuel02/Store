@@ -1,26 +1,91 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import CheckoutDetails from "../Checkout/CheckoutDetails";
+<<<<<<< HEAD
 import { ToastContainer } from "react-toastify";
 import ROUTES from "../../utils/Routes";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteCartItem, getCart, getMyOrders, UpdateCartQuantity } from "../../Redux/Cart";
 import { AppDispatch } from "../../Redux/store";
+=======
+import { toast, ToastContainer } from "react-toastify";
+import ROUTES from "../../utils/Routes";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../DB/firebase";
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
 interface AppComponent {
   cartItems: any;
   totalPrice: any;
+<<<<<<< HEAD
 }
 const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
   const dispatch = useDispatch<AppDispatch>();
   const myOrders = useSelector((state: any) => state.Cart.orders);
+=======
+  getCart: any;
+}
+const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) => {
+  const token = localStorage.getItem("one_store_login");
+
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
   const priceFormat = new Intl.NumberFormat("en-US");
   const [ShowPrice] = useState<any>(true);
   const [Order, setOrder] = useState<any>(myOrders);
 
   const [checkout, setCheckOut] = useState(false);
+<<<<<<< HEAD
+=======
+
+  const getOrders = async () => {
+    try {
+      const targetRef = collection(db, "order");
+      const q = query(targetRef, where("userId", "==", token));
+      const querySnapshot = await getDocs(q);
+
+      const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
+      setOrder(newData[0]);
+      // console.log(...newData);
+    } catch (error) {
+      console.log(" Unable to get data");
+    }
+  };
+  const UpdateCartQuantity = async (id: string, q: number) => {
+    try {
+      await updateDoc(doc(db, "cart", id), { inStock: q });
+      // await delay(900);
+      // window.location.replace("/cart");
+    } catch (error) {
+      toast.error("unable increase product quantity quantity");
+    }
+  };
+
+  const deleteCartItem = async (id: any) => {
+    try {
+      await deleteDoc(doc(db, "cart", id));
+      getCart();
+      toast.success("Item removed");
+
+      // await delay(900);
+
+      // window.location.reload();
+    } catch (e) {
+      toast.error("Error deleting document: ");
+    }
+  };
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   const setT = () => {
     setCheckOut(true);
@@ -64,11 +129,17 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
                           value="-"
                           onClick={async () => {
                             const q = Number(i.inStock) - 1;
+<<<<<<< HEAD
                             // Number(i.inStock) > 1 && UpdateCartQuantity(i.id, q);
 
                             Number(i.inStock) > 1 &&
                               dispatch<any>(UpdateCartQuantity({ id: i.id, q: q }));
                             dispatch<any>(getCart());
+=======
+                            if (Number(i.inStock) > 1) {
+                              await UpdateCartQuantity(i.id, q);
+                            }
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
                           }}
                         />
                         <p className="text-base text-black font-roboto">{Number(i.inStock)}</p>

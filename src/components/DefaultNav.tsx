@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* eslint-disable @typescript-eslint/no-explicit-any */
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
@@ -9,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../Redux/Cart";
 import { AppDispatch } from "../Redux/store";
 
+<<<<<<< HEAD
 const DefaultNav: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const CartState = useSelector((state: any) => state.Cart.cart);
@@ -17,6 +22,33 @@ const DefaultNav: React.FC = () => {
 
   const [Cart, setCart] = useState<any>(CartState);
   const [exprLogin, setExpireLogin] = useState(true);
+=======
+interface AppComponent {
+  Cart: any;
+}
+
+const DefaultNav: React.FC<AppComponent> = ({ Cart }) => {
+  const Now = new Date().getTime();
+  // const [_, setCart] = useState<any>([]);
+  const [exprLogin, setExpireLogin] = useState(true);
+
+  // const getUserInfo = async () => {
+  //   try {
+  //     await getDocs(collection(db, "cart")).then((querySnapshot) => {
+  //       const newData: any = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  //       if (newData) {
+  //         const d: any = [];
+  //         newData.map((item: any) => {
+  //           return item.cartId == token ? d.push(item) : null;
+  //         });
+  //         setCart(d);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error(" Unable to get cart", error);
+  //   }
+  // };
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   const [_, setSearchResult] = useState<any>([{ name: "computer" }]);
 
@@ -24,11 +56,15 @@ const DefaultNav: React.FC = () => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
       // getUserInfo();
+<<<<<<< HEAD
       dispatch<any>(getCart() as any);
+=======
+>>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
       setExpireLogin(false);
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const searchProduct = async (word: string) => {
     if (typeof word !== "string") {
@@ -86,10 +122,10 @@ const DefaultNav: React.FC = () => {
               <MdOutlineLocalGroceryStore size={32} className="mx-auto text-slate-700" />
               {Cart && Cart.length > 0 && (
                 <div
-                  className=" relative top w-5 h-5 items-center bg-red-600 rounded-full"
+                  className=" relative top w-4 h-4 items-center bg-red-600 rounded-full"
                   style={{ top: "-70%", right: "-65%" }}
                 >
-                  <p className=" text-center  text-sm font-roboto text-white ">
+                  <p className=" text-center  text-[10px] font-roboto text-white ">
                     {Cart.length}
                   </p>
                 </div>
