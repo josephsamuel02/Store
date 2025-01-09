@@ -9,12 +9,8 @@ import { db } from "../../DB/firebase";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 const Product: React.FC = () => {
-<<<<<<< HEAD
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-=======
   const token = localStorage.getItem("one_store_login");
 
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
   const { id }: any = useParams();
   const [Cart, setCart] = useState<any>([]);
 

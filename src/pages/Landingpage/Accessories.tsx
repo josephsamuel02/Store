@@ -2,12 +2,6 @@
 import React from "react";
 import ROUTES from "../../utils/Routes";
 import { MdShoppingCart } from "react-icons/md";
-<<<<<<< HEAD
-import { addToCart, getCart } from "../../Redux/Cart";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../Redux/store";
-=======
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
 interface AppComponent {
   Products: any;
@@ -16,10 +10,6 @@ interface AppComponent {
 
 const Accessories: React.FC<AppComponent> = ({ Products, addToCart }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
-<<<<<<< HEAD
-  const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.auth.data?.user_id);
-=======
   const User = localStorage.getItem("one_store_login");
 
   // const getCart = async () => {
@@ -47,7 +37,6 @@ const Accessories: React.FC<AppComponent> = ({ Products, addToCart }) => {
   //     return error.message;
   //   }
   // };
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   return (
     <div className="my-8 w-full h-auto">
@@ -90,22 +79,12 @@ const Accessories: React.FC<AppComponent> = ({ Products, addToCart }) => {
                   {User && (
                     <h2
                       className=" w-full py-2  bg-[#4303a8] hover:bg-[#6d35c7] flex flex-row  items-center rounded cursor-pointer"
-<<<<<<< HEAD
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const cartItem = { ...i, inStock: 1 };
-                        dispatch<any>(addToCart(cartItem));
-                        dispatch<any>(getCart());
-                        console.log({ ...i, inStock: 1 });
-=======
                       onClick={(e: any) => {
                         e.preventDefault();
                         e.stopPropagation();
                         const cartItem = { ...i, inStock: 1 };
                         addToCart(cartItem);
                         // console.log({ ...i, inStock: 1 });
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
                       }}
                     >
                       <MdShoppingCart className="text-md text-white ml-auto" />

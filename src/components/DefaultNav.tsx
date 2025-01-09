@@ -1,28 +1,11 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable @typescript-eslint/no-explicit-any */
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import ROUTES from "../utils/Routes";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../DB/firebase";
 import { MdOutlineLocalGroceryStore, MdPersonOutline } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../Redux/Cart";
-import { AppDispatch } from "../Redux/store";
 
-<<<<<<< HEAD
-const DefaultNav: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const CartState = useSelector((state: any) => state.Cart.cart);
-
-  const Now = new Date().getTime();
-
-  const [Cart, setCart] = useState<any>(CartState);
-  const [exprLogin, setExpireLogin] = useState(true);
-=======
 interface AppComponent {
   Cart: any;
 }
@@ -48,7 +31,6 @@ const DefaultNav: React.FC<AppComponent> = ({ Cart }) => {
   //     console.error(" Unable to get cart", error);
   //   }
   // };
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   const [_, setSearchResult] = useState<any>([{ name: "computer" }]);
 
@@ -56,10 +38,6 @@ const DefaultNav: React.FC<AppComponent> = ({ Cart }) => {
     const login_expiry_date = localStorage.getItem("login_expiry_date");
     if (Now < Number(login_expiry_date)) {
       // getUserInfo();
-<<<<<<< HEAD
-      dispatch<any>(getCart() as any);
-=======
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
       setExpireLogin(false);
     } else if (Now >= Number(login_expiry_date)) {
       setExpireLogin(true);
@@ -83,10 +61,6 @@ const DefaultNav: React.FC<AppComponent> = ({ Cart }) => {
       console.error("searchProduct error:", error);
     }
   };
-
-  useEffect(() => {
-    setCart(CartState);
-  }, [CartState]);
 
   useEffect(() => {
     searchProduct("milo");

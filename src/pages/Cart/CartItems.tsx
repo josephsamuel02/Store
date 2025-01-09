@@ -4,13 +4,6 @@
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import CheckoutDetails from "../Checkout/CheckoutDetails";
-<<<<<<< HEAD
-import { ToastContainer } from "react-toastify";
-import ROUTES from "../../utils/Routes";
-import { useDispatch, useSelector } from "react-redux";
-import { DeleteCartItem, getCart, getMyOrders, UpdateCartQuantity } from "../../Redux/Cart";
-import { AppDispatch } from "../../Redux/store";
-=======
 import { toast, ToastContainer } from "react-toastify";
 import ROUTES from "../../utils/Routes";
 
@@ -24,30 +17,20 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../DB/firebase";
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
 interface AppComponent {
   cartItems: any;
   totalPrice: any;
-<<<<<<< HEAD
-}
-const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const myOrders = useSelector((state: any) => state.Cart.orders);
-=======
   getCart: any;
 }
 const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) => {
   const token = localStorage.getItem("one_store_login");
 
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
   const priceFormat = new Intl.NumberFormat("en-US");
   const [ShowPrice] = useState<any>(true);
-  const [Order, setOrder] = useState<any>(myOrders);
+  const [Order, setOrder] = useState<any>();
 
   const [checkout, setCheckOut] = useState(false);
-<<<<<<< HEAD
-=======
 
   const getOrders = async () => {
     try {
@@ -85,16 +68,14 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) =
       toast.error("Error deleting document: ");
     }
   };
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
 
   const setT = () => {
     setCheckOut(true);
   };
 
   useEffect(() => {
-    !myOrders && dispatch<any>(getMyOrders());
-    setOrder(myOrders);
-  }, [myOrders]);
+    getOrders();
+  }, []);
 
   return (
     <>
@@ -129,17 +110,9 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) =
                           value="-"
                           onClick={async () => {
                             const q = Number(i.inStock) - 1;
-<<<<<<< HEAD
-                            // Number(i.inStock) > 1 && UpdateCartQuantity(i.id, q);
-
-                            Number(i.inStock) > 1 &&
-                              dispatch<any>(UpdateCartQuantity({ id: i.id, q: q }));
-                            dispatch<any>(getCart());
-=======
                             if (Number(i.inStock) > 1) {
                               await UpdateCartQuantity(i.id, q);
                             }
->>>>>>> 7e7da27bf8a3e504ce14050601ef444583677db9
                           }}
                         />
                         <p className="text-base text-black font-roboto">{Number(i.inStock)}</p>
@@ -148,11 +121,9 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) =
                           className="mx-3 w-7 h-7 bg-Storepurple rounded shadow font-roboto font-bold text-white"
                           type="button"
                           value="+"
-                          onClick={async () => {
+                          onClick={() => {
                             const q = Number(i.inStock) + 1;
-
-                            dispatch<any>(UpdateCartQuantity({ id: i.id, q: q }));
-                            dispatch<any>(getCart());
+                            UpdateCartQuantity(i.id, q);
                           }}
                         />
                       </div>
@@ -163,8 +134,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice, getCart }) =
                 <div
                   className="w-36 m-2 h-auto px-4 py-2 flex flex-row cursor-pointer items-center rounded-md hover:bg-slate-200 "
                   onClick={() => {
-                    dispatch<any>(DeleteCartItem({ id: i.id }));
-                    dispatch<any>(getCart());
+                    deleteCartItem(i.id);
                   }}
                 >
                   <span>
