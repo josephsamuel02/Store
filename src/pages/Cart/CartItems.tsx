@@ -59,7 +59,7 @@ const CartItems: React.FC<AppComponent> = ({ cartItems, totalPrice }) => {
       await deleteDoc(doc(db, "cart", id));
       toast.success("Item removed");
       await delay(900);
-      window.location.reload();
+      // window.location.reload();
     } catch (e) {
       toast.error("Error deleting document: ");
     }

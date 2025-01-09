@@ -8,10 +8,11 @@ interface AppComponent {
 
 const Electronics: React.FC<AppComponent> = ({ Products }) => {
   const priceFormat = new Intl.NumberFormat("en-US");
+
   return (
     <div className="my-8 w-full h-auto">
       <div className="w-full h-auto p-0 flex flex-col bg-[#4303a8]">
-        <p className=" text-4xl text-white text-center font-RubikDistressed ">Electronics</p>
+        <p className=" text-4xl text-white text-center font-RubikDistressed">Electronics</p>
       </div>
       <div className="w-full h-auto my-1 px-0 md:px-5 py-1 md:py-3 grid grid-flow-row grid-cols-3 md:grid-cols-4 bg-[#f0eaf52a] ">
         {Products &&
